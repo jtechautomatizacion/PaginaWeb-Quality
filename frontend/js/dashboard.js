@@ -97,7 +97,7 @@
         tr.setAttribute('data-date', item.fecha || '');
         tr.setAttribute('data-timestamp', String(item.timestamp || 0));
         tr.setAttribute('data-title', item.titulo.toLowerCase());
-        tr.innerHTML = '<td><img class="thumb-admin" src="' + escapeHtml(item.imagen) + '" alt="' + escapeHtml(item.titulo) + '"></td>'
+        tr.innerHTML = '<td><img class="thumb-admin" src="' + escapeHtml(resolveApiUrl(item.imagen)) + '" alt="' + escapeHtml(item.titulo) + '"></td>'
             + '<td><strong>' + escapeHtml(item.titulo) + '</strong><div class="text-muted" style="font-size:12px;">' + escapeHtml(item.resumen) + '</div></td>'
             + '<td><span class="badge ' + badgeClass + '">' + estado + '</span></td>'
             + '<td style="white-space:nowrap;">' + escapeHtml(displayDate) + '</td>'

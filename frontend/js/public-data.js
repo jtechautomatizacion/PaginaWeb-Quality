@@ -10,7 +10,7 @@
 
     function imagenServicio(i) { return IMAGENES_SERVICIOS[i % IMAGENES_SERVICIOS.length]; }
     function imagenProyecto(i) { return IMAGENES_PROYECTOS[i % IMAGENES_PROYECTOS.length]; }
-    function imagenDe(item, fallback) { return item && item.imagen ? item.imagen : fallback; }
+    function imagenDe(item, fallback) { return item && item.imagen ? resolveApiUrl(item.imagen) : fallback; }
 
     if (serviciosMosaico) {
         ApiClient.fetch(window.API_BASE + '/api/servicios')
@@ -129,7 +129,7 @@
                     var wa = 'https://api.whatsapp.com/send?phone=' + window.APP_CONFIG.whatsappNumber + '&text=' + encodeURIComponent('Hola, quisiera informacion sobre: ' + i.titulo);
                     return '<div class="mosaic-tile" data-category="">'
                         + '<a class="mosaic-tile__imglink" href="investigacion/' + i.slug + '" aria-label="' + i.titulo + '">'
-                        + '<img src="' + i.imagen + '" alt="' + i.titulo + '" loading="lazy">'
+                        + '<img src="' + imagenDe(i, 'assets/company/hero-campo.jpeg') + '" alt="' + i.titulo + '" loading="lazy">'
                         + '</a>'
                         + '<div class="mosaic-tile__overlay">'
                         + '<span class="mosaic-tile__title">' + i.titulo + '</span>'
