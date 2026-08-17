@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1775748600,
+    "titulo": "Extraccion de testigos y evaluacion del Puente Colgante Rio Pangoa",
+    "slug": "extraccion-de-testigos-y-evaluacion-puente-colgante-rio-pangoa",
+    "resumen": "Evaluacion estructural avanzada para la Municipalidad Distrital de Mazamari, incluyendo extraccion d",
+    "imagen": "https://placehold.co/600x400/e9edf5/e9edf5",
+    "ubicacion": "Mazamari - Junin",
+    "fecha": "Ejecutado en 2025",
+    "estado": "published",
+    "fecha_admin": "09/04/2026",
+    "timestamp": 1775748600
+  },
+  {
+    "id": 1775747700,
+    "titulo": "Mecanica de suelos y consultoria geotecnica para Camino Vecinal Pangoa",
+    "slug": "mecanica-de-suelos-y-consultoria-geotecnica-camino-vecinal-pangoa",
+    "resumen": "Intervencion tecnica vinculada a la Contraloria General para estudios de mecanica de suelos y consul",
+    "imagen": "https://placehold.co/600x400/e9edf5/e9edf5",
+    "ubicacion": "Pangoa - Junin",
+    "fecha": "Ejecutado en 2024",
+    "estado": "published",
+    "fecha_admin": "09/04/2026",
+    "timestamp": 1775747700
+  },
+  {
+    "id": 1775746800,
+    "titulo": "Ensayos especializados para SIMA Callao",
+    "slug": "ensayos-especializados-para-sima-callao",
+    "resumen": "Portafolio de ensayos de laboratorio para concreto, suelos y pavimentos, con soporte tecnico para li",
+    "imagen": "https://placehold.co/600x400/e9edf5/e9edf5",
+    "ubicacion": "Callao - Lima",
+    "fecha": "Ejecutado en 2024",
+    "estado": "published",
+    "fecha_admin": "09/04/2026",
+    "timestamp": 1775746800
+  }
+]

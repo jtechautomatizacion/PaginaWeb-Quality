@@ -1,0 +1,44 @@
+# Credenciales y configuración
+.env
+.env.local
+.env.*.local
+api/conexion.php
+backend/.env
+backend/config/database.js
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+dist/
+build/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/settings.json
+
+# Logs
+logs/
+*.log
+
+# IDE
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Temporal
+temp/
+tmp/
+scratch/
+*.zip
+
+# Backend
+/backend/node_modules
+/backend/package-lock.json
+/backend/.env
+.login_attempts_*.json
+/middleware/.login_attempts_*.json

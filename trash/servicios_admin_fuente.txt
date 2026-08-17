@@ -1,0 +1,839 @@
+<html lang="es"><head>
+    <meta charset="utf-8">
+    <title>Servicios | Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/company/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&amp;display=swap">
+    <style>
+        :root {
+            --admin-navy: #0f2b5b;
+            --admin-navy-deep: #091e42;
+            --admin-sky: #dbe7f3;
+            --admin-line: #d6dee8;
+            --topbar-h: 60px;
+            --sidebar-w: 260px;
+        }
+        html { scrollbar-width: none; }
+        html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+        body { font-family: 'Roboto', Arial, sans-serif; background: #edf3f8; color: #1f2937; margin: 0; }
+        h1,h2,h3,h4,h5,h6 { font-family: 'Roboto', Arial, sans-serif; font-weight: 900; color: #0f2b5b; }
+
+        /* ===== Topbar ===== */
+        .admin-topbar {
+            position: sticky; top: 0; z-index: 50;
+            height: var(--topbar-h);
+            background: #fff;
+            border-bottom: 1px solid var(--admin-line);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 28px;
+            box-shadow: 0 4px 12px rgba(15,43,91,0.06);
+        }
+        .admin-topbar__left,
+        .admin-topbar__right { display: flex; align-items: center; gap: 14px; }
+        .admin-topbar__left { padding-left: 4px; }
+        .admin-topbar__right { padding-right: 4px; }
+        .admin-topbar__toggle,
+        .admin-topbar__user {
+            background: transparent; border: 1.5px solid rgba(15,43,91,0.15); cursor: pointer;
+            width: 44px; height: 44px; border-radius: 12px;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--admin-navy); font-size: 18px;
+            transition: background 0.15s ease, border-color 0.15s ease;
+            margin: 0 4px;
+        }
+        .admin-topbar__toggle:hover,
+        .admin-topbar__user:hover { border-color: rgba(15,43,91,0.4); background: rgba(15,43,91,0.06); }
+        .admin-topbar__user { border: 0; width: auto; padding: 0 4px; }
+        .admin-topbar__toggle:hover,
+        .admin-topbar__user:hover { background: rgba(15,43,91,0.08); }
+        .admin-topbar__title { font-weight: 800; color: var(--admin-navy); font-size: 15px; margin: 0; }
+        .admin-topbar__title small { font-weight: 500; color: #6b7280; font-size: 12px; display: block; }
+        .admin-topbar__user .user-chip {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(15,43,91,0.08);
+            padding: 6px 16px 6px 8px;
+            border-radius: 999px;
+            margin-right: 4px;
+        }
+        .admin-topbar__user .user-chip__avatar {
+            width: 30px; height: 30px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--admin-navy), #1e4c9f);
+            color: #fff;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 12px;
+        }
+        .admin-topbar__user .user-chip__name { font-weight: 700; color: var(--admin-navy); font-size: 13px; }
+
+        /* Dropdown del usuario */
+        .user-dropdown {
+            position: absolute; top: calc(100% + 6px); right: 16px; z-index: 60;
+            min-width: 240px;
+            background: #fff; border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(15,43,91,0.2);
+            border: 1px solid var(--admin-line);
+            padding: 8px;
+            display: none;
+        }
+        .user-dropdown.is-open { display: block; }
+        .user-dropdown a,
+        .user-dropdown button {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 14px; border-radius: 10px;
+            color: #1f2937; text-decoration: none; font-size: 14px; font-weight: 600;
+            background: transparent; border: 0; width: 100%; text-align: left; cursor: pointer;
+        }
+        .user-dropdown a:hover,
+        .user-dropdown button:hover { background: #f5f7fb; color: var(--admin-navy); text-decoration: none; }
+        .user-dropdown i { color: var(--admin-navy); width: 18px; text-align: center; }
+        .user-dropdown__sep { height: 1px; background: var(--admin-line); margin: 6px 0; }
+        .user-dropdown__head { padding: 10px 14px 8px; border-bottom: 1px solid var(--admin-line); margin-bottom: 6px; }
+        .user-dropdown__head strong { display: block; color: var(--admin-navy); font-size: 14px; }
+        .user-dropdown__head small { color: #6b7280; font-size: 12px; }
+
+        /* ===== Layout ===== */
+        .admin-shell { min-height: calc(100vh - var(--topbar-h)); position: relative; }
+        .admin-shell > .row { margin-left: 0; margin-right: 0; }
+        .admin-shell > .row > [class*="col-"] { padding-left: 0; padding-right: 0; }
+
+        /* ===== Sidebar ===== */
+        .admin-sidebar {
+            background: linear-gradient(180deg, #091e42, #0f2b5b);
+            color: #fff;
+            min-height: calc(100vh - var(--topbar-h));
+            padding: 28px 18px;
+            position: sticky; top: var(--topbar-h);
+            transition: transform 0.3s ease;
+            align-self: stretch;
+            height: calc(100vh - var(--topbar-h));
+            overflow-y: auto;
+        }
+        .admin-sidebar__brand { background: rgba(255,255,255,0.06); border-radius: 14px; padding: 10px 14px; height: 64px; overflow: hidden; display: flex; align-items: center; }
+        .admin-sidebar__brand img { max-width: 200px; height: 70px; object-fit: contain; object-position: left center; filter: brightness(0) invert(1); transform: scale(1.05) translateX(-4px); transform-origin: left center; }
+        .admin-sidebar__nav { display: flex; flex-direction: column; gap: 4px; }
+        .admin-sidebar a {
+            color: rgba(255,255,255,0.88);
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 14px; border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px; font-weight: 600;
+            transition: background 0.15s ease;
+        }
+        .admin-sidebar a i { width: 18px; text-align: center; opacity: 0.9; }
+        .admin-sidebar a:hover,
+        .admin-sidebar a.active {
+            background: rgba(255,255,255,0.14); color: #fff; text-decoration: none;
+        }
+        .admin-sidebar__sep { height: 1px; background: rgba(255,255,255,0.12); margin: 14px 0; }
+        .admin-sidebar form button { margin-top: 20px; }
+
+        /* ===== Content main ===== */
+        .admin-content { padding: 28px; min-height: calc(100vh - var(--topbar-h)); }
+        .admin-card { background: #fff; border-radius: 18px; box-shadow: 0 14px 32px rgba(17,24,39,0.06); padding: 24px; border: 1px solid rgba(17,24,39,0.05); }
+        .stat-card { background: linear-gradient(135deg, #fff, #eef4fa); border-radius: 18px; padding: 22px; height: 100%; border: 1px solid rgba(22,58,99,0.12); }
+        .table td, .table th { vertical-align: middle; }
+        .thumb-admin { width: 84px; height: 56px; border-radius: 12px; object-fit: cover; background: #eceff4; }
+
+        /* ===== Content area padding fix ===== */
+        .admin-content { padding: 28px 32px !important; }
+        .admin-shell > .row { flex-wrap: nowrap; }
+        .admin-shell > .row > .admin-content { min-width: 0; }
+        /* Separador visual entre sidebar y contenido */
+        @media (min-width: 992px) {
+            .admin-sidebar {
+                box-shadow: 8px 0 24px rgba(15,43,91,0.08);
+                border-right: 1px solid rgba(15,43,91,0.15);
+            }
+            .admin-shell > .row > .admin-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Desktop: contraer sidebar cuando se hace clic en hamburguesa */
+        @media (min-width: 992px) {
+            .admin-shell.sidebar-collapsed .admin-sidebar {
+                display: none !important;
+            }
+            .admin-shell.sidebar-collapsed > .row > [class*="col-lg-9"],
+            .admin-shell.sidebar-collapsed > .row > [class*="col-xl-10"],
+            .admin-shell.sidebar-collapsed .admin-content {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        /* ===== Login page ===== */
+        .login-wrapper { min-height: 100vh; display: grid; place-items: center; padding: 32px; background: linear-gradient(135deg, #091e42, #0f2b5b); }
+        .login-card { width: min(460px, 100%); background: #fff; border-radius: 24px; padding: 34px; box-shadow: 0 25px 55px rgba(0,0,0,0.22); }
+
+        /* ===== Buttons ===== */
+        .btn-primary, .btn-outline-primary:hover { background-color: var(--admin-navy); border-color: var(--admin-navy); }
+        .btn-outline-primary { color: var(--admin-navy); border-color: var(--admin-navy); }
+        .btn-outline-primary:hover { color: #fff; }
+        .badge-success { background: #1f8a4c; }
+        .badge-secondary { background: #7c8693; }
+
+        /* ===== Reports cards ===== */
+        .report-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .report-kpi { background: #fff; border-radius: 14px; padding: 18px; border: 1px solid rgba(15,43,91,0.1); }
+        .report-kpi__label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+        .report-kpi__value { font-size: 32px; font-weight: 900; color: var(--admin-navy); line-height: 1.1; margin-top: 4px; }
+        .report-chart { display: flex; gap: 6px; align-items: flex-end; height: 160px; padding: 10px 0; }
+        .report-chart__bar { flex: 1; background: linear-gradient(180deg, #1e4c9f, #0f2b5b); border-radius: 4px 4px 0 0; min-height: 4px; position: relative; }
+        .report-chart__bar span { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #6b7280; white-space: nowrap; }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 991.98px) {
+            .admin-shell > .row { flex-wrap: wrap; }
+            .admin-sidebar {
+                position: fixed !important; top: var(--topbar-h); left: 0;
+                width: 260px !important; max-width: 78vw !important;
+                z-index: 45 !important; height: calc(100vh - var(--topbar-h));
+                transform: translateX(-100%);
+                overflow-y: auto;
+                box-shadow: 14px 0 40px rgba(15,43,91,0.35);
+                flex: 0 0 auto !important;
+                padding: 24px 18px !important;
+                transition: transform 0.3s ease;
+            }
+            .admin-shell.sidebar-open .admin-sidebar { transform: translateX(0); }
+            .admin-shell.sidebar-open::before {
+                content: ""; position: fixed; inset: var(--topbar-h) 0 0;
+                background: rgba(15,43,91,0.55); z-index: 40; backdrop-filter: blur(2px);
+            }
+            .admin-shell > .row > [class*="col-"],
+            .admin-shell .col-lg-9, .admin-shell .col-xl-10,
+            .admin-shell .admin-content {
+                flex: 0 0 100% !important; max-width: 100% !important; width: 100%;
+            }
+            .admin-content { padding: 22px 20px !important; }
+            .report-kpis { grid-template-columns: repeat(2, 1fr); }
+            .admin-topbar__title { font-size: 13px; }
+            .admin-topbar__title small { font-size: 10px; }
+            .user-chip__name { display: none !important; }
+        }
+        @media (max-width: 575.98px) {
+            .admin-topbar { padding: 0 16px; }
+            .admin-topbar__left, .admin-topbar__right { gap: 8px; }
+            .admin-topbar__toggle { width: 40px; height: 40px; margin: 0 6px 0 0; }
+            .admin-topbar__user { margin: 0 0 0 6px; }
+            .admin-content { padding: 16px 12px !important; }
+            .report-kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .report-kpi { padding: 14px; }
+            .report-kpi__value { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+        <header class="admin-topbar">
+        <div class="admin-topbar__left">
+            <button class="admin-topbar__toggle" type="button" data-sidebar-toggle="" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="admin-topbar__title">
+                Panel Group TQC
+                <small>Admin · 12/07/2026</small>
+            </div>
+        </div>
+        <div class="admin-topbar__right" style="position: relative;">
+            <button class="admin-topbar__user" type="button" data-user-toggle="" aria-haspopup="true" aria-expanded="false">
+                <span class="user-chip">
+                    <span class="user-chip__avatar">A</span>
+                    <span class="user-chip__name">Administrador Group TQC</span>
+                    <i class="fas fa-chevron-down" style="font-size:11px; color:#0f2b5b;"></i>
+                </span>
+            </button>
+            <div class="user-dropdown" data-user-dropdown="">
+                <div class="user-dropdown__head">
+                    <strong>Administrador Group TQC</strong>
+                    <small>Administrador</small>
+                </div>
+                <a href="/admin/profile"><i class="fas fa-user-cog"></i> Mi perfil</a>
+                <a href="/admin/reports"><i class="fas fa-chart-line"></i> Reportes</a>
+                <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver sitio</a>
+                <div class="user-dropdown__sep"></div>
+                <form method="post" action="/admin/logout" style="margin:0;">
+                    <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                    <button type="submit"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+
+<style>
+/* ===== Filtros listado admin ===== */
+.admin-filters {
+    background: #fff;
+    border: 1px solid rgba(15,43,91,0.08);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 18px;
+    box-shadow: 0 10px 24px rgba(17,24,39,0.04);
+}
+.admin-filters__row {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr) auto;
+    gap: 12px;
+    align-items: end;
+}
+.admin-filters__field label {
+    display: block;
+    font-size: 11px;
+    color: #6b7280;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+}
+.admin-filters__field input,
+.admin-filters__field select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid #dfe4ee;
+    border-radius: 10px;
+    font-size: 14px;
+    background: #fafbfc;
+    color: #1f2937;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+.admin-filters__field input:focus,
+.admin-filters__field select:focus {
+    outline: none;
+    border-color: #0f2b5b;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(15,43,91,0.1);
+}
+.admin-filters__field .field-with-icon {
+    position: relative;
+}
+.admin-filters__field .field-with-icon input { padding-left: 36px; }
+.admin-filters__field .field-with-icon i {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    color: #8a96a7; font-size: 14px;
+}
+.admin-filters__reset {
+    background: #f5f7fb;
+    color: #0f2b5b;
+    border: 1px solid #dfe4ee;
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    height: 38px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s ease;
+}
+.admin-filters__reset:hover { background: #e9ecf3; }
+
+.admin-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+.admin-chip {
+    background: transparent;
+    border: 1px solid #dfe4ee;
+    color: #4b5563;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.admin-chip:hover { border-color: #0f2b5b; color: #0f2b5b; }
+.admin-chip.is-active {
+    background: #0f2b5b;
+    color: #fff;
+    border-color: #0f2b5b;
+}
+.admin-chip__count {
+    background: rgba(15,43,91,0.1);
+    color: #0f2b5b;
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+}
+.admin-chip.is-active .admin-chip__count { background: rgba(255,255,255,0.22); color: #fff; }
+
+.admin-results-info {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 12px;
+}
+.admin-results-info strong { color: #0f2b5b; }
+
+.admin-list-empty-filter {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.table th[data-sort] {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+.table th[data-sort]:hover { color: #0f2b5b; }
+.table th[data-sort]::after {
+    content: "\f0dc";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-left: 6px;
+    color: #d1d5db;
+    font-size: 10px;
+}
+.table th[data-sort].sort-asc::after { content: "\f0de"; color: #0f2b5b; }
+.table th[data-sort].sort-desc::after { content: "\f0dd"; color: #0f2b5b; }
+
+@media (max-width: 767.98px) {
+    .admin-filters__row { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .admin-filters__field:first-child { grid-column: 1 / -1; }
+    .admin-filters__reset { grid-column: 1 / -1; justify-self: stretch; width: 100%; justify-content: center; }
+}
+</style>
+
+<div class="container-fluid admin-shell">
+    <div class="row">
+        <aside class="col-lg-3 col-xl-2 admin-sidebar" id="admin-sidebar">
+    <div class="admin-sidebar__brand">
+        <img class="brand-admin-logo" src="/assets/company/logo-grouptqc-wide-v2.png" alt="Group Total Quality Control">
+    </div>
+    <p class="mt-3 mb-4 text-white-50"><i class="fas fa-user-circle"></i> &nbsp;Administrador Group TQC</p>
+    <nav class="admin-sidebar__nav">
+        <a href="/admin/dashboard" class=""><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/admin/services" class="active"><i class="fas fa-cogs"></i> Servicios</a>
+        <a href="/admin/posts" class=""><i class="fas fa-book"></i> Investigacion</a>
+        <a href="/admin/courses" class=""><i class="fas fa-graduation-cap"></i> Cursos</a>
+        <a href="/admin/projects" class=""><i class="fas fa-project-diagram"></i> Proyectos</a>
+        <div class="admin-sidebar__sep"></div>
+        <a href="/admin/pages" class=""><i class="fas fa-paint-brush"></i> Editor de paginas</a>
+        <a href="/admin/reports" class=""><i class="fas fa-chart-line"></i> Reportes</a>
+        <a href="/admin/profile" class=""><i class="fas fa-user-cog"></i> Mi perfil</a>
+        <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver sitio</a>
+    </nav>
+    <form method="post" action="/admin/logout" class="mt-4">
+        <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+        <button class="btn btn-outline-light btn-block" type="submit"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</button>
+    </form>
+</aside>
+        <main class="col-lg-9 col-xl-10 admin-content">
+                        
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap" style="gap: 12px;">
+                <div>
+                    <h1 class="h2 mb-1">Servicios</h1>
+                    <p class="text-muted mb-0">Administra el contenido visible en /servicios.</p>
+                </div>
+                <a class="btn btn-primary" href="/admin/services/create"><i class="fas fa-plus"></i> &nbsp;Nuevo Servicio</a>
+            </div>
+
+            <div class="admin-filters" data-admin-filters="">
+                <div class="admin-filters__row">
+                    <div class="admin-filters__field">
+                        <label>Buscar</label>
+                        <div class="field-with-icon">
+                            <i class="fas fa-search"></i>
+                            <input type="search" data-filter-search="" placeholder="Titulo, resumen o slug..." autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="admin-filters__field">
+                        <label>Estado</label>
+                        <select data-filter-status="">
+                            <option value="">Todos</option>
+                            <option value="published">Publicados</option>
+                            <option value="draft">Borradores</option>
+                        </select>
+                    </div>
+                    <div class="admin-filters__field">
+                        <label>Rango de fecha</label>
+                        <select data-filter-range="">
+                            <option value="">Toda la fecha</option>
+                            <option value="7">Ultimos 7 dias</option>
+                            <option value="30">Ultimos 30 dias</option>
+                            <option value="90">Ultimos 90 dias</option>
+                            <option value="365">Ultimo ano</option>
+                        </select>
+                    </div>
+                    <div class="admin-filters__field">
+                        <label>Ordenar por</label>
+                        <select data-filter-sort="">
+                            <option value="date-desc">Fecha (mas reciente)</option>
+                            <option value="date-asc">Fecha (mas antigua)</option>
+                            <option value="title-asc">Titulo (A-Z)</option>
+                            <option value="title-desc">Titulo (Z-A)</option>
+                        </select>
+                    </div>
+                    <button class="admin-filters__reset" type="button" data-filter-reset=""><i class="fas fa-times"></i> Limpiar</button>
+                </div>
+            </div>
+
+            <div class="admin-chips">
+                <button class="admin-chip is-active" type="button" data-chip="all">
+                    Todos <span class="admin-chip__count">8</span>
+                </button>
+                <button class="admin-chip" type="button" data-chip="published">
+                    <i class="fas fa-check-circle"></i> Publicados <span class="admin-chip__count">7</span>
+                </button>
+                <button class="admin-chip" type="button" data-chip="draft">
+                    <i class="fas fa-file-alt"></i> Borradores <span class="admin-chip__count">1</span>
+                </button>
+            </div>
+
+            <div class="admin-results-info" data-results-info="">Mostrando <strong>8</strong> de <strong>8</strong> registros.</div>
+
+            <div class="admin-card">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="admin-list-table">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th data-sort="title">Titulo</th>
+                                <th data-sort="status">Estado</th>
+                                <th data-sort="date">Publicado</th>
+                                <th>Slug</th>
+                                <th class="text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody data-list-body="">
+                                                                                                                        <tr data-item="" data-search="demo curl demo demo-curl-x" data-status="draft" data-date="2026-04-18" data-timestamp="1776495460" data-title="demo curl">
+                                    <td><img class="thumb-admin" src="/assets/company/hero-campo.jpeg" alt="DEMO curl"></td>
+                                    <td>
+                                        <strong>DEMO curl</strong>
+                                        <div class="text-muted" style="font-size:12px;">demo</div>
+                                    </td>
+                                    <td><span class="badge badge-secondary">draft</span></td>
+                                    <td style="white-space:nowrap;">18/04/2026</td>
+                                    <td><code style="font-size:11px;">demo-curl-x</code></td>
+                                    <td class="text-right" style="white-space:nowrap;">
+                                        <a class="btn btn-sm btn-outline-primary" href="/servicios/demo-curl-x" target="_blank" title="Ver"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-sm btn-primary" href="/admin/services/51/edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <form method="post" action="/admin/services/51/delete" style="display:inline-block;" onsubmit="return confirm('Eliminar este registro?');">
+                                            <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                                            <button class="btn btn-sm btn-light" type="submit" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                                                                            <tr data-item="" data-search="exploracion geofisica, mecanica de rocas y ensayos quimicos servicios especializados para caracterizacion del subsuelo, comportamiento de macizos y composicion quimica de materiales. geofisica-mecanica-de-rocas-y-ensayos-quimicos" data-status="published" data-date="2026-04-18" data-timestamp="1776495039" data-title="exploracion geofisica, mecanica de rocas y ensayos quimicos">
+                                    <td><img class="thumb-admin" src="/assets/company/laboratorio-cbr.jpeg" alt="Exploracion Geofisica, Mecanica de Rocas y Ensayos Quimicos"></td>
+                                    <td>
+                                        <strong>Exploracion Geofisica, Mecanica de Rocas y Ensayos Quimicos</strong>
+                                        <div class="text-muted" style="font-size:12px;">Servicios especializados para caracterizacion del subsuelo, comportamiento de macizos y composicion ...</div>
+                                    </td>
+                                    <td><span class="badge badge-success">published</span></td>
+                                    <td style="white-space:nowrap;">18/04/2026</td>
+                                    <td><code style="font-size:11px;">geofisica-mecanica-de-rocas-y-ensayos-quimicos</code></td>
+                                    <td class="text-right" style="white-space:nowrap;">
+                                        <a class="btn btn-sm btn-outline-primary" href="/servicios/geofisica-mecanica-de-rocas-y-ensayos-quimicos" target="_blank" title="Ver"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-sm btn-primary" href="/admin/services/49/edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <form method="post" action="/admin/services/49/delete" style="display:inline-block;" onsubmit="return confirm('Eliminar este registro?');">
+                                            <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                                            <button class="btn btn-sm btn-light" type="submit" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                                                                            <tr data-item="" data-search="evaluacion y calidad en sistemas de albanileria ensayos para unidades, pilas y muretes que respaldan diagnostico estructural, control de calidad y cumplimiento tecnico. evaluacion-en-sistemas-de-albanileria" data-status="published" data-date="2026-04-18" data-timestamp="1776495039" data-title="evaluacion y calidad en sistemas de albanileria">
+                                    <td><img class="thumb-admin" src="/assets/company/patologia-estructural-avanzada.png" alt="Evaluacion y Calidad en Sistemas de Albanileria"></td>
+                                    <td>
+                                        <strong>Evaluacion y Calidad en Sistemas de Albanileria</strong>
+                                        <div class="text-muted" style="font-size:12px;">Ensayos para unidades, pilas y muretes que respaldan diagnostico estructural, control de calidad y c...</div>
+                                    </td>
+                                    <td><span class="badge badge-success">published</span></td>
+                                    <td style="white-space:nowrap;">18/04/2026</td>
+                                    <td><code style="font-size:11px;">evaluacion-en-sistemas-de-albanileria</code></td>
+                                    <td class="text-right" style="white-space:nowrap;">
+                                        <a class="btn btn-sm btn-outline-primary" href="/servicios/evaluacion-en-sistemas-de-albanileria" target="_blank" title="Ver"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-sm btn-primary" href="/admin/services/48/edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <form method="post" action="/admin/services/48/delete" style="display:inline-block;" onsubmit="return confirm('Eliminar este registro?');">
+                                            <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                                            <button class="btn btn-sm btn-light" type="submit" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                                                                            <tr data-item="" data-search="pavimentos flexibles y mezclas asfalticas control integral de mezclas, briquetas y comportamiento superficial para obras viales y mantenimiento de infraestructura. pavimentos-flexibles-y-mezclas-asfalticas" data-status="published" data-date="2026-04-18" data-timestamp="1776495039" data-title="pavimentos flexibles y mezclas asfalticas">
+                                    <td><img class="thumb-admin" src="/assets/company/hero-campo.jpeg" alt="Pavimentos Flexibles y Mezclas Asfalticas"></td>
+                                    <td>
+                                        <strong>Pavimentos Flexibles y Mezclas Asfalticas</strong>
+                                        <div class="text-muted" style="font-size:12px;">Control integral de mezclas, briquetas y comportamiento superficial para obras viales y mantenimient...</div>
+                                    </td>
+                                    <td><span class="badge badge-success">published</span></td>
+                                    <td style="white-space:nowrap;">18/04/2026</td>
+                                    <td><code style="font-size:11px;">pavimentos-flexibles-y-mezclas-asfalticas</code></td>
+                                    <td class="text-right" style="white-space:nowrap;">
+                                        <a class="btn btn-sm btn-outline-primary" href="/servicios/pavimentos-flexibles-y-mezclas-asfalticas" target="_blank" title="Ver"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-sm btn-primary" href="/admin/services/47/edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <form method="post" action="/admin/services/47/delete" style="display:inline-block;" onsubmit="return confirm('Eliminar este registro?');">
+                                            <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                                            <button class="btn btn-sm btn-light" type="submit" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                                                                            <tr data-item="" data-search="evaluacion de concreto endurecido ensayos para verificar resistencia, durabilidad, integridad y comportamiento mecanico de elementos estructurales en servicio. evaluacion-de-concreto-endurecido" data-status="published" data-date="2026-04-18" data-timestamp="1776495039" data-title="evaluacion de concreto endurecido">
+                                    <td><img class="thumb-admin" src="/assets/company/control-concreto.jpeg" alt="Evaluacion de Concreto Endurecido"></td>
+                                    <td>
+                                        <strong>Evaluacion de Concreto Endurecido</strong>
+                                        <div class="text-muted" style="font-size:12px;">Ensayos para verificar resistencia, durabilidad, integridad y comportamiento mecanico de elementos e...</div>
+                                    </td>
+                                    <td><span class="badge badge-success">published</span></td>
+                                    <td style="white-space:nowrap;">18/04/2026</td>
+                                    <td><code style="font-size:11px;">evaluacion-de-concreto-endurecido</code></td>
+                                    <td class="text-right" style="white-space:nowrap;">
+                                        <a class="btn btn-sm btn-outline-primary" href="/servicios/evaluacion-de-concreto-endurecido" target="_blank" title="Ver"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-sm btn-primary" href="/admin/services/46/edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <form method="post" action="/admin/services/46/delete" style="display:inline-block;" onsubmit="return confirm('Eliminar este registro?');">
+                                            <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                                            <button class="btn btn-sm btn-light" type="submit" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                                                                            <tr data-item="" data-search="control de calidad de concreto fresco monitoreo de variables criticas para asegurar la conformidad del concreto antes de su colocacion y liberacion operativa. control-de-calidad-de-concreto-fresco" data-status="published" data-date="2026-04-18" data-timestamp="1776495039" data-title="control de calidad de concreto fresco">
+                                    <td><img class="thumb-admin" src="/assets/company/concreto-fresco-temperatura.png" alt="Control de Calidad de Concreto Fresco"></td>
+                                    <td>
+                                        <strong>Control de Calidad de Concreto Fresco</strong>
+                                        <div class="text-muted" style="font-size:12px;">Monitoreo de variables criticas para asegurar la conformidad del concreto antes de su colocacion y l...</div>
+                                    </td>
+                                    <td><span class="badge badge-success">published</span></td>
+                                    <td style="white-space:nowrap;">18/04/2026</td>
+                                    <td><code style="font-size:11px;">control-de-calidad-de-concreto-fresco</code></td>
+                                    <td class="text-right" style="white-space:nowrap;">
+                                        <a class="btn btn-sm btn-outline-primary" href="/servicios/control-de-calidad-de-concreto-fresco" target="_blank" title="Ver"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-sm btn-primary" href="/admin/services/45/edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <form method="post" action="/admin/services/45/delete" style="display:inline-block;" onsubmit="return confirm('Eliminar este registro?');">
+                                            <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                                            <button class="btn btn-sm btn-light" type="submit" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                                                                            <tr data-item="" data-search="mecanica de suelos y geotecnia informacion precisa del comportamiento del terreno para cimentaciones seguras, movimiento de tierras y decisiones geotecnicas con sustento normativo. mecanica-de-suelos-y-geotecnia" data-status="published" data-date="2026-04-18" data-timestamp="1776495039" data-title="mecanica de suelos y geotecnia">
+                                    <td><img class="thumb-admin" src="/assets/company/geotecnia-perfil.png" alt="Mecanica de Suelos y Geotecnia"></td>
+                                    <td>
+                                        <strong>Mecanica de Suelos y Geotecnia</strong>
+                                        <div class="text-muted" style="font-size:12px;">Informacion precisa del comportamiento del terreno para cimentaciones seguras, movimiento de tierras...</div>
+                                    </td>
+                                    <td><span class="badge badge-success">published</span></td>
+                                    <td style="white-space:nowrap;">18/04/2026</td>
+                                    <td><code style="font-size:11px;">mecanica-de-suelos-y-geotecnia</code></td>
+                                    <td class="text-right" style="white-space:nowrap;">
+                                        <a class="btn btn-sm btn-outline-primary" href="/servicios/mecanica-de-suelos-y-geotecnia" target="_blank" title="Ver"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-sm btn-primary" href="/admin/services/44/edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <form method="post" action="/admin/services/44/delete" style="display:inline-block;" onsubmit="return confirm('Eliminar este registro?');">
+                                            <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                                            <button class="btn btn-sm btn-light" type="submit" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                                                                            <tr data-item="" data-search="asesoria, consultoria e investigacion (quality) consultoria y blindaje tecnico-legal con mas de 30 anos de trayectoria. diagnostico estructural, peritaje, ensayos no destructivos e investigacion cientifica con publicaciones indexadas. asesoria-consultoria-e-investigacion" data-status="published" data-date="2026-04-18" data-timestamp="1776495000" data-title="asesoria, consultoria e investigacion (quality)">
+                                    <td><img class="thumb-admin" src="/assets/company/asesoria/no-destructivo.jpg" alt="Asesoria, Consultoria e Investigacion (QUALITY)"></td>
+                                    <td>
+                                        <strong>Asesoria, Consultoria e Investigacion (QUALITY)</strong>
+                                        <div class="text-muted" style="font-size:12px;">Consultoria y blindaje tecnico-legal con mas de 30 anos de trayectoria. Diagnostico estructural, per...</div>
+                                    </td>
+                                    <td><span class="badge badge-success">published</span></td>
+                                    <td style="white-space:nowrap;">18/04/2026</td>
+                                    <td><code style="font-size:11px;">asesoria-consultoria-e-investigacion</code></td>
+                                    <td class="text-right" style="white-space:nowrap;">
+                                        <a class="btn btn-sm btn-outline-primary" href="/servicios/asesoria-consultoria-e-investigacion" target="_blank" title="Ver"><i class="fas fa-eye"></i></a>
+                                        <a class="btn btn-sm btn-primary" href="/admin/services/50/edit" title="Editar"><i class="fas fa-edit"></i></a>
+                                        <form method="post" action="/admin/services/50/delete" style="display:inline-block;" onsubmit="return confirm('Eliminar este registro?');">
+                                            <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                                            <button class="btn btn-sm btn-light" type="submit" title="Eliminar"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                                    </tbody>
+                    </table>
+                    <div class="admin-list-empty-filter" data-empty-filter="" style="display:none;">
+                        <i class="fas fa-search" style="font-size:24px; color:#d1d5db; display:block; margin-bottom:10px;"></i>
+                        No hay registros que coincidan con los filtros aplicados.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+(function(){
+    var root = document.querySelector('[data-admin-filters]');
+    if (!root) return;
+    var body = document.querySelector('[data-list-body]');
+    var rows = [...document.querySelectorAll('[data-item]')];
+    var searchInput = root.querySelector('[data-filter-search]');
+    var statusSelect = root.querySelector('[data-filter-status]');
+    var rangeSelect = root.querySelector('[data-filter-range]');
+    var sortSelect = root.querySelector('[data-filter-sort]');
+    var resetBtn = root.querySelector('[data-filter-reset]');
+    var chips = document.querySelectorAll('[data-chip]');
+    var resultsInfo = document.querySelector('[data-results-info]');
+    var emptyEl = document.querySelector('[data-empty-filter]');
+    var table = document.getElementById('admin-list-table');
+    var totalAll = rows.length;
+    var activeChip = 'all';
+
+    function apply() {
+        var q = (searchInput.value || '').toLowerCase().trim();
+        var status = statusSelect.value;
+        var days = parseInt(rangeSelect.value || '0', 10);
+        var cutoff = days > 0 ? (Date.now() / 1000) - (days * 86400) : 0;
+
+        if (activeChip !== 'all') { status = activeChip; statusSelect.value = activeChip; }
+
+        var visible = 0;
+        rows.forEach(function(row) {
+            var s = row.getAttribute('data-search');
+            var st = row.getAttribute('data-status');
+            var ts = parseInt(row.getAttribute('data-timestamp') || '0', 10);
+            var passSearch = q === '' || s.indexOf(q) !== -1;
+            var passStatus = !status || st === status;
+            var passDate = cutoff === 0 || ts >= cutoff;
+            var ok = passSearch && passStatus && passDate;
+            row.style.display = ok ? '' : 'none';
+            if (ok) visible++;
+        });
+
+        sortRows();
+
+        resultsInfo.innerHTML = 'Mostrando <strong>' + visible + '</strong> de <strong>' + totalAll + '</strong> registros.';
+        if (visible === 0 && totalAll > 0) {
+            emptyEl.style.display = 'block';
+            table.style.display = 'none';
+        } else {
+            emptyEl.style.display = 'none';
+            table.style.display = '';
+        }
+    }
+
+    function sortRows() {
+        var sortKey = sortSelect.value;
+        var visibleRows = rows.filter(function(r) { return r.style.display !== 'none'; });
+        visibleRows.sort(function(a, b) {
+            if (sortKey === 'title-asc') return a.getAttribute('data-title').localeCompare(b.getAttribute('data-title'));
+            if (sortKey === 'title-desc') return b.getAttribute('data-title').localeCompare(a.getAttribute('data-title'));
+            var tsA = parseInt(a.getAttribute('data-timestamp') || '0', 10);
+            var tsB = parseInt(b.getAttribute('data-timestamp') || '0', 10);
+            return sortKey === 'date-asc' ? tsA - tsB : tsB - tsA;
+        });
+        visibleRows.forEach(function(r) { body.appendChild(r); });
+    }
+
+    [searchInput, statusSelect, rangeSelect, sortSelect].forEach(function(el) {
+        el.addEventListener('input', apply);
+        el.addEventListener('change', apply);
+    });
+
+    resetBtn.addEventListener('click', function() {
+        searchInput.value = '';
+        statusSelect.value = '';
+        rangeSelect.value = '';
+        sortSelect.value = 'date-desc';
+        activeChip = 'all';
+        chips.forEach(function(c) { c.classList.toggle('is-active', c.getAttribute('data-chip') === 'all'); });
+        apply();
+    });
+
+    chips.forEach(function(c) {
+        c.addEventListener('click', function() {
+            activeChip = c.getAttribute('data-chip');
+            chips.forEach(function(x) { x.classList.remove('is-active'); });
+            c.classList.add('is-active');
+            if (activeChip === 'all') statusSelect.value = '';
+            apply();
+        });
+    });
+
+    // Click en headers para ordenar
+    document.querySelectorAll('th[data-sort]').forEach(function(th) {
+        th.addEventListener('click', function() {
+            var key = th.getAttribute('data-sort');
+            var isAsc = th.classList.contains('sort-asc');
+            document.querySelectorAll('th[data-sort]').forEach(function(t) {
+                t.classList.remove('sort-asc', 'sort-desc');
+            });
+            if (key === 'title') {
+                sortSelect.value = isAsc ? 'title-desc' : 'title-asc';
+                th.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
+            } else if (key === 'date') {
+                sortSelect.value = isAsc ? 'date-desc' : 'date-asc';
+                th.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
+            } else if (key === 'status') {
+                rows.sort(function(a, b) {
+                    var sa = a.getAttribute('data-status');
+                    var sb = b.getAttribute('data-status');
+                    return isAsc ? sb.localeCompare(sa) : sa.localeCompare(sb);
+                });
+                rows.forEach(function(r) { body.appendChild(r); });
+                th.classList.add(isAsc ? 'sort-desc' : 'sort-asc');
+                return;
+            }
+            apply();
+        });
+    });
+})();
+</script>
+
+<script>
+(function(){
+    // Toggle sidebar (colapsa en desktop, off-canvas en mobile)
+    var toggle = document.querySelector('[data-sidebar-toggle]');
+    var shell = document.querySelector('.admin-shell');
+    if (toggle && shell) {
+        // Restaurar estado desde localStorage (solo desktop)
+        if (window.matchMedia('(min-width: 992px)').matches && localStorage.getItem('adminSidebarCollapsed') === '1') {
+            shell.classList.add('sidebar-collapsed');
+        }
+        toggle.addEventListener('click', function(){
+            var isMobile = window.matchMedia('(max-width: 991.98px)').matches;
+            if (isMobile) {
+                shell.classList.toggle('sidebar-open');
+            } else {
+                shell.classList.toggle('sidebar-collapsed');
+                localStorage.setItem('adminSidebarCollapsed', shell.classList.contains('sidebar-collapsed') ? '1' : '0');
+            }
+        });
+        // Cerrar mobile al click en backdrop
+        shell.addEventListener('click', function(ev){
+            if (!shell.classList.contains('sidebar-open')) return;
+            if (ev.target === shell) shell.classList.remove('sidebar-open');
+        });
+    }
+
+    // Toggle dropdown del usuario
+    var userBtn = document.querySelector('[data-user-toggle]');
+    var dropdown = document.querySelector('[data-user-dropdown]');
+    if (userBtn && dropdown) {
+        userBtn.addEventListener('click', function(ev){
+            ev.stopPropagation();
+            dropdown.classList.toggle('is-open');
+            userBtn.setAttribute('aria-expanded', dropdown.classList.contains('is-open') ? 'true' : 'false');
+        });
+        document.addEventListener('click', function(ev){
+            if (!dropdown.contains(ev.target) && !userBtn.contains(ev.target)) {
+                dropdown.classList.remove('is-open');
+                userBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+        document.addEventListener('keydown', function(ev){
+            if (ev.key === 'Escape') {
+                dropdown.classList.remove('is-open');
+                userBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+})();
+</script>
+
+
+</body></html>

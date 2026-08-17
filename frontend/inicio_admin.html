@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Inicio | Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/favicon-32.png?v=1" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon-180.png?v=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css">
+    <link rel="stylesheet" href="css/main.css?v=60">
+</head>
+<body class="admin-theme">
+
+    <header class="admin-topbar">
+        <div class="admin-topbar__left">
+            <button class="admin-topbar__toggle" type="button" data-sidebar-toggle="" aria-label="Menu" aria-controls="admin-sidebar" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="admin-topbar__title">
+                Panel Group TQC
+                <small>Admin</small>
+            </div>
+        </div>
+        <div class="admin-topbar__right">
+            <button class="admin-theme-toggle" type="button" title="Cambiar tema" aria-label="Cambiar tema"><i class="fas fa-sun"></i></button>
+            <button class="admin-topbar__user" type="button" data-user-toggle="" aria-haspopup="true" aria-expanded="false">
+                <span class="user-chip">
+                    <span class="user-chip__avatar">A</span>
+                    <span class="user-chip__name">Administrador Group TQC</span>
+                    <i class="fas fa-chevron-down user-chip__caret"></i>
+                </span>
+            </button>
+            <div class="user-dropdown" data-user-dropdown="">
+                <div class="user-dropdown__head">
+                    <strong>Administrador Group TQC</strong>
+                    <small>Administrador</small>
+                </div>
+                <a href="perfil_admin.html"><i class="fas fa-user-cog"></i> Mi perfil</a>
+                <a href="/admin/reports"><i class="fas fa-chart-line"></i> Reportes</a>
+                <a href="inicio.html" target="_blank"><i class="fas fa-external-link-alt"></i> Ver sitio</a>
+                <div class="user-dropdown__sep"></div>
+                <form method="post" action="/admin/logout" class="user-dropdown__logout-form">
+                    <input type="hidden" name="_csrf" value="__CSRF_TOKEN__">
+                    <button type="submit"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid admin-shell">
+        <div class="row">
+            <aside class="col-lg-3 col-xl-2 admin-sidebar" id="admin-sidebar">
+                <div class="admin-sidebar__brand bg-white p-2 rounded">
+                    <img class="brand-admin-logo" src="assets/LogoQuality.png" alt="Group Total Quality Control">
+                </div>
+                <p class="mt-3 mb-4 text-white-50"><i class="fas fa-user-circle"></i> &nbsp;Administrador Group TQC</p>
+                <nav class="admin-sidebar__nav" aria-label="Menu principal del panel">
+                    <a href="admin.html"><i class="fas fa-th-large"></i> Dashboard</a>
+                    <a href="inicio_admin.html" class="active"><i class="fas fa-home"></i> Inicio</a>
+                    <a href="nosotros_admin.html"><i class="fas fa-users"></i> Nosotros</a>
+                    <a href="servicios_admin.html"><i class="fas fa-cogs"></i> Servicios</a>
+                    <a href="proyectos_admin.html"><i class="fas fa-project-diagram"></i> Proyectos</a>
+                    <a href="investigacion_admin.html"><i class="fas fa-book"></i> Investigacion</a>
+                    <a href="cursos_admin.html"><i class="fas fa-graduation-cap"></i> Cursos</a>
+                    <a href="docentes_admin.html"><i class="fas fa-chalkboard-teacher"></i> Docentes</a>
+                    <div class="admin-sidebar__sep"></div>
+                    <a href="editor_admin.html"><i class="fas fa-paint-brush"></i> Editor de paginas</a>
+                    <a href="reportes_admin.html"><i class="fas fa-chart-line"></i> Reportes</a>
+                    <a href="perfil_admin.html"><i class="fas fa-user-cog"></i> Mi perfil</a>
+                    <a href="inicio.html" target="_blank"><i class="fas fa-external-link-alt"></i> Ver sitio</a>
+                </nav>
+                <form method="post" action="/admin/logout" class="mt-4">
+                    <input type="hidden" name="_csrf" value="__CSRF_TOKEN__">
+                    <button class="btn btn-outline-light btn-block" type="submit"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</button>
+                </form>
+            </aside>
+            <main class="col-lg-9 col-xl-10 admin-content">
+
+                <div class="admin-page-header">
+                    <div>
+                        <h1 class="h2 mb-1">Inicio</h1>
+                        <p class="text-muted mb-0">Elige que servicios se muestran en el carrusel principal de la pagina de inicio (maximo 4).</p>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="inicio-hero-table">
+                            <thead>
+                                <tr>
+                                    <th>Imagen</th>
+                                    <th>Titulo</th>
+                                    <th>Estado</th>
+                                    <th class="text-right">En portada</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inicio-hero-body"></tbody>
+                        </table>
+                    </div>
+                    <div id="inicio-hero-empty" style="display:none; padding: 20px; text-align:center; color: var(--admin-text-secondary);">
+                        No hay servicios registrados todavia. Crea uno en la seccion Servicios.
+                    </div>
+                </div>
+
+                <div class="admin-page-header" style="margin-top: 34px;">
+                    <div>
+                        <h1 class="h2 mb-1">Numeros</h1>
+                        <p class="text-muted mb-0">Cifras mostradas en la seccion "Trayectoria y respaldo" de inicio.</p>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="stat-table">
+                            <thead>
+                                <tr>
+                                    <th>Valor</th>
+                                    <th>Etiqueta</th>
+                                    <th class="text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stat-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-page-header" style="margin-top: 34px;">
+                    <div>
+                        <h1 class="h2 mb-1">Acreditaciones</h1>
+                        <p class="text-muted mb-0">Actualiza el certificado (PDF o imagen) de cada acreditacion mostrada en inicio.</p>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="cred-table">
+                            <thead>
+                                <tr>
+                                    <th>Titulo</th>
+                                    <th>Descripcion</th>
+                                    <th>Archivo</th>
+                                    <th class="text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cred-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-page-header" style="margin-top: 34px;">
+                    <div>
+                        <h1 class="h2 mb-1">Clientes</h1>
+                        <p class="text-muted mb-0">Logos que aparecen en la seccion "Clientes que confian en nosotros". <span id="cli-counter">0/25</span>.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="cli-add-btn"><i class="fas fa-plus"></i> &nbsp;Agregar cliente</button>
+                </div>
+
+                <div class="admin-card">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="cli-table">
+                            <thead>
+                                <tr>
+                                    <th>Logo</th>
+                                    <th>Nombre</th>
+                                    <th class="text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cli-body"></tbody>
+                        </table>
+                    </div>
+                    <div id="cli-empty" style="display:none; padding: 20px; text-align:center; color: var(--admin-text-secondary);">
+                        No hay clientes registrados todavia.
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <div class="pb-modal" id="statModal">
+        <div class="pb-modal__box">
+            <div class="pb-modal__head">
+                <h3 class="pb-modal__title">Editar numero</h3>
+                <button type="button" class="pb-modal__close" id="statModalClose">&times;</button>
+            </div>
+            <form id="statModalForm">
+                <div class="pb-form-field">
+                    <label>Valor *</label>
+                    <input type="text" id="statField_valor" required placeholder="Ej. 50, 100, 3+, ISO 9001:2015">
+                </div>
+                <div class="pb-form-field">
+                    <label>Etiqueta *</label>
+                    <input type="text" id="statField_etiqueta" required placeholder="Ej. Tipos de servicio">
+                </div>
+                <div style="display:flex; gap:10px; margin-top:20px;">
+                    <button type="button" class="pb-btn pb-btn--ghost" id="statModalCancel" style="flex:0 0 auto;"><i class="fas fa-times"></i> Cancelar</button>
+                    <button type="submit" class="pb-btn pb-btn--primary"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="pb-modal" id="credModal">
+        <div class="pb-modal__box">
+            <div class="pb-modal__head">
+                <h3 class="pb-modal__title">Editar acreditacion</h3>
+                <button type="button" class="pb-modal__close" id="credModalClose">&times;</button>
+            </div>
+            <form id="credModalForm">
+                <div class="pb-form-field">
+                    <label>Titulo *</label>
+                    <input type="text" id="credField_titulo" required>
+                </div>
+                <div class="pb-form-field">
+                    <label>Descripcion</label>
+                    <div class="pb-quill-editor" id="credField_descripcion_editor"></div>
+                    <textarea id="credField_descripcion" style="display:none;"></textarea>
+                </div>
+                <div class="pb-form-field">
+                    <label>Certificado (PDF o imagen)</label>
+                    <div class="pb-image-uploader">
+                        <a id="credField_archivoActual" href="#" target="_blank" rel="noopener" style="font-size:13px;">Sin archivo cargado</a>
+                        <input type="file" id="credField_archivoFile" accept="image/jpeg,image/png,image/gif,image/webp,application/pdf">
+                        <small class="pb-image-uploader__hint">JPG, PNG, GIF, WEBP o PDF. Maximo 10MB.</small>
+                        <div class="pb-image-uploader__error" id="credField_archivoError" style="display:none;"></div>
+                    </div>
+                    <input type="hidden" id="credField_archivo_url">
+                    <input type="hidden" id="credField_archivo_tipo">
+                </div>
+                <div style="display:flex; gap:10px; margin-top:20px;">
+                    <button type="button" class="pb-btn pb-btn--ghost" id="credModalCancel" style="flex:0 0 auto;"><i class="fas fa-times"></i> Cancelar</button>
+                    <button type="submit" class="pb-btn pb-btn--primary"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="pb-modal" id="cliModal">
+        <div class="pb-modal__box">
+            <div class="pb-modal__head">
+                <h3 class="pb-modal__title">Nuevo cliente</h3>
+                <button type="button" class="pb-modal__close" id="cliModalClose">&times;</button>
+            </div>
+            <form id="cliModalForm">
+                <div class="pb-form-field">
+                    <label>Nombre *</label>
+                    <input type="text" id="cliField_nombre" required>
+                </div>
+                <div class="pb-form-field">
+                    <label>Logo *</label>
+                    <div class="pb-image-uploader">
+                        <img id="cliField_logoPreview" class="pb-image-uploader__preview" src="https://placehold.co/170x54/f1f5f9/94a3b8?text=Logo" alt="Vista previa">
+                        <input type="file" id="cliField_logoFile" accept="image/jpeg,image/png,image/gif,image/webp">
+                        <small class="pb-image-uploader__hint">JPG, PNG, GIF o WEBP. Maximo 10MB.</small>
+                        <div class="pb-image-uploader__error" id="cliField_logoError" style="display:none;"></div>
+                    </div>
+                    <input type="hidden" id="cliField_logo_url">
+                </div>
+                <div style="display:flex; gap:10px; margin-top:20px;">
+                    <button type="button" class="pb-btn pb-btn--ghost" id="cliModalCancel" style="flex:0 0 auto;"><i class="fas fa-times"></i> Cancelar</button>
+                    <button type="submit" class="pb-btn pb-btn--primary"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api-base.js"></script>
+    <script src="js/auth.js?v=4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+    <script src="js/dashboard.js?v=13"></script>
+    <script src="js/quill-fields.js?v=4"></script>
+    <script src="js/inicio-admin.js?v=5"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+Options -Indexes
+RewriteEngine On
+
+RedirectMatch 403 \.env$
+RedirectMatch 403 ^/\.git(/|$)
+RedirectMatch 403 \.json$
+RedirectMatch 403 \.sql$
+RedirectMatch 403 \.login_attempts_
+RedirectMatch 403 ^/config/
+RedirectMatch 403 ^/\.well-known/admin
+
+RewriteRule ^login$ api/login.php [L,QSA]
+RewriteRule ^api/servicios$ api/servicios.php [L,QSA]
+RewriteRule ^api/proyectos$ api/proyectos.php [L,QSA]
+RewriteRule ^api/investigacion$ api/investigacion.php [L,QSA]
+RewriteRule ^api/cursos$ api/cursos.php [L,QSA]
+RewriteRule ^api/docentes$ api/docentes.php [L,QSA]
+RewriteRule ^api/acreditaciones$ api/acreditaciones.php [L,QSA]
+RewriteRule ^api/clientes$ api/clientes.php [L,QSA]
+RewriteRule ^api/estadisticas$ api/estadisticas.php [L,QSA]
+RewriteRule ^api/nosotros_bloques$ api/nosotros_bloques.php [L,QSA]
+RewriteRule ^api/nosotros_valores$ api/nosotros_valores.php [L,QSA]
+RewriteRule ^api/nosotros_staff$ api/nosotros_staff.php [L,QSA]
+RewriteRule ^api/nosotros_trayectoria$ api/nosotros_trayectoria.php [L,QSA]
+RewriteRule ^api/contenido$ api/contenido.php [L,QSA]
+
+RewriteRule ^servicios/[a-z0-9-]+/?$ detalle.html [L]
+RewriteRule ^proyectos/[a-z0-9-]+/?$ detalle.html [L]
+RewriteRule ^investigacion/[a-z0-9-]+/?$ detalle.html [L]
+RewriteRule ^cursos/[a-z0-9-]+/?$ detalle.html [L]
+RewriteRule ^docentes/[a-z0-9-]+/?$ docentes.html [L]

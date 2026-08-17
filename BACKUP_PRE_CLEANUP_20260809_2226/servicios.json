@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1776495460,
+    "titulo": "DEMO curl",
+    "slug": "demo-curl-x",
+    "resumen": "demo",
+    "imagen": "https://placehold.co/640x480/e9edf5/e9edf5",
+    "estado": "draft",
+    "fecha": "18/04/2026",
+    "timestamp": 1776495460
+  },
+  {
+    "id": 1776495039,
+    "titulo": "Exploracion Geofisica, Mecanica de Rocas y Ensayos Quimicos",
+    "slug": "geofisica-mecanica-de-rocas-y-ensayos-quimicos",
+    "resumen": "Servicios especializados para caracterizacion del subsuelo, comportamiento de macizos y composicion",
+    "imagen": "https://placehold.co/640x480/e9edf5/e9edf5",
+    "estado": "published",
+    "fecha": "18/04/2026",
+    "timestamp": 1776495039
+  },
+  {
+    "id": 1776495039,
+    "titulo": "Evaluacion y Calidad en Sistemas de Albanileria",
+    "slug": "evaluacion-en-sistemas-de-albanileria",
+    "resumen": "Ensayos para unidades, pilas y muretes que respaldan diagnostico estructural, control de calidad y c",
+    "imagen": "https://placehold.co/640x480/e9edf5/e9edf5",
+    "estado": "published",
+    "fecha": "18/04/2026",
+    "timestamp": 1776495039
+  },
+  {
+    "id": 1776495039,
+    "titulo": "Pavimentos Flexibles y Mezclas Asfalticas",
+    "slug": "pavimentos-flexibles-y-mezclas-asfalticas",
+    "resumen": "Control integral de mezclas, briquetas y comportamiento superficial para obras viales y mantenimient",
+    "imagen": "https://placehold.co/640x480/e9edf5/e9edf5",
+    "estado": "published",
+    "fecha": "18/04/2026",
+    "timestamp": 1776495039
+  },
+  {
+    "id": 1776495039,
+    "titulo": "Evaluacion de Concreto Endurecido",
+    "slug": "evaluacion-de-concreto-endurecido",
+    "resumen": "Ensayos para verificar resistencia, durabilidad, integridad y comportamiento mecanico de elementos e",
+    "imagen": "https://placehold.co/640x480/e9edf5/e9edf5",
+    "estado": "published",
+    "fecha": "18/04/2026",
+    "timestamp": 1776495039
+  },
+  {
+    "id": 1776495039,
+    "titulo": "Control de Calidad de Concreto Fresco",
+    "slug": "control-de-calidad-de-concreto-fresco",
+    "resumen": "Monitoreo de variables criticas para asegurar la conformidad del concreto antes de su colocacion y l",
+    "imagen": "https://placehold.co/640x480/e9edf5/e9edf5",
+    "estado": "published",
+    "fecha": "18/04/2026",
+    "timestamp": 1776495039
+  },
+  {
+    "id": 1776495039,
+    "titulo": "Mecanica de Suelos y Geotecnia",
+    "slug": "mecanica-de-suelos-y-geotecnia",
+    "resumen": "Informacion precisa del comportamiento del terreno para cimentaciones seguras, movimiento de tierras",
+    "imagen": "https://placehold.co/640x480/e9edf5/e9edf5",
+    "estado": "published",
+    "fecha": "18/04/2026",
+    "timestamp": 1776495039
+  },
+  {
+    "id": 1776495000,
+    "titulo": "Asesoria, Consultoria e Investigacion (QUALITY)",
+    "slug": "asesoria-consultoria-e-investigacion",
+    "resumen": "Consultoria y blindaje tecnico-legal con mas de 30 anos de trayectoria. Diagnostico estructural, per",
+    "imagen": "https://placehold.co/640x480/e9edf5/e9edf5",
+    "estado": "published",
+    "fecha": "18/04/2026",
+    "timestamp": 1776495000
+  },
+  {
+    "id": 1785170809320,
+    "titulo": "prueba",
+    "slug": "prueba",
+    "resumen": "resumennnnnnnnnnnnnnnnn",
+    "imagen": "https://placehold.co/640x480/e9edf5/e9edf5",
+    "estado": "published",
+    "fecha": "27/07/2026",
+    "timestamp": 1785170809320
+  }
+]

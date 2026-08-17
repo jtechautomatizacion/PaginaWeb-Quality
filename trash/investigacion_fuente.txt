@@ -1,0 +1,1881 @@
+<html lang="es"><head>
+    <meta charset="utf-8">
+    <title>Investigacion | Group Total Quality Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Resultados confiables en ensayos de alta calidad tecnica, de manera responsable e imparcial.">
+    <link rel="icon" href="/assets/company/favicon.png" type="image/png" sizes="any">
+    <link rel="shortcut icon" href="/assets/company/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/assets/company/favicon.png">
+    <meta name="theme-color" content="#0f2b5b">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&amp;display=swap">
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/linericon/style.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/assets/vendors/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css?v=3">
+    <link rel="stylesheet" href="/assets/css/style-bs.css?v=18">
+    <link rel="stylesheet" href="/assets/css/style-bscorp.css?v=6">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <style>
+        /* ================================================================
+           PALETA QUALITY EXPRESS - SOLO 4 COLORES del logo + blanco
+           1. AZUL  #45629C  (texto y simbolo del logo)
+           2. NARANJA #EF9E4D (acento simbolo)
+           3. NEGRO #1D1D1B  (texto secundario)
+           4. BLANCO #FFFFFF  (fondos / texto sobre azul)
+           ================================================================ */
+        :root {
+            --gtqc-blue:        #45629C;
+            --gtqc-blue-dark:   #2C4677;  /* derivado para hover */
+            --gtqc-blue-deep:   #1D2B47;  /* navy mas oscuro para fondos */
+            --gtqc-orange:      #EF9E4D;
+            --gtqc-orange-dark: #D7842F;
+            --gtqc-text:        #1D1D1B;
+            --gtqc-white:       #FFFFFF;
+            --gtqc-gray:        #F7F7F7;  /* off-white para alternar secciones */
+        }
+        /* Overrides agresivos para colores hardcoded del sitio antiguo */
+        body, .navbar, .header_area, .footer-area-color, .hm-section, .svc-section {
+            --hm-color-primary: var(--gtqc-blue);
+            --hm-color-accent: var(--gtqc-orange);
+        }
+        /* Texto navy: usar el azul nuevo */
+        .h2_title, h1, h2, h3, h4, h5,
+        .menu_nav .nav-link:hover,
+        .menu_nav .nav-item.active .nav-link,
+        .hm-section__title, .svc-section__title,
+        .pi-name, .pb-card__title, .sr-card__title,
+        .sr-group__title, .docente-modal__name,
+        .footer_title, .single-footer-widget h6,
+        .course-card__title a, .ccd-name {
+            color: var(--gtqc-blue) !important;
+        }
+        /* Eyebrows / acentos azules */
+        .hm-section__eyebrow, .svc-section__eyebrow, .pi-eyebrow,
+        .sr-card__chip, .docente-modal__role { color: var(--gtqc-blue-light) !important; }
+        /* Backgrounds oscuros del sitio (header, footer, CTAs) */
+        .header-top, .footer-area-color, .hm-cta-final,
+        .pb-cta-button, .svc-cta, .course-cta--call,
+        .sr-page header.page-hero {
+            background: var(--gtqc-blue-deep) !important;
+        }
+        /* Botones primarios - NARANJA dominante con texto OSCURO para alto contraste */
+        .btn-primary-navy, .pb-btn--primary,
+        .svc-btn--primary, .hm-btn--red, .hm-btn--blue,
+        .course-card__btn--detail,
+        .pi-cta-button,
+        .btn-brochure-serv,
+        .courses-banner__btn,
+        .pi-cta-button,
+        .svc-form-btn,
+        .filter-btn-clear,
+        .courses-filter__btn,
+        button[type="submit"]:not(.wa-picker__close):not(.docente-modal__close):not(.gjs-btn-prim) {
+            background: var(--gtqc-orange) !important;
+            color: var(--gtqc-blue-deep) !important;  /* navy oscuro sobre naranja: contraste 7+ */
+            font-weight: 800 !important;
+            border-color: var(--gtqc-orange) !important;
+            box-shadow: 0 6px 16px rgba(239,158,77,0.35);
+        }
+        .btn-primary-navy:hover, .pb-btn--primary:hover,
+        .svc-btn--primary:hover, .hm-btn--red:hover, .hm-btn--blue:hover,
+        .course-card__btn--detail:hover, .pi-cta-button:hover,
+        .btn-brochure-serv:hover, .courses-banner__btn:hover,
+        .svc-form-btn:hover,
+        button[type="submit"]:not(.wa-picker__close):not(.docente-modal__close):hover {
+            background: var(--gtqc-orange-dark) !important;
+            color: var(--gtqc-blue-deep) !important;
+            box-shadow: 0 10px 22px rgba(239,158,77,0.5);
+        }
+        /* Botones SECUNDARIOS - tabs/linkedin = navy */
+        .pi-tab-btn.is-active,
+        .docente-card__linkedin {
+            background: var(--gtqc-blue) !important;
+            color: #fff !important;
+        }
+        /* Aula Virtual = naranja con texto BLANCO */
+        .btn-aulavirtual {
+            background: var(--gtqc-orange) !important;
+            color: var(--gtqc-white) !important;
+            box-shadow: 0 8px 18px rgba(239,158,77,0.40);
+        }
+        .btn-aulavirtual:hover {
+            background: var(--gtqc-orange-dark, #D7842F) !important;
+            color: var(--gtqc-white) !important;
+        }
+        /* Color naranja en CTAs */
+        .btn-aulavirtual-phone {
+            background: var(--gtqc-orange) !important;
+            box-shadow: 0 8px 22px rgba(239,158,77,0.45);
+            color: #fff !important;
+        }
+        /* Underline activo */
+        .menu_nav .nav-item.active .nav-link::after,
+        .menu_nav .nav-link::after {
+            background: var(--gtqc-orange) !important;
+        }
+        /* Dropdown submenu hover */
+        .menu_nav .submenu a:hover {
+            background: rgba(69,98,156,0.08) !important;
+            color: var(--gtqc-blue) !important;
+            border-left-color: var(--gtqc-orange) !important;
+        }
+        /* WhatsApp + sus tonos verdes los preservamos */
+        /* (Aula Virtual ahora es naranja, definido arriba) */
+        /* Headline carataula del home */
+        .hm-headline {
+            background: var(--gtqc-blue-deep) !important;
+        }
+        /* Card de servicios - ver mas detalles */
+        .div-box-slide-md a[style*="border-bottom"] {
+            color: var(--gtqc-blue) !important;
+            border-bottom-color: var(--gtqc-blue) !important;
+        }
+        /* Inputs / forms focus */
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--gtqc-blue) !important;
+            outline-color: var(--gtqc-blue) !important;
+        }
+
+        /* ============================================
+           CONTRASTE FORZADO en secciones oscuras
+           Si el fondo es navy/azul → texto blanco
+           ============================================ */
+        .hm-cta-final, .hm-cta-final * { color: var(--gtqc-white) !important; }
+        .hm-cta-final h2, .hm-cta-final h3 { color: var(--gtqc-white) !important; }
+        /* Pero los botones naranja/dark dentro de cta-final mantienen su navy text */
+        .hm-cta-final .hm-btn,
+        .hm-cta-final .hm-btn--red,
+        .hm-cta-final .hm-btn--dark,
+        .hm-cta-final .hm-btn--accent,
+        .hm-cta-final a.hm-btn { color: var(--gtqc-blue-deep) !important; }
+        .hm-cta-final p { color: rgba(255,255,255,0.92) !important; }
+        /* Botones dentro del CTA dark: naranja con texto NAVY OSCURO (R=8+) */
+        .hm-cta-final .hm-btn,
+        .hm-cta-final a[class*="btn"] {
+            background: var(--gtqc-orange) !important;
+            color: var(--gtqc-blue-deep) !important;
+            border-color: var(--gtqc-orange) !important;
+            box-shadow: 0 8px 18px rgba(239,158,77,0.4);
+            font-weight: 800 !important;
+        }
+        .hm-cta-final .hm-btn:hover,
+        .hm-cta-final a[class*="btn"]:hover {
+            background: var(--gtqc-orange-dark) !important;
+            color: var(--gtqc-blue-deep) !important;
+        }
+        /* Boton "CURSOS" oscuro dentro del CTA → blanco con texto navy */
+        .hm-cta-final .hm-btn--dark {
+            background: var(--gtqc-white) !important;
+            color: var(--gtqc-blue) !important;
+            border-color: var(--gtqc-white) !important;
+        }
+        .hm-cta-final .hm-btn--dark:hover {
+            background: var(--gtqc-gray) !important;
+            color: var(--gtqc-blue-dark) !important;
+        }
+
+        /* Footer area - todo BLANCO con !important fuerte */
+        .footer-area-color,
+        .footer-area-color *,
+        .footer-area-color h1, .footer-area-color h2, .footer-area-color h3,
+        .footer-area-color h4, .footer-area-color h5, .footer-area-color h6,
+        .footer-area-color p, .footer-area-color span, .footer-area-color li,
+        .footer-area-color strong, .footer-area-color .footer_title,
+        .footer-area-color .single-footer-widget h6,
+        .footer-area-color .list_style li a,
+        .footer-area-color a, .footer-area-color a span {
+            color: var(--gtqc-white) !important;
+            text-shadow: none;
+        }
+        .footer-area-color a:hover, .footer-area-color a:hover span { color: var(--gtqc-orange) !important; }
+        /* Headers del footer destacados con tipografia mas marcada */
+        .footer-area-color .footer_title,
+        .footer-area-color .single-footer-widget h6 {
+            font-weight: 800 !important;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 14px;
+            margin-bottom: 14px;
+            color: var(--gtqc-white) !important;
+            border-bottom: 2px solid rgba(255,255,255,0.15);
+            padding-bottom: 8px;
+        }
+        .footer-area-color .btn-request {
+            background: var(--gtqc-white) !important;
+            color: var(--gtqc-blue) !important;
+        }
+        .footer-area-color .btn-virtual {
+            background: var(--gtqc-orange) !important;
+            color: var(--gtqc-white) !important;
+        }
+
+        /* Hero del slider del home: textos blancos sobre imagen */
+        .hm-hero__title, .hm-hero__summary, .hm-hero__eyebrow {
+            color: var(--gtqc-white) !important;
+        }
+        /* Boton VER DETALLES en hero del home → naranja */
+        .hm-hero__ctas .hm-btn--red {
+            background: var(--gtqc-orange) !important;
+            color: var(--gtqc-white) !important;
+            border-color: var(--gtqc-orange) !important;
+        }
+        .hm-hero__ctas .hm-btn--red:hover {
+            background: var(--gtqc-orange-dark) !important;
+        }
+        /* COTIZA AQUI outline → blanco con borde blanco */
+        .hm-hero__ctas .hm-btn--outline {
+            background: transparent !important;
+            color: var(--gtqc-white) !important;
+            border: 2px solid var(--gtqc-white) !important;
+        }
+        .hm-hero__ctas .hm-btn--outline:hover {
+            background: var(--gtqc-white) !important;
+            color: var(--gtqc-blue) !important;
+        }
+
+        /* Service detail hero (svc-hero) tambien fondo navy → texto blanco */
+        .svc-hero, .svc-hero * { color: var(--gtqc-white) !important; }
+        .svc-hero__eyebrow { color: var(--gtqc-orange) !important; }
+        .svc-hero__breadcrumbs a { color: rgba(255,255,255,0.85) !important; }
+
+        /* Hero generico (otras paginas) cualquier h1/h2/p sobre fondo navy */
+        .content-hero, .content-hero *, .content-hero h1, .content-hero p {
+            color: var(--gtqc-white) !important;
+        }
+        .content-hero h1 { font-weight: 900 !important; }
+
+        /* Si una seccion h2 cae sobre body navy, forzar a blanco */
+        section[style*="background"][style*="0f2b5b"] h2,
+        section[style*="background"][style*="1D2B47"] h2,
+        .hm-section--alt h2.h2_title { color: var(--gtqc-blue) !important; }
+
+        /* Links genericos visibles: emails / telefonos en areas oscuras */
+        .footer-area-color .header-contact-info * { color: var(--gtqc-white) !important; }
+        .footer-area-color .header-top-info * { color: var(--gtqc-white) !important; }
+        .footer-area-color [style*="color"] { color: var(--gtqc-white) !important; }
+
+        /* Aula virtual link en cursos banner: el banner tiene fondo BLANCO,
+           texto debe ser navy para contraste */
+        .courses-banner, .courses-banner * { color: var(--gtqc-blue) !important; }
+        .courses-banner strong { color: var(--gtqc-blue-deep) !important; }
+        .courses-banner__btn { background: var(--gtqc-orange) !important; color: var(--gtqc-blue-deep) !important; }
+
+        /* btn-white-head del header-top: fondo blanco con texto navy */
+        .header-top .btn-white-head, .btn-white-head {
+            color: var(--gtqc-blue) !important;
+            background: var(--gtqc-white) !important;
+            font-weight: 700 !important;
+        }
+        .btn-white-head:hover { background: var(--gtqc-orange) !important; color: var(--gtqc-blue-deep) !important; }
+
+        /* Aula virtual sidebar btn (.courses-aula-btn) sobre fondo navy: texto blanco */
+        .courses-aula-btn { color: var(--gtqc-white) !important; background: var(--gtqc-orange) !important; font-weight: 800 !important; }
+        .courses-aula-btn:hover { color: var(--gtqc-blue-deep) !important; }
+
+        /* === FIX FUERTE: footer/CTA → todos los hijos color blanco override === */
+        .footer-area-color li,
+        .footer-area-color li a,
+        .footer-area-color li span,
+        .footer-area-color .header-contact-info li,
+        .footer-area-color .header-contact-info li a,
+        .footer-area-color .header-top-info li,
+        .footer-area-color .header-top-info li a {
+            color: var(--gtqc-white) !important;
+        }
+        .footer-area-color a[style], .footer-area-color span[style] { color: var(--gtqc-white) !important; }
+
+        /* (eliminada la regla erronea ".fond-img-bsc * { white }" — fond-img-bsc tiene FONDO BLANCO, ver mas abajo) */
+
+        /* "Aula virtual" o cualquier link en .courses-banner */
+        .courses-banner, .courses-banner * { color: var(--gtqc-white) !important; }
+        .courses-banner__btn { background: var(--gtqc-orange) !important; color: var(--gtqc-blue-deep) !important; }
+
+        /* Email links del footer/contacto azul Bootstrap default → blanco */
+        .footer-area-color a[href^="mailto:"],
+        .footer-area-color a[href^="tel:"],
+        .header-top a[href^="mailto:"],
+        .header-top a[href^="tel:"] {
+            color: var(--gtqc-white) !important;
+            text-decoration: none;
+        }
+        .footer-area-color a[href^="mailto:"]:hover { color: var(--gtqc-orange) !important; }
+
+        /* === Header TOP (la barra navy con email+telefono arriba del header) === */
+        .header-top, .header-top *,
+        .header-top .p-span,
+        .header-top .header-contact-info,
+        .header-top .header-contact-info *,
+        .header-top .header-top-info * {
+            color: var(--gtqc-white) !important;
+        }
+        .header-top a:hover { color: var(--gtqc-orange) !important; }
+
+        /* /cotizacion: links de email azul Bootstrap → blanco */
+        a[href^="mailto:"][style*="color"] { color: inherit !important; }
+        section a[href^="mailto:"], section a[href^="tel:"] { color: var(--gtqc-blue) !important; font-weight: 700; }
+        section a[href^="mailto:"]:hover { color: var(--gtqc-orange) !important; }
+        /* Pero si esta en area oscura → blanco */
+        [style*="background"][style*="navy"] a[href^="mailto:"],
+        [style*="background"][style*="0f2b5b"] a[href^="mailto:"],
+        [style*="background"][style*="1D2B47"] a[href^="mailto:"] {
+            color: var(--gtqc-white) !important;
+        }
+
+        /* .fond-img-bsc tiene FONDO BLANCO con textura hexagonal: texto NAVY (no blanco)
+           Especificidad reforzada para ganar a cualquier regla heredada del tema base */
+        section.fond-img-bsc h2, section.fond-img-bsc .h2_title,
+        section.fond-img-bsc h2.h2_title, section.fond-img-bsc h2.h2_title.text-center,
+        section.fond-img-bsc h3, section.fond-img-bsc h4,
+        section.fond-img-bsc h3.h3_title, section.fond-img-bsc h4.h4_title {
+            color: var(--gtqc-blue) !important;
+            font-weight: 800 !important;
+            text-shadow: none !important;
+        }
+        section.fond-img-bsc h2.h2_title { font-size: 28px !important; line-height: 1.25; margin-bottom: 14px; }
+        section.fond-img-bsc p, section.fond-img-bsc li, section.fond-img-bsc strong,
+        section.fond-img-bsc span:not([style*="color"]) {
+            color: var(--gtqc-text) !important;
+        }
+        /* Numeros/iconos de la trayectoria DENTRO de fond-img-bsc tambien navy oscuro */
+        section.fond-img-bsc .tray-ubic h2,
+        section.fond-img-bsc .tray-ubic span { color: var(--gtqc-blue-deep) !important; }
+
+        /* Secciones con bg gris/oscuro EXPLICITO en estilo inline (#2E2E2E) → texto blanco */
+        section[style*="2E2E2E"] h2,
+        section[style*="2E2E2E"] h2.h2_title_wt,
+        section[style*="2E2E2E"] * {
+            color: var(--gtqc-white) !important;
+        }
+
+        /* Eyebrow/role en cards docente: D7842F naranja-oscuro sobre blanco da R=2.9 (insuficiente).
+           Forzamos a NAVY (R=5.5+) y reservamos el naranja para destacar bordes/iconos */
+        .docentes-section__eyebrow,
+        .hm-section__eyebrow:not([style*="color"]) {
+            color: var(--gtqc-blue) !important;
+            font-weight: 800 !important;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .docente-card__role {
+            color: var(--gtqc-blue) !important;
+            font-weight: 800 !important;
+            font-size: 13px !important;
+        }
+
+        /* === HOME: "Nuestros Servicios" (h2 dentro .hm-services__aside con bg navy) === */
+        .hm-services__aside, .hm-services__aside * { color: var(--gtqc-white) !important; }
+        .hm-services__aside h2, .hm-services__aside h3 { color: var(--gtqc-white) !important; font-weight: 800 !important; }
+
+        /* === HOME: section "Trayectoria y respaldo" (.hm-section--dark con bg #2E2E2E) === */
+        .hm-section--dark, .hm-section--dark * { color: var(--gtqc-white) !important; }
+        .hm-section--dark h2, .hm-section--dark .hm-section__title, .hm-section--dark h3 {
+            color: var(--gtqc-white) !important;
+            font-weight: 800 !important;
+        }
+        .hm-section--dark .hm-section__eyebrow, .hm-section--dark a:not(.btn) {
+            color: var(--gtqc-orange) !important;
+        }
+
+        /* === SVC contact card (bg navy #0F2B5B) — TODO el contenido en blanco === */
+        .svc-contact-card, .svc-contact-card * { color: var(--gtqc-white) !important; }
+        .svc-contact-card h2, .svc-contact-card h3, .svc-contact-card h4 {
+            color: var(--gtqc-white) !important;
+            font-weight: 800 !important;
+        }
+        .svc-contact-card a[href^="mailto:"], .svc-contact-card a[href^="tel:"] {
+            color: var(--gtqc-white) !important;
+            text-decoration: underline;
+        }
+        .svc-contact-card a[href^="mailto:"]:hover, .svc-contact-card a[href^="tel:"]:hover {
+            color: var(--gtqc-orange) !important;
+        }
+
+        /* === Botones naranja con texto blanco (R=2.17): forzamos NAVY oscuro sobre naranja ===
+           Cubre TODOS los a/button/.btn con bg naranja inline o por clase */
+        a[style*="background:#EF9E4D"], a[style*="background: #EF9E4D"],
+        a[style*="background-color:#EF9E4D"], a[style*="background-color: #EF9E4D"],
+        button[style*="background:#EF9E4D"], button[style*="background: #EF9E4D"],
+        .btn[style*="EF9E4D"], .btn-orange, .read-more-btn,
+        a.read-more-btn, a.btn-warning, .btn-warning,
+        .hm-btn, .hm-btn--accent, .hm-btn--orange, .hm-btn--red, .hm-btn--dark,
+        .hm-services__btn, .courses-aula-btn, .docentes-section__btn,
+        .btn-aulavirtual-phone,
+        .svc-btn--brochure, .svc-btn--svcs,
+        a.btn[href*="cotizacion"]:not([class*="white"]),
+        section[class*="cta"] a.btn:not([class*="white"]) {
+            color: var(--gtqc-blue-deep) !important;
+            font-weight: 800 !important;
+            text-shadow: none !important;
+        }
+        .hm-btn:hover, .hm-btn--red:hover, .hm-btn--dark:hover,
+        .btn-aulavirtual-phone:hover { color: var(--gtqc-blue-deep) !important; }
+
+        /* === WhatsApp: el verde #25D366 con texto blanco da R=1.98. Cambiamos a verde MUY oscuro #075E54 (R=11+) === */
+        #whatsapp a, .floating-whatsapp, .whatsapp-float,
+        a[href*="api.whatsapp.com"], a[href*="wa.me"],
+        a.btn[href*="whatsapp"], a.btn[href*="wa.me"],
+        a[style*="background:#25D366"], a[style*="background: #25D366"],
+        .btn[style*="25D366"],
+        .svc-btn--wa, a.svc-btn--wa, .svc-btn.svc-btn--wa {
+            background: #075E54 !important;
+            color: var(--gtqc-white) !important;
+            font-weight: 700 !important;
+        }
+        #whatsapp a:hover, a[href*="api.whatsapp.com"]:hover, a[href*="wa.me"]:hover,
+        .svc-btn--wa:hover {
+            background: #054640 !important;
+            color: var(--gtqc-white) !important;
+        }
+        /* children del WhatsApp link tambien blancos (span/strong/i) */
+        #whatsapp a *, a[href*="api.whatsapp.com"] *, a[href*="wa.me"] *,
+        .svc-btn--wa * { color: var(--gtqc-white) !important; }
+
+        /* === /cotizacion: bloque .caja-info con bg navy contiene emails azul Bootstrap === */
+        .caja-info, .caja-info * { color: var(--gtqc-white) !important; }
+        .caja-info a[href^="mailto:"], .caja-info a[href^="tel:"] {
+            color: var(--gtqc-white) !important;
+            text-decoration: underline;
+        }
+        .caja-info a[href^="mailto:"]:hover, .caja-info a[href^="tel:"]:hover {
+            color: var(--gtqc-orange) !important;
+        }
+
+        /* === svc-cta CTA final con bg navy oscuro #1D2B47 === */
+        .svc-cta, .svc-cta * { color: var(--gtqc-white) !important; }
+        .svc-cta h2, .svc-cta h3 { color: var(--gtqc-white) !important; font-weight: 800 !important; }
+        .svc-cta .svc-btn--brochure, .svc-cta .svc-btn--svcs {
+            color: var(--gtqc-blue-deep) !important;
+        }
+
+        /* Si estamos en hero con fondo image y se ve "blanco sobre blanco" en el script,
+           es porque el bg del padre es image. Aplicamos sombra para garantizar visibilidad */
+        .svc-hero h1, .svc-hero p, .svc-hero a, .svc-hero span,
+        .hm-hero__title, .hm-hero__summary {
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5) !important;
+        }
+
+        /* Boton COTIZA en hero */
+        .hm-hero__ctas .hm-btn--red { color: var(--gtqc-blue-deep) !important; font-weight: 800 !important; }
+        .hm-hero__ctas .hm-btn--red:hover { color: var(--gtqc-blue-deep) !important; }
+
+        /* === Badge azul de cards de curso (.course-card__badge) — texto BLANCO === */
+        .course-card__badge, .course-card__badge * {
+            color: var(--gtqc-white) !important;
+            background: #0d4cff !important;
+            font-weight: 800 !important;
+        }
+
+        /* === ICONOS dentro de .btn-white-head: el icono es blanco sobre fondo blanco → invisible. Forzar a navy. === */
+        .btn-white-head, a.btn-white-head { color: var(--gtqc-blue) !important; font-weight: 800 !important; }
+        .btn-white-head i, .btn-white-head .fas, .btn-white-head .far, .btn-white-head .fab,
+        .btn-white-head svg, .btn-white-head svg * {
+            color: var(--gtqc-blue) !important;
+            fill: var(--gtqc-blue) !important;
+        }
+        .btn-white-head:hover { background: var(--gtqc-orange) !important; color: var(--gtqc-blue-deep) !important; }
+        .btn-white-head:hover i, .btn-white-head:hover .fas { color: var(--gtqc-blue-deep) !important; }
+
+        /* === MENU NAV: cabe sin pisar el logo, texto un poco mas grande === */
+        .menu_nav { gap: 2px !important; flex-wrap: nowrap !important; justify-content: flex-end !important; }
+        .menu_nav .nav-link,
+        .header_area .menu_nav .nav-link {
+            font-size: 14px !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.02em !important;
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+        }
+        .menu_nav .item-btn-aulavirtual { margin-left: 6px !important; margin-right: 6px !important; }
+        .menu_nav .item-btn-aulavirtual .btn-aulavirtual {
+            font-size: 14px !important;
+            font-weight: 800 !important;
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+        }
+        /* Logo compacto */
+        .header_area .navbar .logo_h, .header_area .navbar-brand.logo_h {
+            flex: 0 0 165px !important;
+            max-width: 165px !important;
+            padding-right: 10px !important;
+        }
+        .header_area .navbar .logo_h img { max-height: 56px !important; width: auto !important; }
+        /* Forzar el container del header a ancho completo para que entren los 8 items */
+        .header_area .container,
+        .header_area .navbar .container,
+        .header_area > .container {
+            max-width: 100% !important;
+            width: 100% !important;
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+        }
+
+        /* === TITULOS de cards de servicios mas grandes === */
+        .div-box-slide-md h4, .div-box-slide-md h3, .div-box-slide-md .h4_title,
+        .service-card h3, .service-card h4, .service-card .h4_title,
+        .servicio-card h3, .servicio-card h4,
+        .div-box-slide-md a[href*="/servicios/"]:not([class*="btn"]) {
+            font-size: 20px !important;
+            font-weight: 800 !important;
+            line-height: 1.3 !important;
+            letter-spacing: 0.02em !important;
+        }
+        .div-box-slide-md p, .service-card p, .servicio-card p {
+            font-size: 15px !important;
+            line-height: 1.55 !important;
+        }
+        /* Link "Ver mas detalles" en cards: del 12px tiny a tamaño legible */
+        .div-box-slide-md a[href]:not([class*="btn"]),
+        .service-card a:not([class*="btn"]),
+        a.read-more-link, .read-more-link {
+            font-size: 14px !important;
+            font-weight: 800 !important;
+        }
+
+        /* Headline carataula del home: navy MUY oscuro para max contraste con texto blanco */
+        .hm-headline {
+            background: var(--gtqc-blue-deep) !important;
+        }
+        .hm-headline, .hm-headline * { color: var(--gtqc-white) !important; text-shadow: 0 2px 6px rgba(0,0,0,0.3); }
+        .hm-headline span[style*="color"], .hm-headline .hm-headline__badge {
+            color: var(--gtqc-orange) !important;
+            background: rgba(239,158,77,0.15) !important;
+            border: 1px solid rgba(239,158,77,0.45) !important;
+        }
+
+        /* Banner amarillo "GROUP TOTAL QUALITY CONTROL" en banner navy:
+           dejar amarillo para que destaque (es el "marca paraguas") */
+
+        html, body { overflow-x: hidden; }
+        img { max-width: 100%; height: auto; }
+        @media (min-width: 1400px) {
+            .header-top .container,
+            .header_area .container,
+            .breadcrumb_area .container,
+            .request-info .container,
+            .footer-area-color .container,
+            .footer-bt .container,
+            section .container,
+            .content-shell .container {
+                max-width: 1400px;
+            }
+        }
+        .content-shell { padding: 50px 0 70px; }
+        .header-top { height: auto; min-height: 55px; }
+        .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 24px; }
+        .content-card { background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 16px 45px rgba(17,24,39,.08); border: 1px solid rgba(30,76,159,.09); height: 100%; }
+        .content-card__image { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #efe8df; }
+        .content-card__body { padding: 22px; }
+        .content-chip { display: inline-flex; align-items: center; gap: 8px; background: rgba(30,76,159,.08); color: #0f2b5b; border-radius: 999px; padding: 7px 12px; font-size: 12px; margin: 0 8px 10px 0; }
+        .content-meta { color: #6b7280; font-size: 13px; margin-bottom: 10px; }
+        .content-meta strong { color: #202124; }
+        .content-page-title { font-size: 42px; line-height: 1.1; margin-bottom: 14px; }
+        .content-intro { max-width: 780px; margin: 0 auto; color: #48525f; }
+        .content-hero .content-intro { color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,.55); font-weight: 500; }
+        .content-hero { background: rgba(29,43,71,0.7) url('/assets/company/hero-campo.jpeg') center/cover; background-blend-mode: multiply; color: #fff; padding: 130px 0 110px; min-height: 380px; display: flex; align-items: center; }
+        .content-hero .breadcrumb { justify-content: center; background: transparent; margin-bottom: 0; }
+        .content-hero .breadcrumb a { color: rgba(255,255,255,.84); }
+        .content-detail-card { background: #fff; border-radius: 22px; padding: 34px; box-shadow: 0 18px 48px rgba(17,24,39,.09); border: 1px solid rgba(17,24,39,.05); }
+        .content-detail-card img { width: 100%; border-radius: 18px; margin-bottom: 22px; }
+        .content-sidebar-card { background: #111827; color: #fff; border-radius: 22px; padding: 24px; position: sticky; top: 24px; }
+        .content-sidebar-card h4 { color: #fff; margin-bottom: 18px; }
+        .content-sidebar-card p { color: rgba(255,255,255,.78); }
+        .btn-admin-shortcut { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px; background: #fff; color: #0f2b5b; font-weight: 600; text-decoration: none; }
+        .header-top .row { align-items: center; }
+        .header-top .header-contact-info a { display: inline-flex; align-items: center; gap: 6px; }
+        .header-top .header-contact-info { display: flex; align-items: center; gap: 22px; flex-wrap: nowrap; }
+        .header-top .header-contact-info .p-span { white-space: nowrap; }
+        .header-top .btn-container { display: flex; gap: 10px; flex-wrap: nowrap; justify-content: flex-end; }
+        .header-top .btn-white-head { white-space: nowrap; }
+        .header_area .navbar { gap: 18px; align-items: center; flex-wrap: nowrap; }
+        .header_area .navbar .logo_h { flex: 0 1 280px; max-width: 280px; width: 100%; margin-right: 6px; }
+        .header_area .navbar .collapse { min-width: 0; }
+        .header_area .navbar .navbar-nav { flex: 1 1 auto; min-width: 0; align-items: center; }
+        .menu_nav { display: flex; align-items: center; flex-wrap: nowrap; gap: 2px; justify-content: flex-end; }
+        .menu_nav .nav-item { flex: 0 0 auto; position: relative; }
+        .menu_nav .nav-link {
+            text-transform: uppercase;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: .03em;
+            line-height: 1.2 !important;
+            padding-left: 12px !important;
+            padding-right: 12px !important;
+            white-space: nowrap;
+            color: #4b5563 !important;
+            transition: color 0.18s ease, transform 0.18s ease;
+            position: relative;
+        }
+        .menu_nav .item-btn-aulavirtual .btn-aulavirtual {
+            padding-left: 18px !important;
+            padding-right: 18px !important;
+            font-size: 15px !important;
+            font-weight: 800 !important;
+        }
+        /* Underline animado en hover y activo */
+        .menu_nav .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            bottom: -8px;
+            height: 3px;
+            background: #2563eb;
+            border-radius: 3px;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.22s ease;
+        }
+        .menu_nav .nav-link:hover {
+            color: #0f2b5b !important;
+            transform: translateY(-1px);
+        }
+        .menu_nav .nav-link:hover::after { transform: scaleX(1); }
+        /* Estado activo: pill naranja con texto blanco, alto comodo */
+        .menu_nav .nav-item.active .nav-link {
+            background: var(--gtqc-orange) !important;
+            color: var(--gtqc-white) !important;
+            font-weight: 800 !important;
+            border-radius: 999px !important;
+            padding: 10px 22px !important;
+            line-height: 1.2 !important;
+            box-shadow: 0 8px 18px rgba(239,158,77,0.45);
+            display: inline-flex !important;
+            align-items: center !important;
+        }
+        .menu_nav .nav-item.active .nav-link:hover {
+            background: var(--gtqc-orange-dark, #D7842F) !important;
+            color: var(--gtqc-white) !important;
+            transform: translateY(-1px);
+        }
+        /* Quitar el underline animado cuando esta activo (ya es pill, no necesita underline) */
+        .menu_nav .nav-item.active .nav-link::after {
+            display: none !important;
+        }
+        .menu_nav .item-btn-aulavirtual { margin-left: 8px; }
+        .menu_nav .item-btn-aulavirtual .btn-aulavirtual { padding-left: 20px; padding-right: 20px; white-space: nowrap; }
+        /* Dropdown submenu */
+        .menu_nav .has-submenu { position: relative; }
+        .menu_nav .submenu {
+            list-style: none;
+            margin: 0;
+            padding: 8px 0;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            min-width: 260px;
+            max-width: 360px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid rgba(15,43,91,0.08);
+            border-radius: 12px;
+            box-shadow: 0 18px 38px rgba(17,24,39,0.18);
+            display: none;
+            z-index: 1000;
+        }
+        .menu_nav .has-submenu:hover > .submenu, .menu_nav .has-submenu:focus-within > .submenu { display: block; animation: pbSubFadeIn .18s ease-out; }
+        @keyframes pbSubFadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+        .menu_nav .submenu li { display: block; }
+        .menu_nav .submenu a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            font-size: 12px;
+            color: #1f2937;
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: 0;
+            text-decoration: none;
+            line-height: 1.4;
+            border-left: 3px solid transparent;
+            transition: all .15s ease;
+        }
+        /* Sin chevron antes del item: el icono FA no estaba cargando y mostraba un cuadrito */
+        .menu_nav .submenu a::before { content: none !important; display: none !important; }
+        .menu_nav .submenu a:hover {
+            background: #eff6ff;
+            color: #0f2b5b;
+            border-left-color: #2563eb;
+        }
+        /* Scroll bar custom para el submenu */
+        .menu_nav .submenu::-webkit-scrollbar { width: 6px; }
+        .menu_nav .submenu::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .menu_nav .submenu::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .header_area .navbar .logo_h {
+            flex: 0 0 auto;
+            max-width: 220px;
+            height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 6px 0;
+            overflow: visible;
+        }
+        .logo_h img {
+            max-height: 64px;
+            height: 64px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            object-position: left center;
+            object-fit: contain;
+            object-position: left center;
+            display: block;
+            transform: scale(1.1) translateX(-6px);
+            transform-origin: left center;
+        }
+        .header_area .navbar { padding-top: 0 !important; padding-bottom: 0 !important; min-height: 0; }
+        .header_area { padding: 0 !important; }
+        .header_area .container { padding-top: 0; padding-bottom: 0; }
+        /* Solo visible en mobile (en desktop ya esta el Contacto en el menu) */
+        @media (min-width: 992px) { .btn-aulavirtual-phone { display: none !important; } }
+        .btn-aulavirtual-phone {
+            white-space: nowrap;
+            flex: 0 0 auto;
+            background: var(--gtqc-orange) !important;
+            color: #fff !important;
+            font-weight: 800 !important;
+            padding: 10px 22px !important;
+            border-radius: 999px !important;
+            text-decoration: none !important;
+            box-shadow: 0 8px 22px rgba(245,158,11,0.45);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            position: relative;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: pbCotizaPulse 2.4s ease-in-out infinite;
+        }
+        .btn-aulavirtual-phone:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 14px 30px rgba(239,68,68,0.55);
+            color: #fff !important;
+            background: var(--gtqc-orange-dark) !important;
+            animation: none;
+        }
+        .btn-aulavirtual-phone i { font-size: 13px; }
+        @keyframes pbCotizaPulse {
+            0%, 100% { box-shadow: 0 8px 22px rgba(245,158,11,0.45), 0 0 0 0 rgba(239,68,68,0.4); }
+            50%      { box-shadow: 0 8px 22px rgba(245,158,11,0.45), 0 0 0 10px rgba(239,68,68,0); }
+        }
+        .logo-footer-custom { max-width: 160px; width: 100%; height: auto; }
+        .request-info .row { align-items: center; row-gap: 18px; }
+        .request-info .btn-request,
+        .request-info .btn-virtual {
+            width: 100%;
+            max-width: 230px;
+            margin: 0 auto;
+        }
+        .vis-mis-alig { gap: 16px; }
+        .subtitle-blog { overflow-wrap: anywhere; }
+        #hero-slider { min-height: 560px; }
+        .hs-slide {
+            padding-right: 24px;
+        }
+        .hs-slide::before {
+            width: min(80%, 860px);
+        }
+        .hs-content h2,
+        .hs-content p {
+            overflow-wrap: anywhere;
+        }
+        .hs-controls {
+            max-width: calc(100% - 48px);
+            flex-wrap: wrap;
+        }
+        .btn-view-service,
+        .btn-view-cotiza {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-right: 12px;
+            margin-bottom: 12px;
+        }
+        .red {
+            right: 18px;
+            left: auto;
+            top: auto;
+            bottom: 18px;
+        }
+        #whatsapp a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            max-width: calc(100vw - 36px);
+            padding: 12px 14px;
+            line-height: 1.2;
+            white-space: normal;
+        }
+        #whatsapp a:hover { margin: 0; }
+        #whatsapp img { flex: 0 0 auto; }
+        .old-card { background: #fff; border-radius: 14px; box-shadow: 0 10px 28px rgba(17,24,39,.08); border: 1px solid rgba(30,76,159,.12); height: 100%; overflow: hidden; }
+        .old-card img { width: 100%; display: block; object-fit: cover; }
+        .old-card__body { padding: 18px; }
+        .old-card__body h4 { margin-bottom: 10px; color: #2f2f2f; font-size: 20px; }
+        .old-card__body p { margin-bottom: 12px; color: #4b5563; }
+        .old-link { color: #0f2b5b; font-weight: 700; }
+        .old-stat-box { border: 1px solid rgba(255,255,255,.18); border-radius: 14px; padding: 24px 16px; text-align: center; height: 100%; }
+        .old-stat-box h2 { color: #fff; font-size: 34px; margin-bottom: 6px; }
+        .old-stat-box span { color: rgba(255,255,255,.84); display: block; }
+        .old-highlight-box { background: #fff; border-radius: 14px; padding: 24px; box-shadow: 0 12px 30px rgba(17,24,39,.08); border: 1px solid rgba(30,76,159,.12); height: 100%; }
+        .old-highlight-box h3 { color: #0f2b5b; margin-bottom: 12px; font-size: 22px; }
+        .old-highlight-box ul { padding-left: 18px; margin-bottom: 0; }
+        .old-highlight-box li { margin-bottom: 8px; color: #374151; }
+        .old-cta-box { background: #f5f9ff; border: 1px solid rgba(30,76,159,.12); border-radius: 14px; padding: 24px; }
+        .old-contact-box { background: #fff; border-radius: 14px; padding: 18px; box-shadow: 0 10px 24px rgba(17,24,39,.08); border: 1px solid rgba(30,76,159,.1); margin-bottom: 16px; }
+        .old-highlight-box,
+        .old-cta-box,
+        .old-contact-box,
+        .content-card__body,
+        .content-detail-card,
+        .content-chip {
+            overflow-wrap: anywhere;
+        }
+        .old-contact-box strong { display: block; margin-bottom: 6px; color: #2f2f2f; }
+        .old-contact-box a { color: #0f2b5b; }
+        .old-small-note { color: #6b7280; font-size: 14px; }
+        .detail-body p, .detail-body li { color: #374151; line-height: 1.8; }
+        .detail-body h2, .detail-body h3 { color: #2f2f2f; margin-top: 24px; margin-bottom: 14px; }
+        .detail-body ul, .detail-body ol { padding-left: 20px; }
+        @media (min-width: 992px) {
+            .header_area .navbar-expand-lg .navbar-collapse {
+                display: flex !important;
+                flex-basis: auto;
+                justify-content: flex-end;
+                min-width: 0;
+            }
+            .header_area .navbar-expand-lg .navbar-nav {
+                margin-left: auto;
+            }
+        }
+        @media (max-width: 1399.98px) {
+            .header-top .header-contact-info { gap: 16px; }
+            .menu_nav { gap: 2px !important; }
+            .menu_nav .nav-link { padding-left: 7px !important; padding-right: 7px !important; font-size: 13.5px !important; font-weight: 800 !important; }
+            .menu_nav .item-btn-aulavirtual { margin-left: 5px !important; margin-right: 5px !important; }
+            .menu_nav .item-btn-aulavirtual .btn-aulavirtual { padding-left: 14px !important; padding-right: 14px !important; font-size: 13.5px !important; }
+            .header_area .navbar .logo_h { flex-basis: 150px !important; max-width: 150px !important; padding-right: 8px !important; }
+            .logo_h img { max-height: 50px !important; }
+            .header_area .navbar > .container { padding-left: 8px !important; padding-right: 8px !important; max-width: 100% !important; }
+        }
+        @media (max-width: 1199.98px) {
+            .header-top .header-contact-info {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px 18px;
+            }
+            .header-top .btn-container {
+                justify-content: center;
+            }
+            .header_area .navbar {
+                gap: 12px;
+            }
+            .header_area .navbar .logo_h {
+                flex-basis: 220px;
+                max-width: 220px;
+            }
+            .logo_h img {
+                max-height: 44px;
+            }
+            .menu_nav .nav-link {
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+            }
+            .btn-view-service,
+            .btn-view-cotiza {
+                padding-left: 28px;
+                padding-right: 28px;
+            }
+        }
+        @media (max-width: 991.98px) {
+            /* Mobile navbar: logo + cotiza aqui + toggler TODOS en una fila */
+            .header_area .navbar {
+                flex-wrap: wrap !important;
+                position: relative;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                gap: 8px;
+                padding: 6px 0 !important;
+            }
+            .header_area .navbar > .navbar-brand {
+                flex: 0 1 auto !important;
+                min-width: 0;
+                margin: 0 !important;
+                order: 1;
+            }
+            .header_area .navbar > .btn-aulavirtual-phone {
+                flex: 0 0 auto;
+                margin: 0 0 0 auto !important;
+                order: 2;
+            }
+            .header_area .navbar > .navbar-toggler {
+                flex: 0 0 auto;
+                margin: 0 !important;
+                order: 3;
+                padding: 6px 9px;
+            }
+            .header_area .navbar .navbar-collapse {
+                order: 4;
+                flex-basis: 100% !important;
+                width: 100%;
+            }
+            .header_area .navbar-collapse {
+                flex-basis: 100% !important;
+                width: 100%;
+                max-width: 100%;
+                background: #fff;
+                border-top: 1px solid #eef1f8;
+                margin-top: 10px;
+                padding: 8px 0 12px;
+                box-shadow: 0 20px 40px rgba(15,43,91,0.12);
+                border-radius: 0 0 14px 14px;
+                z-index: 100;
+            }
+            .header_area .navbar-collapse.show,
+            .header_area .navbar-collapse.collapsing { display: block !important; }
+            .header_area .menu_nav .nav-link {
+                border-bottom: 1px solid #f1f4fa;
+                text-align: left !important;
+                padding: 14px 20px !important;
+            }
+            .header_area .menu_nav .nav-item:last-child .nav-link { border-bottom: 0; }
+            .header_area .menu_nav .item-btn-aulavirtual .btn-aulavirtual {
+                margin: 10px 20px;
+                text-align: center;
+                width: auto;
+                display: block;
+                border-radius: 999px;
+            }
+            .navbar-toggler {
+                border: 1px solid rgba(15,43,91,0.2) !important;
+                padding: 6px 10px;
+                border-radius: 8px;
+            }
+            .navbar-toggler .icon-bar {
+                display: block;
+                width: 22px;
+                height: 2px;
+                background: #0f2b5b;
+                margin: 5px 0;
+                border-radius: 2px;
+            }
+        }
+        @media (max-width: 991px) {
+            .content-page-title { font-size: 30px; }
+            .content-shell { padding: 35px 0 50px; }
+            .content-detail-card { padding: 24px; }
+            .content-sidebar-card { position: static; }
+            .content-card__body,
+            .old-card__body,
+            .old-highlight-box,
+            .old-cta-box,
+            .old-contact-box {
+                padding: 18px;
+            }
+            #hero-slider {
+                height: auto;
+                min-height: 540px;
+            }
+            .hs-slide {
+                padding-left: 24px;
+                padding-right: 24px;
+                align-items: flex-end;
+                padding-bottom: 44px;
+            }
+            .hs-slide::before {
+                width: 100%;
+            }
+            .hs-content {
+                max-width: 560px;
+            }
+            .hs-content h2 {
+                font-size: 32px;
+            }
+            .hs-controls {
+                left: 24px;
+                top: 24px;
+                gap: 8px;
+            }
+            .vis-mis-alig {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .request-info .col-md-12,
+            .request-info .col-md-6,
+            .request-info .col-lg-3,
+            .request-info .col-lg-6 {
+                display: block !important;
+                text-align: center !important;
+            }
+            .header-top .row {
+                row-gap: 10px;
+            }
+            .header-top .btn-container {
+                justify-content: center;
+                padding-bottom: 10px;
+                width: 100%;
+            }
+            .header-top .header-contact-info {
+                justify-content: center;
+                width: 100%;
+            }
+            .header_area .navbar {
+                padding-top: 14px;
+                padding-bottom: 14px;
+            }
+            .header_area .navbar .logo_h {
+                flex-basis: 220px;
+                max-width: 220px;
+            }
+            .btn-aulavirtual-phone {
+                order: 2;
+                margin-left: auto;
+                margin-right: 12px;
+                font-size: 11px;
+                padding: 8px 12px;
+            }
+            .navbar-toggler {
+                order: 3;
+            }
+            #navbarSupportedContent {
+                order: 4;
+                width: 100%;
+                margin-top: 14px;
+            }
+            .menu_nav {
+                width: 100%;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+            }
+            .menu_nav .nav-item {
+                width: 100%;
+                text-align: center;
+            }
+            .menu_nav .nav-link,
+            .menu_nav .item-btn-aulavirtual .btn-aulavirtual {
+                display: block;
+                width: 100%;
+                padding: 12px 10px !important;
+            }
+            .menu_nav .item-btn-aulavirtual {
+                margin-left: 0;
+                margin-top: 4px;
+            }
+        }
+        @media (max-width: 767.98px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .subtitle-blog {
+                min-height: 0 !important;
+            }
+            #hero-slider {
+                min-height: 500px;
+            }
+            .hs-slide {
+                padding-left: 18px;
+                padding-right: 18px;
+                padding-bottom: 32px;
+            }
+            .hs-controls {
+                left: 18px;
+                right: 18px;
+                top: 18px;
+                max-width: none;
+                justify-content: space-between;
+            }
+            .hs-content h2 {
+                font-size: 28px;
+            }
+            .hs-content p {
+                font-size: 15px;
+            }
+            .btn-view-service,
+            .btn-view-cotiza {
+                width: 100%;
+                margin-right: 0;
+            }
+            .header-top .header-contact-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .header-top .btn-container {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .header-top .btn-white-head {
+                font-size: 12px;
+            }
+            .old-stat-box h2 {
+                font-size: 28px;
+            }
+            .old-highlight-box h3,
+            .old-card__body h4,
+            .h3_title {
+                font-size: 18px;
+            }
+            #whatsapp a {
+                font-size: 13px;
+            }
+        }
+        @media (max-width: 575.98px) {
+            .content-page-title { font-size: 27px; }
+            .content-intro { font-size: 14px; }
+            .logo_h img { max-height: 40px; }
+            #hero-slider {
+                min-height: 460px;
+            }
+            .hs-content h2 {
+                font-size: 24px;
+            }
+            .hs-content p {
+                display: block;
+                font-size: 14px;
+                margin-bottom: 14px;
+            }
+            .hs-controls {
+                padding: 6px 10px;
+            }
+            .btn-aulavirtual-phone {
+                margin-right: 8px;
+                padding: 7px 10px;
+                font-size: 10px;
+            }
+            .header-top .header-contact-info a {
+                font-size: 11px !important;
+            }
+            .request-info .btn-request,
+            .request-info .btn-virtual {
+                max-width: none;
+            }
+            #whatsapp a {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+        }
+        /* ===== Scrollbar oculto completamente ===== */
+        html { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar, body::-webkit-scrollbar,
+        *::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; background: transparent !important; }
+        html::-webkit-scrollbar-thumb, body::-webkit-scrollbar-thumb,
+        *::-webkit-scrollbar-thumb { background: transparent !important; }
+        html::-webkit-scrollbar-track, body::-webkit-scrollbar-track,
+        *::-webkit-scrollbar-track { background: transparent !important; }
+        body { scrollbar-width: none; -ms-overflow-style: none; }
+        body::-webkit-scrollbar { display: none !important; }
+
+        /* ===== Tipografia unificada: Roboto global ===== */
+        :root { --site-font: 'Roboto', 'Helvetica Neue', Arial, sans-serif; }
+        html, body,
+        p, span, a, li, label, input, textarea, select, button,
+        .nav-link, .btn, .form-control,
+        .content-body, .content-intro, .content-lead,
+        [class*="hm-"], [class*="svc-"], [class*="old-"], [class*="content-"] {
+            font-family: var(--site-font) !important;
+        }
+        body { font-family: var(--site-font) !important; font-weight: 500; letter-spacing: 0.005em; font-size: 16.5px; line-height: 1.65; color: #1f2937; }
+        p, li, span, label, td, th, .form-control,
+        .hm-section__lead, .hm-project-card__summary, .hm-service-card__summary,
+        .svc-section__lead, .svc-intro__copy p, .svc-include-item__text,
+        .content-intro, .content-lead, .old-small-note {
+            font-weight: 500 !important;
+            font-size: 1.02em;
+        }
+        strong, b, .nav-link, .menu_nav a, .footer_title, .hm-stat__value, .hm-stat__label,
+        .hm-project-card__title, .hm-service-card__title, .hm-section__eyebrow,
+        .svc-section__eyebrow, .hm-hero__eyebrow {
+            font-weight: 700 !important;
+        }
+        .menu_nav { gap: 4px !important; }
+        .menu_nav .nav-link { font-weight: 800 !important; font-size: 12.5px !important; letter-spacing: 0.02em; padding-left: 6px !important; padding-right: 6px !important; }
+        .menu_nav .item-btn-aulavirtual .btn-aulavirtual { font-size: 12.5px !important; font-weight: 800 !important; padding: 8px 14px !important; }
+        @media (max-width: 1399.98px) {
+            .menu_nav { gap: 2px !important; }
+            .menu_nav .nav-link { font-size: 12px !important; padding-left: 5px !important; padding-right: 5px !important; }
+            .menu_nav .item-btn-aulavirtual .btn-aulavirtual { font-size: 12px !important; padding: 7px 12px !important; }
+        }
+        @media (max-width: 1199.98px) {
+            .menu_nav { gap: 1px !important; }
+            .menu_nav .nav-link { font-size: 11.5px !important; padding-left: 4px !important; padding-right: 4px !important; }
+            .menu_nav .item-btn-aulavirtual .btn-aulavirtual { font-size: 11.5px !important; padding: 7px 10px !important; }
+        }
+        h1, h2, h3, h4, h5, h6,
+        .h2_title, .h2_title_wt, .h3_title, .h4_title,
+        .page-cover-tittle,
+        .hm-hero__title, .hm-section__title, .hm-services__aside h2, .hm-cta-final__text h2,
+        .svc-section__title, .svc-cta__text h2,
+        .content-page-title, .content-hero h1,
+        .old-highlight-box h3, .old-card__body h4,
+        .footer_title,
+        .breadcrumb_area h1, .breadcrumb_area h2, .breadcrumb_area h3, .breadcrumb_area h4 {
+            font-family: var(--site-font) !important;
+            font-weight: 900 !important;
+            letter-spacing: -0.01em;
+        }
+        strong, b { font-weight: 700; }
+        /* Ocultar fuentes icon no deben cambiar */
+        .fas, .far, .fab, .fa, .lnr, [class*="lnr-"],
+        i[class^="fa"], i[class*=" fa"],
+        i[class^="lnr"], i[class*=" lnr"] {
+            font-family: inherit !important;
+        }
+        .fas, i.fas, .far, i.far { font-family: "Font Awesome 5 Free" !important; }
+        .fab, i.fab { font-family: "Font Awesome 5 Brands" !important; }
+        .lnr, i.lnr, [class^="lnr-"], [class*=" lnr-"] { font-family: 'Linearicons-Free' !important; }
+
+        /* ===== Logo footer en blanco (mismo archivo que el header pero recoloreado) ===== */
+        .logo-footer-whitened {
+            max-width: 260px;
+            width: 100%;
+            height: 70px;
+            object-fit: cover;
+            object-position: left center;
+            filter: brightness(0) invert(1);
+            -webkit-filter: brightness(0) invert(1);
+            mix-blend-mode: screen;
+            display: block;
+            margin: 0;
+        }
+        .footer-area-color .row > [class*="col-lg-3"]:first-child .single-footer-widget ul.list_style li:first-child {
+            margin-bottom: 4px !important;
+            padding-bottom: 0 !important;
+            line-height: 0;
+        }
+        .footer-area-color .row > [class*="col-lg-3"]:first-child .single-footer-widget ul.list_style li:first-child a {
+            display: inline-block;
+            padding: 0;
+            margin: 0;
+            line-height: 0;
+        }
+        .footer-area-color .row > [class*="col-lg-3"]:first-child .single-footer-widget ul.list_style li:nth-child(2) {
+            margin-top: 8px !important;
+            padding-top: 0 !important;
+        }
+
+        /* ===== Footer bottom negro ===== */
+        .footer-bt { background: #000 !important; }
+        .footer-bt .header-top-info,
+        .footer-bt .header-contact-info,
+        .footer-bt .p-span { color: #fff !important; }
+
+        /* ===== Breadcrumb/Portada override con imagen HD de GTQC ===== */
+        .breadcrumb_area {
+            background: rgba(29,43,71,0.75) url('/assets/company/hero-campo.jpeg') center/cover no-repeat !important;
+            background-blend-mode: multiply;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            padding: 70px 0 50px;
+        }
+        .breadcrumb_area .overlay,
+        .breadcrumb_area .bg-parallax { display: none !important; }
+        .breadcrumb_area .page-cover-tittle,
+        .breadcrumb_area h4 {
+            color: #fff !important;
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 800;
+            text-shadow: 0 3px 18px rgba(0,0,0,0.55);
+            letter-spacing: 0.02em;
+            margin-bottom: 14px;
+        }
+        .breadcrumb_area .breadcrumb {
+            background: transparent !important;
+            justify-content: center;
+            padding: 0;
+        }
+        .breadcrumb_area .breadcrumb li,
+        .breadcrumb_area .breadcrumb a,
+        .breadcrumb_area .breadcrumb b {
+            color: rgba(255,255,255,0.92) !important;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        }
+        .breadcrumb_area .breadcrumb .active a,
+        .breadcrumb_area .breadcrumb .active b { color: #6fb6ff !important; }
+        @media (max-width: 767.98px) {
+            .breadcrumb_area { min-height: 200px; padding: 50px 0 36px; }
+        }
+
+        /* ===== Mobile Responsive Fixes (v2) ===== */
+        @media (max-width: 767.98px) {
+            html, body { overflow-x: hidden; }
+            .container, .container-fluid { padding-left: 16px; padding-right: 16px; }
+            .red { right: 14px; bottom: 14px; }
+            /* Cotiza aqui button mobile */
+            .btn-aulavirtual-phone {
+                font-size: 11px;
+                padding: 7px 11px;
+            }
+            /* Header top contact info mobile — solo iconos en pantallas super chicas */
+            .header-top .header-contact-info a { white-space: nowrap; }
+            .header-top .btn-white-head {
+                padding: 5px 9px;
+                font-size: 11px;
+            }
+            .header-top .btn-white-head img { width: 16px !important; }
+            /* Footer WA picker modal: asegurar scroll en mobile */
+            .wa-picker__panel { max-height: 90vh; overflow-y: auto; }
+        }
+        @media (max-width: 575.98px) {
+            .header-top .header-contact-info { gap: 4px 10px !important; }
+            .header-top .header-contact-info .p-span { font-size: 11px; }
+            .navbar-brand.logo_h { flex-basis: auto !important; max-width: 150px !important; }
+            .logo_h img { max-height: 48px !important; }
+            /* Oculta labels del top bar para dar mas espacio al logo */
+            .header-top .btn-white-head { padding: 5px 7px; }
+            .header-top .btn-white-head { font-size: 10px; }
+        }
+        @media (max-width: 767.98px) {
+            .header_area .navbar .logo_h { flex: 1 1 auto !important; max-width: 170px !important; }
+            .logo_h img { max-height: 56px !important; }
+            .btn-aulavirtual-phone { font-size: 10px !important; padding: 6px 10px !important; white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header-top">
+        <div class="container position-relative">
+            <div class="row">
+                <div class="col-xl-8 col-lg-9 d-flex align-items-center justify-content-start">
+                    <div class="header-top-info">
+                        <div class="header-contact-info">
+                            <span class="p-span">
+                                <a href="mailto:responsablecomercial2@grouptqualityc.com.pe" style="font-size: 12px;">
+                                    <i class="fas fa-envelope"></i> responsablecomercial2@grouptqualityc.com.pe                                </a>
+                            </span>
+                            <span class="p-span">
+                                <a href="https://api.whatsapp.com/send?phone=51920137591&amp;text=Hola,%20quisiera%20informacion%20sobre%20los%20servicios%20de%20Group%20Total%20Quality%20Control." target="_blank" rel="noopener" style="font-size: 12px;">
+                                    <i class="fab fa-whatsapp" style="font-size: 16px;"></i> +51 920 137 591                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-3 d-flex align-items-center justify-content-end">
+                    <div class="btn-container">
+                        <a class="btn-white-head" href="/cursos">
+                            <i class="fas fa-graduation-cap" style="color:#0f2b5b; font-size:16px; margin-right:4px;"></i> Cursos
+                        </a>
+                        <a class="btn-white-head" href="/proyectos">
+                            <i class="fas fa-flask" style="color:#0f2b5b; font-size:15px; margin-right:4px;"></i> Proyectos
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <header class="header_area">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand logo_h" href="/"><img src="/assets/company/brand/logo-quality-express.png" alt="Group Total Quality Control"></a>
+                <a class="btn-aulavirtual-phone" href="/cotizacion"><i class="fas fa-file-alt"></i>&nbsp; COTIZA AQUI</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Menu">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto">
+                                                                                                            <li class="nav-item   ">
+                                                                    <a class="nav-link" href="/">Inicio</a>
+                                                                                            </li>
+                                                                                                            <li class="nav-item   ">
+                                                                    <a class="nav-link" href="/nosotros">Nosotros</a>
+                                                                                            </li>
+                                                                                                            <li class="nav-item   has-submenu">
+                                                                    <a class="nav-link" href="/servicios">Servicios <i class="fas fa-chevron-down" style="font-size:9px; margin-left:4px; opacity:.7;"></i></a>
+                                                                                                    <ul class="submenu">
+                                                                                    <li><a href="/servicios/geofisica-mecanica-de-rocas-y-ensayos-quimicos">EXPLORACION GEOFISICA, MECANICA DE ROC...</a></li>
+                                                                                    <li><a href="/servicios/evaluacion-en-sistemas-de-albanileria">EVALUACION Y CALIDAD EN SISTEMAS DE AL...</a></li>
+                                                                                    <li><a href="/servicios/pavimentos-flexibles-y-mezclas-asfalticas">PAVIMENTOS FLEXIBLES Y MEZCLAS ASFALTI...</a></li>
+                                                                                    <li><a href="/servicios/evaluacion-de-concreto-endurecido">EVALUACION DE CONCRETO ENDURECIDO</a></li>
+                                                                                    <li><a href="/servicios/control-de-calidad-de-concreto-fresco">CONTROL DE CALIDAD DE CONCRETO FRESCO</a></li>
+                                                                                    <li><a href="/servicios/mecanica-de-suelos-y-geotecnia">MECANICA DE SUELOS Y GEOTECNIA</a></li>
+                                                                                    <li><a href="/servicios/asesoria-consultoria-e-investigacion">ASESORIA, CONSULTORIA E INVESTIGACION ...</a></li>
+                                                                            </ul>
+                                                            </li>
+                                                                                                            <li class="nav-item   has-submenu">
+                                                                    <a class="nav-link" href="/proyectos">Proyectos <i class="fas fa-chevron-down" style="font-size:9px; margin-left:4px; opacity:.7;"></i></a>
+                                                                                                    <ul class="submenu">
+                                                                                    <li><a href="/proyectos/extraccion-de-testigos-y-evaluacion-puente-colgante-rio-pangoa">EXTRACCION DE TESTIGOS Y EVALUACION DE...</a></li>
+                                                                                    <li><a href="/proyectos/mecanica-de-suelos-y-consultoria-geotecnica-camino-vecinal-pangoa">MECANICA DE SUELOS Y CONSULTORIA GEOTE...</a></li>
+                                                                                    <li><a href="/proyectos/ensayos-especializados-para-sima-callao">ENSAYOS ESPECIALIZADOS PARA SIMA CALLA...</a></li>
+                                                                            </ul>
+                                                            </li>
+                                                                                                            <li class="nav-item active  has-submenu">
+                                                                    <a class="nav-link" href="/investigacion">Investigacion <i class="fas fa-chevron-down" style="font-size:9px; margin-left:4px; opacity:.7;"></i></a>
+                                                                                                    <ul class="submenu">
+                                                                                    <li><a href="/investigacion/inacal-le-234-e-iso-en-qa-qc">INACAL LE-234 E ISO: POR QUE LA ACREDI...</a></li>
+                                                                                    <li><a href="/investigacion/investigacion-aplicada-soporte-experimental-para-tesis">INVESTIGACION APLICADA Y SOPORTE EXPER...</a></li>
+                                                                                    <li><a href="/investigacion/blindaje-tecnico-legal-y-diagnostico-estructural">BLINDAJE TECNICO-LEGAL Y DIAGNOSTICO E...</a></li>
+                                                                            </ul>
+                                                            </li>
+                                                                                                            <li class="nav-item   has-submenu">
+                                                                    <a class="nav-link" href="/cursos">Cursos <i class="fas fa-chevron-down" style="font-size:9px; margin-left:4px; opacity:.7;"></i></a>
+                                                                                                    <ul class="submenu">
+                                                                                    <li><a href="/cursos/curso-patologia-estructural-peritaje-e-investigacion">PATOLOGIA ESTRUCTURAL, PERITAJE E INVE...</a></li>
+                                                                                    <li><a href="/cursos/curso-geotecnia-aplicada-y-pavimentos">GEOTECNIA APLICADA, PAVIMENTOS Y ENSAY...</a></li>
+                                                                                    <li><a href="/cursos/curso-qa-qc-y-control-de-calidad-de-concreto">QA/QC Y CONTROL DE CALIDAD DE CONCRETO...</a></li>
+                                                                            </ul>
+                                                            </li>
+                                                                                                            <li class="nav-item  item-btn-aulavirtual ">
+                                                                    <a class="btn-aulavirtual" href="/cursos">Aula Virtual</a>
+                                                                                            </li>
+                                                                                                            <li class="nav-item   ">
+                                                                    <a class="nav-link" href="/cotizacion">Contacto</a>
+                                                                                            </li>
+                                            </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+<style>
+/* ===== Listado (proyectos/cursos/investigacion): fondo blanco con contraste ===== */
+.content-shell { background: #fff !important; color: #1f2937 !important; padding: 50px 0 70px; }
+.content-shell * { color: inherit; }
+.content-shell h1, .content-shell h2, .content-shell h3, .content-shell h4, .content-shell h5 { color: #0f2b5b !important; }
+.content-shell .content-card { background: #fff !important; color: #1f2937 !important; border: 1px solid rgba(15,43,91,0.1); box-shadow: 0 10px 24px rgba(17,24,39,0.06); }
+.content-shell .content-card__body h3, .content-shell .content-card__body h4 { color: #0f2b5b !important; }
+.content-shell .content-card p, .content-shell .content-card span { color: #374151 !important; }
+.content-shell .content-detail-card { background: #fff !important; color: #1f2937 !important; border: 1px solid rgba(15,43,91,0.1); }
+.content-shell .content-sidebar-card { background: #0f2b5b !important; color: #fff !important; }
+.content-shell .content-sidebar-card *, .content-shell .content-sidebar-card a { color: #fff !important; }
+/* Sidebar categorias */
+.content-shell aside, .content-shell [class*="sidebar"], .content-shell [class*="filter"] {
+    background: #f5f7fb !important;
+    color: #1f2937 !important;
+    border-radius: 16px;
+    border: 1px solid rgba(15,43,91,0.08);
+}
+.content-shell aside *, .content-shell [class*="sidebar"] *, .content-shell [class*="filter"] * { color: #1f2937 !important; }
+.content-shell aside h2, .content-shell aside h3, .content-shell aside h4,
+.content-shell [class*="sidebar"] h2, .content-shell [class*="sidebar"] h3, .content-shell [class*="sidebar"] h4 { color: #0f2b5b !important; }
+.content-shell aside a, .content-shell [class*="sidebar"] a { color: #374151 !important; text-decoration: none; }
+.content-shell aside a:hover, .content-shell [class*="sidebar"] a:hover { color: #0f2b5b !important; }
+.content-shell aside .is-active, .content-shell [class*="active"] { background: #0f2b5b !important; color: #fff !important; }
+.content-shell aside .is-active *, .content-shell [class*="active"] * { color: #fff !important; }
+</style>
+
+
+
+<section class="content-hero">
+    <div class="container text-center">
+        <h1 class="content-page-title">Investigacion</h1>
+        <p class="content-intro">Tesis y articulos cientificos administrables para publicar investigacion, analisis tecnico y contenido especializado de la marca.</p>
+    </div>
+</section>
+
+<section class="content-shell">
+    <div class="container">
+                                <div class="listing-layout">
+                <aside class="listing-sidebar">
+                    <h4 class="listing-sidebar-title"><i class="fas fa-layer-group"></i> Categorias</h4>
+                    <ul class="cat-filter-list">
+                        <li><button type="button" class="cat-filter-btn is-active" data-cat-filter="*">Todas <span class="cat-count">3</span></button></li>
+                                            </ul>
+                </aside>
+                <div class="listing-content">
+                    <div class="mosaic-grid" data-mosaic="">
+                                                                                <div class="mosaic-tile" data-category="">
+                                <a class="mosaic-tile__imglink" href="/investigacion/inacal-le-234-e-iso-en-qa-qc" aria-label="INACAL LE-234 e ISO: por que la acreditacion cambia el valor del QA/QC">
+                                    <img src="/assets/company/inacal-le-234.png" alt="INACAL LE-234 e ISO: por que la acreditacion cambia el valor del QA/QC" loading="lazy">
+                                </a>
+                                <div class="mosaic-tile__overlay">
+                                    <span class="mosaic-tile__title">INACAL LE-234 e ISO: por que la acreditacion cambia el valor del QA/QC</span>
+                                    <span class="mosaic-tile__divider"></span>
+                                    <div class="mosaic-tile__actions">
+                                        <a class="tile-action tile-action--view" href="/investigacion/inacal-le-234-e-iso-en-qa-qc" aria-label="Ver proyecto" title="Ver proyecto"><i class="fas fa-eye"></i></a>
+                                        <a class="tile-action tile-action--wa" href="https://api.whatsapp.com/send?phone=51920137591&amp;text=Hola%2C%20quisiera%20informacion%20sobre%3A%20INACAL%20LE-234%20e%20ISO%3A%20por%20que%20la%20acreditacion%20cambia%20el%20valor%20del%20QA%2FQC" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                                                                                <div class="mosaic-tile" data-category="">
+                                <a class="mosaic-tile__imglink" href="/investigacion/investigacion-aplicada-soporte-experimental-para-tesis" aria-label="Investigacion aplicada y soporte experimental para tesis y articulos cientificos">
+                                    <img src="/assets/company/patologia-estructural-avanzada.png" alt="Investigacion aplicada y soporte experimental para tesis y articulos cientificos" loading="lazy">
+                                </a>
+                                <div class="mosaic-tile__overlay">
+                                    <span class="mosaic-tile__title">Investigacion aplicada y soporte experimental para tesis y articulos cientificos</span>
+                                    <span class="mosaic-tile__divider"></span>
+                                    <div class="mosaic-tile__actions">
+                                        <a class="tile-action tile-action--view" href="/investigacion/investigacion-aplicada-soporte-experimental-para-tesis" aria-label="Ver proyecto" title="Ver proyecto"><i class="fas fa-eye"></i></a>
+                                        <a class="tile-action tile-action--wa" href="https://api.whatsapp.com/send?phone=51920137591&amp;text=Hola%2C%20quisiera%20informacion%20sobre%3A%20Investigacion%20aplicada%20y%20soporte%20experimental%20para%20tesis%20y%20articulos%20cientificos" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                                                                                <div class="mosaic-tile" data-category="">
+                                <a class="mosaic-tile__imglink" href="/investigacion/blindaje-tecnico-legal-y-diagnostico-estructural" aria-label="Blindaje tecnico-legal y diagnostico estructural para decisiones de alto riesgo">
+                                    <img src="/assets/company/consultoria-ensayo-no-destructivo.png" alt="Blindaje tecnico-legal y diagnostico estructural para decisiones de alto riesgo" loading="lazy">
+                                </a>
+                                <div class="mosaic-tile__overlay">
+                                    <span class="mosaic-tile__title">Blindaje tecnico-legal y diagnostico estructural para decisiones de alto riesgo</span>
+                                    <span class="mosaic-tile__divider"></span>
+                                    <div class="mosaic-tile__actions">
+                                        <a class="tile-action tile-action--view" href="/investigacion/blindaje-tecnico-legal-y-diagnostico-estructural" aria-label="Ver proyecto" title="Ver proyecto"><i class="fas fa-eye"></i></a>
+                                        <a class="tile-action tile-action--wa" href="https://api.whatsapp.com/send?phone=51920137591&amp;text=Hola%2C%20quisiera%20informacion%20sobre%3A%20Blindaje%20tecnico-legal%20y%20diagnostico%20estructural%20para%20decisiones%20de%20alto%20riesgo" target="_blank" rel="noopener" aria-label="Consultar por WhatsApp" title="Consultar por WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                                            </div>
+                    <p class="listing-empty-filter" data-empty="" hidden="">No hay contenido para esta categoria.</p>
+                </div>
+            </div>
+            <script>
+            (function(){
+                var btns = document.querySelectorAll(".cat-filter-btn");
+                var tiles = document.querySelectorAll(".mosaic-tile[data-category]");
+                var empty = document.querySelector("[data-empty]");
+                btns.forEach(function(b){
+                    b.addEventListener("click", function(){
+                        btns.forEach(function(x){ x.classList.remove("is-active"); });
+                        b.classList.add("is-active");
+                        var f = b.getAttribute("data-cat-filter");
+                        var shown = 0;
+                        tiles.forEach(function(t){
+                            var cat = t.getAttribute("data-category") || "";
+                            var match = (f === "*" || cat === f);
+                            t.style.display = match ? "" : "none";
+                            if (match) shown++;
+                        });
+                        if (empty) empty.hidden = shown !== 0;
+                    });
+                });
+            })();
+            </script>
+            </div>
+</section>
+
+<style>
+.gtqc-clients-section { padding: 60px 0 70px; background: #f7f8fa; }
+.gtqc-clients-section__head { text-align: center; max-width: 760px; margin: 0 auto 32px; padding: 0 16px; }
+.gtqc-clients-section__eyebrow { display: inline-block; color: #EF9E4D; font-size: 12px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px; }
+.gtqc-clients-section__title { color: #1D2B47; font-size: 30px; font-weight: 900; margin: 0 0 12px; line-height: 1.2; }
+.gtqc-clients-section__lead { color: #4b5563; font-size: 15.5px; line-height: 1.65; margin: 0; }
+.gtqc-clients-marquee { overflow: hidden; padding: 18px 0; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.gtqc-clients-marquee__track { display: flex; gap: 50px; align-items: center; width: max-content; animation: gtqcClientsScroll 50s linear infinite; }
+.gtqc-clients-marquee:hover .gtqc-clients-marquee__track { animation-play-state: paused; }
+.gtqc-clients-marquee__item img { height: 54px; width: auto; max-width: 170px; opacity: 0.65; filter: grayscale(100%); transition: opacity 0.2s, filter 0.2s; object-fit: contain; }
+.gtqc-clients-marquee__item:hover img { opacity: 1; filter: grayscale(0%); }
+@keyframes gtqcClientsScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (max-width: 767px) {
+    .gtqc-clients-section { padding: 44px 0 50px; }
+    .gtqc-clients-marquee__track { gap: 32px; animation-duration: 35s; }
+    .gtqc-clients-marquee__item img { height: 42px; max-width: 130px; }
+    .gtqc-clients-section__title { font-size: 24px; }
+}
+</style>
+
+<section class="gtqc-clients-section">
+    <div class="container">
+        <div class="gtqc-clients-section__head">
+            <div class="gtqc-clients-section__eyebrow">Confianza</div>
+            <h2 class="gtqc-clients-section__title">Clientes que Confian en Nosotros</h2>
+            <p class="gtqc-clients-section__lead">Contamos con experiencia comprobada atendiendo a entidades publicas y privadas de alta exigencia en infraestructura vial, edificaciones, saneamiento, salud y mineria.</p>
+        </div>
+        <div class="gtqc-clients-marquee">
+            <div class="gtqc-clients-marquee__track">
+                                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/menorca_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/grupo_centenario_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/inversiones_el_pino_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/es_salud_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/sedapal_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/lares_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/frionarval_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/boscharquitectos_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/villanorma_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/malecon30_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/globalbillion_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/losportales_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/clinicaangloamericana_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/bimit_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/numay_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/distribuidoraasia_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/inbioma_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                                                                <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/menorca_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/grupo_centenario_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/inversiones_el_pino_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/es_salud_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/sedapal_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/lares_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/frionarval_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/boscharquitectos_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/villanorma_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/malecon30_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/globalbillion_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/losportales_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/clinicaangloamericana_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/bimit_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/numay_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/distribuidoraasia_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                            <div class="gtqc-clients-marquee__item">
+                            <img src="/assets/images/otros/inbioma_clientes.webp" alt="Cliente" loading="lazy">
+                        </div>
+                                                </div>
+        </div>
+    </div>
+</section>
+
+<section class="request-info">
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-md-12 col-lg-6 d-flex text-justify">
+                <p class="t-white">Si desea obtener mas informacion, por favor complete el formulario de contacto. Tambien puede gestionar nuevos articulos, cursos y proyectos desde el panel administrador.</p>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center d-flex">
+                <a href="/cotizacion" class="btn-request">SOLICITAR INFORMACION</a>
+            </div>
+            <div class="col-md-6 col-lg-3 text-center d-flex">
+                <a href="/cursos" class="btn-virtual">AULA VIRTUAL&nbsp;<img src="/assets/images/icons/aulavirtual.png" width="25" alt="Aula Virtual"></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer-area-color section_gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <ul class="list_style">
+                        <li><a href="/"><img class="logo-footer-custom logo-footer-whitened" src="/assets/company/brand/logo-quality-express-white.png" alt="Group Total Quality Control" style="max-height:64px; width:auto;"></a></li>
+                        <li><a>Group Total Quality Control - RUC: 20606918357</a></li>
+                        <li style="margin-top:10px;"><strong style="color:#fff; display:block; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;"><i class="fas fa-map-marker-alt" style="color:#EF9E4D;"></i> Sede Huancayo</strong><a>Jr. Miguel Grau Nro. 01, Pilcomayo, Huancayo, Junin.</a></li>
+                                                    <li style="margin-top:10px;"><strong style="color:#fff; display:block; font-size:12px; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;"><i class="fas fa-map-marker-alt" style="color:#EF9E4D;"></i> Sede Lima</strong><a>Cal. E Mz. J Lt. 23 Urb. Maria Auxiliadora, San Juan de Miraflores, Lima.</a></li>
+                                            </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h6 class="footer_title">Secciones</h6>
+                    <ul class="list_style">
+                        <li><a href="/servicios">Servicios</a></li>
+                        <li><a href="/proyectos">Proyectos</a></li>
+                        <li><a href="/investigacion">Investigacion</a></li>
+                        <li><a href="/cursos">Cursos</a></li>
+                        <li><a href="/cotizacion">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h6 class="footer_title">Legal</h6>
+                    <ul class="list_style">
+                        <li><a href="/legal/politica_de_privacidad">Politica de Privacidad</a></li>
+                        <li><a href="/legal/terminos_y_condiciones">Terminos y Condiciones</a></li>
+                        <li><a href="/legal/libro_de_reclamaciones">Libro de Reclamaciones</a></li>
+                        <li><a href="/admin">Panel administrador</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h6 class="footer_title">Contacto</h6>
+                    <ul class="list_style">
+                        <li><a href="https://api.whatsapp.com/send?phone=51920137591&amp;text=Hola,%20quisiera%20informacion%20sobre%20los%20servicios%20de%20Group%20Total%20Quality%20Control." target="_blank" rel="noopener">+51 920 137 591</a></li>
+                                                <li><a href="mailto:responsablecomercial2@grouptqualityc.com.pe">responsablecomercial2@grouptqualityc.com.pe</a></li>
+                                                    <li><a href="mailto:grouptqc20@gmail.com">grouptqc20@gmail.com</a></li>
+                                                <li><a href="/cotizacion">Formulario de cotizacion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="red">
+    <div id="whatsapp">
+        <a href="#" role="button" data-wa-picker="" aria-haspopup="dialog" aria-controls="waPickerModal">
+            <span class="wa-icon"><img src="/assets/images/icons/icowhatsapp.png" alt="WhatsApp"></span>
+            <span class="wa-text">Contactenos por<br><strong>WhatsApp</strong></span>
+        </a>
+    </div>
+</div>
+
+<a href="https://www.facebook.com/LabTotalQualityControl/?locale=es_LA" target="_blank" rel="noopener" id="floatingFacebook" aria-label="Siguenos en Facebook">
+    <span class="fb-icon"><i class="fab fa-facebook-f"></i></span>
+    <span class="fb-text">Siguenos en<br><strong>Facebook</strong></span>
+</a>
+<style>
+#floatingFacebook {
+    position: fixed;
+    right: 18px;
+    bottom: 96px;
+    z-index: 998;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px 10px 10px;
+    background: #1877f2;
+    color: #fff !important;
+    border-radius: 999px;
+    box-shadow: 0 10px 26px rgba(24,119,242,0.45);
+    text-decoration: none !important;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.15;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    max-width: calc(100vw - 36px);
+}
+#floatingFacebook .fb-icon {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+#floatingFacebook .fb-icon i { font-size: 18px; color: #fff !important; }
+#floatingFacebook .fb-text { color: #fff !important; white-space: normal; }
+#floatingFacebook .fb-text strong { font-weight: 800; font-size: 15px; letter-spacing: 0.01em; }
+#floatingFacebook:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(24,119,242,0.55); background: #166fe0; color: #fff !important; }
+#floatingFacebook:hover * { color: #fff !important; }
+@media (max-width: 767px) {
+    #floatingFacebook { right: 14px; bottom: 86px; padding: 8px 14px 8px 8px; font-size: 12px; }
+    #floatingFacebook .fb-icon { width: 32px; height: 32px; }
+    #floatingFacebook .fb-icon i { font-size: 15px; }
+    #floatingFacebook .fb-text strong { font-size: 13px; }
+}
+</style>
+
+<div class="wa-picker" id="waPickerModal" role="dialog" aria-modal="true" aria-labelledby="waPickerTitle" hidden="">
+    <div class="wa-picker__backdrop" data-wa-close=""></div>
+    <div class="wa-picker__panel" role="document">
+        <button type="button" class="wa-picker__close" data-wa-close="" aria-label="Cerrar">×</button>
+        <div class="wa-picker__head">
+            <span class="wa-picker__logo"><i class="fab fa-whatsapp"></i></span>
+            <h3 id="waPickerTitle">Contactenos por WhatsApp</h3>
+            <p>Elige el numero con el que deseas escribir</p>
+        </div>
+        <div class="wa-picker__list">
+                            <a class="wa-picker__item" href="https://api.whatsapp.com/send?phone=51920137591&amp;text=Hola%2C%20quisiera%20informacion%20sobre%20los%20servicios%20de%20Group%20Total%20Quality%20Control." target="_blank" rel="noopener">
+                    <span class="wa-picker__icon"><i class="fab fa-whatsapp"></i></span>
+                    <span class="wa-picker__info">
+                        <span class="wa-picker__label">Comercial</span>
+                        <span class="wa-picker__num">+51 920 137 591</span>
+                    </span>
+                    <span class="wa-picker__arrow"><i class="fas fa-chevron-right"></i></span>
+                </a>
+                                </div>
+    </div>
+</div>
+<script>
+(function(){
+    var modal = document.getElementById('waPickerModal');
+    if (!modal) return;
+    var openers = document.querySelectorAll('[data-wa-picker]');
+    var closers = modal.querySelectorAll('[data-wa-close]');
+    function open(e){ if (e) e.preventDefault(); modal.hidden = false; document.body.classList.add('wa-picker-open'); }
+    function close(){ modal.hidden = true; document.body.classList.remove('wa-picker-open'); }
+    openers.forEach(function(o){ o.addEventListener('click', open); });
+    closers.forEach(function(c){ c.addEventListener('click', close); });
+    document.addEventListener('keydown', function(ev){ if (ev.key === 'Escape' && !modal.hidden) close(); });
+})();
+</script>
+
+<div class="footer-bt">
+    <div class="container position-relative">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="header-top-info mt-3">
+                    <div class="header-contact-info">
+                        <span class="p-span">Todos los derechos reservados © <b class="text-white">Group Total Quality Control</b> 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/jquery-3.2.1.min.js?v=20260426"></script>
+<script src="/assets/js/popper.js?v=20260426"></script>
+<script src="/assets/js/bootstrap.min.js?v=20260426"></script>
+<script src="/assets/vendors/owl-carousel/owl.carousel.min.js?v=20260426"></script>
+<script src="/assets/js/jquery.ajaxchimp.min.js?v=20260426"></script>
+<script src="/assets/js/mail-script.js?v=20260426"></script>
+<script src="/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js?v=20260426"></script>
+<script src="/assets/js/stellar.js?v=20260426"></script>
+<script src="/assets/vendors/lightbox/simpleLightbox.min.js?v=20260426"></script>
+<script src="/assets/js/custom.js?v=20260426"></script>
+
+
+</body></html>

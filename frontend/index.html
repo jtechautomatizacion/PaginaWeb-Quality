@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Ingreso administrador</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/favicon-32.png?v=1" type="image/png">
+    <link rel="apple-touch-icon" href="assets/favicon-180.png?v=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="css/main.css?v=60">
+</head>
+<body class="admin-theme">
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="text-center mb-4">
+                <img class="brand-admin-logo login-logo" src="assets/LogoQuality.png" alt="Group Total Quality Control">
+                <h1 class="h3 mt-3">Panel administrador</h1>
+                <p class="text-muted mb-0">Gestiona investigacion, cursos y proyectos de Group Total Quality Control desde un solo lugar.</p>
+            </div>
+
+            <form method="post" action="/admin/login">
+                <input type="hidden" name="_csrf" value="__CSRF_TOKEN__">
+                <div class="alert alert-danger login-error d-none" role="alert"></div>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input class="form-control" id="username" name="username" type="text" autocomplete="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contrasena</label>
+                    <input class="form-control" id="password" name="password" type="password" autocomplete="current-password" required>
+                </div>
+                <button class="btn btn-primary btn-block" type="submit">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api-base.js"></script>
+    <script src="js/auth.js?v=4"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+DirectoryIndex inicio.html index.html
+Options -Indexes
+RewriteEngine On
+
+RedirectMatch 403 \.env$
+RedirectMatch 403 ^/\.git(/|$)
+RedirectMatch 403 \.json$
+RedirectMatch 403 \.sql$
+RedirectMatch 403 \.login_attempts_
+RedirectMatch 403 ^/config/
+RedirectMatch 403 ^/\.well-known/admin
+RedirectMatch 403 ^/_wordpress_backup_no_usar/
+
+RewriteRule ^servicios/[a-z0-9-]+/?$ detalle.html [L]
+RewriteRule ^proyectos/[a-z0-9-]+/?$ detalle.html [L]
+RewriteRule ^investigacion/[a-z0-9-]+/?$ detalle.html [L]
+RewriteRule ^cursos/[a-z0-9-]+/?$ detalle.html [L]
+RewriteRule ^docentes/[a-z0-9-]+/?$ docentes.html [L]
+
+# 1) Si alguien entra con .html en la URL, redirige (301) a la version sin extension
+RewriteCond %{THE_REQUEST} \s/+(.*?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# 2) Internamente, sirve el archivo .html real cuando piden la URL sin extension
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^.]+)$ $1.html [NC,L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php83 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

@@ -1,0 +1,439 @@
+<html lang="es"><head>
+    <meta charset="utf-8">
+    <title>Mi perfil | Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/assets/company/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&amp;display=swap">
+    <style>
+        :root {
+            --admin-navy: #0f2b5b;
+            --admin-navy-deep: #091e42;
+            --admin-sky: #dbe7f3;
+            --admin-line: #d6dee8;
+            --topbar-h: 60px;
+            --sidebar-w: 260px;
+        }
+        html { scrollbar-width: none; }
+        html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+        body { font-family: 'Roboto', Arial, sans-serif; background: #edf3f8; color: #1f2937; margin: 0; }
+        h1,h2,h3,h4,h5,h6 { font-family: 'Roboto', Arial, sans-serif; font-weight: 900; color: #0f2b5b; }
+
+        /* ===== Topbar ===== */
+        .admin-topbar {
+            position: sticky; top: 0; z-index: 50;
+            height: var(--topbar-h);
+            background: #fff;
+            border-bottom: 1px solid var(--admin-line);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 28px;
+            box-shadow: 0 4px 12px rgba(15,43,91,0.06);
+        }
+        .admin-topbar__left,
+        .admin-topbar__right { display: flex; align-items: center; gap: 14px; }
+        .admin-topbar__left { padding-left: 4px; }
+        .admin-topbar__right { padding-right: 4px; }
+        .admin-topbar__toggle,
+        .admin-topbar__user {
+            background: transparent; border: 1.5px solid rgba(15,43,91,0.15); cursor: pointer;
+            width: 44px; height: 44px; border-radius: 12px;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--admin-navy); font-size: 18px;
+            transition: background 0.15s ease, border-color 0.15s ease;
+            margin: 0 4px;
+        }
+        .admin-topbar__toggle:hover,
+        .admin-topbar__user:hover { border-color: rgba(15,43,91,0.4); background: rgba(15,43,91,0.06); }
+        .admin-topbar__user { border: 0; width: auto; padding: 0 4px; }
+        .admin-topbar__toggle:hover,
+        .admin-topbar__user:hover { background: rgba(15,43,91,0.08); }
+        .admin-topbar__title { font-weight: 800; color: var(--admin-navy); font-size: 15px; margin: 0; }
+        .admin-topbar__title small { font-weight: 500; color: #6b7280; font-size: 12px; display: block; }
+        .admin-topbar__user .user-chip {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(15,43,91,0.08);
+            padding: 6px 16px 6px 8px;
+            border-radius: 999px;
+            margin-right: 4px;
+        }
+        .admin-topbar__user .user-chip__avatar {
+            width: 30px; height: 30px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--admin-navy), #1e4c9f);
+            color: #fff;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 12px;
+        }
+        .admin-topbar__user .user-chip__name { font-weight: 700; color: var(--admin-navy); font-size: 13px; }
+
+        /* Dropdown del usuario */
+        .user-dropdown {
+            position: absolute; top: calc(100% + 6px); right: 16px; z-index: 60;
+            min-width: 240px;
+            background: #fff; border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(15,43,91,0.2);
+            border: 1px solid var(--admin-line);
+            padding: 8px;
+            display: none;
+        }
+        .user-dropdown.is-open { display: block; }
+        .user-dropdown a,
+        .user-dropdown button {
+            display: flex; align-items: center; gap: 10px;
+            padding: 10px 14px; border-radius: 10px;
+            color: #1f2937; text-decoration: none; font-size: 14px; font-weight: 600;
+            background: transparent; border: 0; width: 100%; text-align: left; cursor: pointer;
+        }
+        .user-dropdown a:hover,
+        .user-dropdown button:hover { background: #f5f7fb; color: var(--admin-navy); text-decoration: none; }
+        .user-dropdown i { color: var(--admin-navy); width: 18px; text-align: center; }
+        .user-dropdown__sep { height: 1px; background: var(--admin-line); margin: 6px 0; }
+        .user-dropdown__head { padding: 10px 14px 8px; border-bottom: 1px solid var(--admin-line); margin-bottom: 6px; }
+        .user-dropdown__head strong { display: block; color: var(--admin-navy); font-size: 14px; }
+        .user-dropdown__head small { color: #6b7280; font-size: 12px; }
+
+        /* ===== Layout ===== */
+        .admin-shell { min-height: calc(100vh - var(--topbar-h)); position: relative; }
+        .admin-shell > .row { margin-left: 0; margin-right: 0; }
+        .admin-shell > .row > [class*="col-"] { padding-left: 0; padding-right: 0; }
+
+        /* ===== Sidebar ===== */
+        .admin-sidebar {
+            background: linear-gradient(180deg, #091e42, #0f2b5b);
+            color: #fff;
+            min-height: calc(100vh - var(--topbar-h));
+            padding: 28px 18px;
+            position: sticky; top: var(--topbar-h);
+            transition: transform 0.3s ease;
+            align-self: stretch;
+            height: calc(100vh - var(--topbar-h));
+            overflow-y: auto;
+        }
+        .admin-sidebar__brand { background: rgba(255,255,255,0.06); border-radius: 14px; padding: 10px 14px; height: 64px; overflow: hidden; display: flex; align-items: center; }
+        .admin-sidebar__brand img { max-width: 200px; height: 70px; object-fit: contain; object-position: left center; filter: brightness(0) invert(1); transform: scale(1.05) translateX(-4px); transform-origin: left center; }
+        .admin-sidebar__nav { display: flex; flex-direction: column; gap: 4px; }
+        .admin-sidebar a {
+            color: rgba(255,255,255,0.88);
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 14px; border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px; font-weight: 600;
+            transition: background 0.15s ease;
+        }
+        .admin-sidebar a i { width: 18px; text-align: center; opacity: 0.9; }
+        .admin-sidebar a:hover,
+        .admin-sidebar a.active {
+            background: rgba(255,255,255,0.14); color: #fff; text-decoration: none;
+        }
+        .admin-sidebar__sep { height: 1px; background: rgba(255,255,255,0.12); margin: 14px 0; }
+        .admin-sidebar form button { margin-top: 20px; }
+
+        /* ===== Content main ===== */
+        .admin-content { padding: 28px; min-height: calc(100vh - var(--topbar-h)); }
+        .admin-card { background: #fff; border-radius: 18px; box-shadow: 0 14px 32px rgba(17,24,39,0.06); padding: 24px; border: 1px solid rgba(17,24,39,0.05); }
+        .stat-card { background: linear-gradient(135deg, #fff, #eef4fa); border-radius: 18px; padding: 22px; height: 100%; border: 1px solid rgba(22,58,99,0.12); }
+        .table td, .table th { vertical-align: middle; }
+        .thumb-admin { width: 84px; height: 56px; border-radius: 12px; object-fit: cover; background: #eceff4; }
+
+        /* ===== Content area padding fix ===== */
+        .admin-content { padding: 28px 32px !important; }
+        .admin-shell > .row { flex-wrap: nowrap; }
+        .admin-shell > .row > .admin-content { min-width: 0; }
+        /* Separador visual entre sidebar y contenido */
+        @media (min-width: 992px) {
+            .admin-sidebar {
+                box-shadow: 8px 0 24px rgba(15,43,91,0.08);
+                border-right: 1px solid rgba(15,43,91,0.15);
+            }
+            .admin-shell > .row > .admin-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Desktop: contraer sidebar cuando se hace clic en hamburguesa */
+        @media (min-width: 992px) {
+            .admin-shell.sidebar-collapsed .admin-sidebar {
+                display: none !important;
+            }
+            .admin-shell.sidebar-collapsed > .row > [class*="col-lg-9"],
+            .admin-shell.sidebar-collapsed > .row > [class*="col-xl-10"],
+            .admin-shell.sidebar-collapsed .admin-content {
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        /* ===== Login page ===== */
+        .login-wrapper { min-height: 100vh; display: grid; place-items: center; padding: 32px; background: linear-gradient(135deg, #091e42, #0f2b5b); }
+        .login-card { width: min(460px, 100%); background: #fff; border-radius: 24px; padding: 34px; box-shadow: 0 25px 55px rgba(0,0,0,0.22); }
+
+        /* ===== Buttons ===== */
+        .btn-primary, .btn-outline-primary:hover { background-color: var(--admin-navy); border-color: var(--admin-navy); }
+        .btn-outline-primary { color: var(--admin-navy); border-color: var(--admin-navy); }
+        .btn-outline-primary:hover { color: #fff; }
+        .badge-success { background: #1f8a4c; }
+        .badge-secondary { background: #7c8693; }
+
+        /* ===== Reports cards ===== */
+        .report-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .report-kpi { background: #fff; border-radius: 14px; padding: 18px; border: 1px solid rgba(15,43,91,0.1); }
+        .report-kpi__label { font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+        .report-kpi__value { font-size: 32px; font-weight: 900; color: var(--admin-navy); line-height: 1.1; margin-top: 4px; }
+        .report-chart { display: flex; gap: 6px; align-items: flex-end; height: 160px; padding: 10px 0; }
+        .report-chart__bar { flex: 1; background: linear-gradient(180deg, #1e4c9f, #0f2b5b); border-radius: 4px 4px 0 0; min-height: 4px; position: relative; }
+        .report-chart__bar span { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #6b7280; white-space: nowrap; }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 991.98px) {
+            .admin-shell > .row { flex-wrap: wrap; }
+            .admin-sidebar {
+                position: fixed !important; top: var(--topbar-h); left: 0;
+                width: 260px !important; max-width: 78vw !important;
+                z-index: 45 !important; height: calc(100vh - var(--topbar-h));
+                transform: translateX(-100%);
+                overflow-y: auto;
+                box-shadow: 14px 0 40px rgba(15,43,91,0.35);
+                flex: 0 0 auto !important;
+                padding: 24px 18px !important;
+                transition: transform 0.3s ease;
+            }
+            .admin-shell.sidebar-open .admin-sidebar { transform: translateX(0); }
+            .admin-shell.sidebar-open::before {
+                content: ""; position: fixed; inset: var(--topbar-h) 0 0;
+                background: rgba(15,43,91,0.55); z-index: 40; backdrop-filter: blur(2px);
+            }
+            .admin-shell > .row > [class*="col-"],
+            .admin-shell .col-lg-9, .admin-shell .col-xl-10,
+            .admin-shell .admin-content {
+                flex: 0 0 100% !important; max-width: 100% !important; width: 100%;
+            }
+            .admin-content { padding: 22px 20px !important; }
+            .report-kpis { grid-template-columns: repeat(2, 1fr); }
+            .admin-topbar__title { font-size: 13px; }
+            .admin-topbar__title small { font-size: 10px; }
+            .user-chip__name { display: none !important; }
+        }
+        @media (max-width: 575.98px) {
+            .admin-topbar { padding: 0 16px; }
+            .admin-topbar__left, .admin-topbar__right { gap: 8px; }
+            .admin-topbar__toggle { width: 40px; height: 40px; margin: 0 6px 0 0; }
+            .admin-topbar__user { margin: 0 0 0 6px; }
+            .admin-content { padding: 16px 12px !important; }
+            .report-kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .report-kpi { padding: 14px; }
+            .report-kpi__value { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+        <header class="admin-topbar">
+        <div class="admin-topbar__left">
+            <button class="admin-topbar__toggle" type="button" data-sidebar-toggle="" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="admin-topbar__title">
+                Panel Group TQC
+                <small>Admin · 14/07/2026</small>
+            </div>
+        </div>
+        <div class="admin-topbar__right" style="position: relative;">
+            <button class="admin-topbar__user" type="button" data-user-toggle="" aria-haspopup="true" aria-expanded="false">
+                <span class="user-chip">
+                    <span class="user-chip__avatar">A</span>
+                    <span class="user-chip__name">Administrador Group TQC</span>
+                    <i class="fas fa-chevron-down" style="font-size:11px; color:#0f2b5b;"></i>
+                </span>
+            </button>
+            <div class="user-dropdown" data-user-dropdown="">
+                <div class="user-dropdown__head">
+                    <strong>Administrador Group TQC</strong>
+                    <small>Administrador</small>
+                </div>
+                <a href="/admin/profile"><i class="fas fa-user-cog"></i> Mi perfil</a>
+                <a href="/admin/reports"><i class="fas fa-chart-line"></i> Reportes</a>
+                <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver sitio</a>
+                <div class="user-dropdown__sep"></div>
+                <form method="post" action="/admin/logout" style="margin:0;">
+                    <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                    <button type="submit"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+<style>
+.profile-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 22px; align-items: start; }
+.profile-section {
+    background: #fff;
+    border: 1px solid rgba(15,43,91,0.08);
+    border-radius: 16px;
+    padding: 26px 28px;
+    box-shadow: 0 10px 26px rgba(17,24,39,0.05);
+}
+.profile-section__head { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid #f5f7fb; }
+.profile-section__icon { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #0f2b5b, #1e4c9f); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; flex: 0 0 auto; }
+.profile-section__title { margin: 0; font-size: 16px; font-weight: 800; color: #0f2b5b; }
+.profile-section__title small { display: block; font-size: 12px; font-weight: 500; color: #6b7280; margin-top: 2px; }
+.profile-field { margin-bottom: 16px; }
+.profile-field label { font-size: 13px; font-weight: 700; color: #1f2937; margin-bottom: 6px; display: block; }
+.profile-field input { width: 100%; padding: 11px 14px; border: 1px solid #dfe4ee; border-radius: 10px; font-size: 14px; background: #fafbfc; color: #1f2937; transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease; font-family: inherit; }
+.profile-field input:focus { outline: none; border-color: #0f2b5b; background: #fff; box-shadow: 0 0 0 3px rgba(15,43,91,0.12); }
+.profile-field small { font-size: 12px; color: #6b7280; margin-top: 5px; display: block; }
+.profile-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.profile-subhead { font-size: 14px; color: #0f2b5b; margin: 22px 0 12px; padding-top: 18px; border-top: 1px solid #f5f7fb; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.profile-btn-save { width: 100%; background: #0f2b5b; color: #fff; border: 0; padding: 14px; border-radius: 10px; font-weight: 800; font-size: 14px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s ease; box-shadow: 0 10px 24px rgba(15,43,91,0.22); margin-top: 6px; }
+.profile-btn-save:hover { background: #091e42; }
+.profile-info-card { background: linear-gradient(135deg, #0f2b5b, #1e4c9f); color: #fff; border-radius: 16px; padding: 26px; }
+.profile-info-card h3 { color: #fff; font-size: 16px; margin-bottom: 12px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.profile-info-card p { color: rgba(255,255,255,0.88); font-size: 14px; line-height: 1.65; margin-bottom: 14px; }
+.profile-info-card .sep { border-color: rgba(255,255,255,0.18); margin: 14px 0; }
+.profile-info-card .label { color: rgba(255,255,255,0.72); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; margin-bottom: 4px; }
+.profile-info-card .val { color: #fff; font-size: 15px; font-weight: 700; }
+.profile-info-card .meta { color: rgba(255,255,255,0.7); font-size: 12px; margin-top: 4px; }
+@media (max-width: 991.98px) { .profile-grid { grid-template-columns: 1fr; } }
+@media (max-width: 575.98px) { .profile-grid-2 { grid-template-columns: 1fr; } .profile-section { padding: 20px 18px; } }
+</style>
+
+<div class="container-fluid admin-shell">
+    <div class="row">
+        <aside class="col-lg-3 col-xl-2 admin-sidebar" id="admin-sidebar">
+    <div class="admin-sidebar__brand">
+        <img class="brand-admin-logo" src="/assets/company/logo-grouptqc-wide-v2.png" alt="Group Total Quality Control">
+    </div>
+    <p class="mt-3 mb-4 text-white-50"><i class="fas fa-user-circle"></i> &nbsp;Administrador Group TQC</p>
+    <nav class="admin-sidebar__nav">
+        <a href="/admin/dashboard" class=""><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/admin/services" class=""><i class="fas fa-cogs"></i> Servicios</a>
+        <a href="/admin/posts" class=""><i class="fas fa-book"></i> Investigacion</a>
+        <a href="/admin/courses" class=""><i class="fas fa-graduation-cap"></i> Cursos</a>
+        <a href="/admin/projects" class=""><i class="fas fa-project-diagram"></i> Proyectos</a>
+        <div class="admin-sidebar__sep"></div>
+        <a href="/admin/pages" class=""><i class="fas fa-paint-brush"></i> Editor de paginas</a>
+        <a href="/admin/reports" class=""><i class="fas fa-chart-line"></i> Reportes</a>
+        <a href="/admin/profile" class="active"><i class="fas fa-user-cog"></i> Mi perfil</a>
+        <a href="/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver sitio</a>
+    </nav>
+    <form method="post" action="/admin/logout" class="mt-4">
+        <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+        <button class="btn btn-outline-light btn-block" type="submit"><i class="fas fa-sign-out-alt"></i> Cerrar sesion</button>
+    </form>
+</aside>
+        <main class="col-lg-9 col-xl-10 admin-content">
+                        
+            <div class="mb-4">
+                <h1 class="h2 mb-1"><i class="fas fa-user-cog"></i> &nbsp;Mi perfil</h1>
+                <p class="text-muted mb-0">Actualiza tu informacion de acceso al panel administrador.</p>
+            </div>
+
+            <div class="profile-grid">
+                <form method="post" action="/admin/profile" class="profile-section">
+                    <input type="hidden" name="_csrf" value="11d1491c60366844fc86f2da0709fa221b8a25056d8188cc550937aab1571a44">
+                    <div class="profile-section__head">
+                        <div class="profile-section__icon"><i class="fas fa-user-edit"></i></div>
+                        <h3 class="profile-section__title">Datos de la cuenta <small>Nombre publico y usuario para iniciar sesion</small></h3>
+                    </div>
+
+                    <div class="profile-field">
+                        <label for="full_name">Nombre completo</label>
+                        <input id="full_name" name="full_name" type="text" value="Administrador Group TQC" required="">
+                    </div>
+                    <div class="profile-field">
+                        <label for="username">Usuario</label>
+                        <input id="username" name="username" type="text" value="grouptqc" required="" autocomplete="username">
+                        <small>Lo usaras para iniciar sesion. Debe ser unico.</small>
+                    </div>
+
+                    <div class="profile-subhead"><i class="fas fa-key"></i> Cambiar contrasena <span style="font-weight:500; color:#6b7280; font-size:12px;">(opcional)</span></div>
+                    <small style="color:#6b7280; display:block; margin-bottom:12px; font-size:12.5px;">Deja los campos vacios si no deseas cambiar tu contrasena.</small>
+
+                    <div class="profile-field">
+                        <label for="current_password">Contrasena actual</label>
+                        <input id="current_password" name="current_password" type="password" autocomplete="current-password">
+                    </div>
+                    <div class="profile-grid-2">
+                        <div class="profile-field">
+                            <label for="new_password">Nueva contrasena</label>
+                            <input id="new_password" name="new_password" type="password" autocomplete="new-password" minlength="8">
+                            <small>Minimo 8 caracteres.</small>
+                        </div>
+                        <div class="profile-field">
+                            <label for="confirm_password">Confirmar</label>
+                            <input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" minlength="8">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="profile-btn-save"><i class="fas fa-save"></i> Guardar cambios</button>
+                </form>
+
+                <aside class="profile-info-card">
+                    <h3><i class="fas fa-shield-alt"></i> Seguridad</h3>
+                    <p>Usa una contrasena fuerte: al menos 8 caracteres combinando letras, numeros y simbolos. No compartas tus credenciales ni las reutilices en otros servicios.</p>
+                    <hr class="sep">
+                    <div class="label">Sesion iniciada como</div>
+                    <div class="val">Administrador Group TQC</div>
+                    <div class="meta">Usuario: grouptqc</div>
+                    <hr class="sep">
+                    <div class="label">Cuenta creada</div>
+                    <div class="val">09/04/2026</div>
+                </aside>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+(function(){
+    // Toggle sidebar (colapsa en desktop, off-canvas en mobile)
+    var toggle = document.querySelector('[data-sidebar-toggle]');
+    var shell = document.querySelector('.admin-shell');
+    if (toggle && shell) {
+        // Restaurar estado desde localStorage (solo desktop)
+        if (window.matchMedia('(min-width: 992px)').matches && localStorage.getItem('adminSidebarCollapsed') === '1') {
+            shell.classList.add('sidebar-collapsed');
+        }
+        toggle.addEventListener('click', function(){
+            var isMobile = window.matchMedia('(max-width: 991.98px)').matches;
+            if (isMobile) {
+                shell.classList.toggle('sidebar-open');
+            } else {
+                shell.classList.toggle('sidebar-collapsed');
+                localStorage.setItem('adminSidebarCollapsed', shell.classList.contains('sidebar-collapsed') ? '1' : '0');
+            }
+        });
+        // Cerrar mobile al click en backdrop
+        shell.addEventListener('click', function(ev){
+            if (!shell.classList.contains('sidebar-open')) return;
+            if (ev.target === shell) shell.classList.remove('sidebar-open');
+        });
+    }
+
+    // Toggle dropdown del usuario
+    var userBtn = document.querySelector('[data-user-toggle]');
+    var dropdown = document.querySelector('[data-user-dropdown]');
+    if (userBtn && dropdown) {
+        userBtn.addEventListener('click', function(ev){
+            ev.stopPropagation();
+            dropdown.classList.toggle('is-open');
+            userBtn.setAttribute('aria-expanded', dropdown.classList.contains('is-open') ? 'true' : 'false');
+        });
+        document.addEventListener('click', function(ev){
+            if (!dropdown.contains(ev.target) && !userBtn.contains(ev.target)) {
+                dropdown.classList.remove('is-open');
+                userBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+        document.addEventListener('keydown', function(ev){
+            if (ev.key === 'Escape') {
+                dropdown.classList.remove('is-open');
+                userBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+    }
+})();
+</script>
+
+
+</body></html>

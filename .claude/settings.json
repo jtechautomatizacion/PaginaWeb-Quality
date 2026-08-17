@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s \"http://localhost/Pagina%20web/servicios/mecanica-de-suelos-y-geotecnia\")",
+      "Bash(curl -s -o /dev/null -w \"css/main.css via base: %{http_code}\\\\n\" \"http://localhost/Pagina%20web/css/main.css\")",
+      "Bash(curl -s -o /dev/null -w \"js/detalle.js via base: %{http_code}\\\\n\" \"http://localhost/Pagina%20web/js/detalle.js\")",
+      "Bash(node -e ' *)",
+      "Bash(curl -s -o /dev/null -w \"inicio.html: %{http_code}\\\\n\" \"http://localhost/Pagina%20web/inicio.html\")"
+    ]
+  }
+}
