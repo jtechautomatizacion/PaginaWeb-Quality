@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { requireAuth } = require('./middleware/auth.middleware');
 
 const app = express();
@@ -14,6 +15,7 @@ if (!process.env.JWT_SECRET) {
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: false }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const PUBLIC_API_PATHS = ['/login', '/cambiar_contrasena'];
 app.use('/api', (req, res, next) => {
