@@ -13,6 +13,12 @@
         return 'https://api.whatsapp.com/send?phone=' + WHATSAPP_NUMBER + '&text=' + encodeURIComponent(mensaje);
     }
 
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+    }
+
     function leerTipoYSlugDesdeRuta() {
         var pathMatch = decodeURIComponent(window.location.pathname)
             .match(/\/(servicios|proyectos|investigacion|cursos)\/([a-z0-9-]+)\/?$/);
@@ -37,7 +43,7 @@
         var cards = otros.map(function (item) {
             var img = (tipo === 'servicios' && item.intro_imagen) ? item.intro_imagen : item.imagen;
             return '<a href="' + tipo + '/' + escapeHtml(item.slug) + '" class="svc-related-card">'
-                + '<img src="' + escapeHtml(resolveApiUrl(img)) + '" alt="' + escapeHtml(item.titulo) + '" class="svc-related-card__image">'
+                + '<img src="' + escapeHtml(getImageUrl(img)) + '" alt="' + escapeHtml(item.titulo) + '" class="svc-related-card__image">'
                 + '<div class="svc-related-card__body">'
                 + '<h4>' + escapeHtml(item.titulo) + '</h4>'
                 + '<p>' + escapeHtml(item.resumen) + '</p>'
@@ -207,7 +213,7 @@
         var cuerpo = pConfig.body(item);
         var ctaStackHtml = pConfig.ctaStack ? pConfig.ctaStack(mensajeWa) : '';
 
-        var fotosHtml = '<a href="' + escapeHtml(resolveApiUrl(item.imagen)) + '" target="_blank" rel="noopener"><img src="' + escapeHtml(resolveApiUrl(item.imagen)) + '" alt="' + escapeHtml(item.titulo) + '" loading="lazy"></a>';
+        var fotosHtml = '<a href="' + escapeHtml(getImageUrl(item.imagen)) + '" target="_blank" rel="noopener"><img src="' + escapeHtml(getImageUrl(item.imagen)) + '" alt="' + escapeHtml(item.titulo) + '" loading="lazy"></a>';
 
         var relacionadosHtml = otros.map(function (o) {
             return '<a class="mosaic-tile" href="' + tipo + '/' + escapeHtml(o.slug) + '">'
@@ -228,7 +234,7 @@
             + '<div class="pi-main row">'
             + '<div class="pi-media col-lg-6"><div class="pi-image-wrap">'
             + '<div class="pi-cover-slider"><div class="pi-slider-track">'
-            + '<figure class="pi-slide is-active"><img src="' + escapeHtml(resolveApiUrl(item.imagen)) + '" alt="' + escapeHtml(item.titulo) + '"></figure>'
+            + '<figure class="pi-slide is-active"><img src="' + escapeHtml(getImageUrl(item.imagen)) + '" alt="' + escapeHtml(item.titulo) + '"></figure>'
             + '</div></div>'
             + '<div class="pi-image-caption">Group Total Quality Control - Laboratorio, peritaje y consultoria tecnica.</div>'
             + '</div></div>'
@@ -316,7 +322,7 @@
             + '<a href="' + waLink(mensajeWa) + '" target="_blank" rel="noopener" class="svc-btn svc-btn--wa"><i class="fab fa-whatsapp"></i> Hablar con un asesor</a>'
             + (tipo === 'servicios' ? '<a href="assets/files/brochure-group-total-quality-control.pdf" target="_blank" class="svc-btn svc-btn--primary"><i class="fas fa-file-pdf"></i> Descargar Brochure</a>' : '')
             + '</div></div>'
-            + '<div class="svc-intro__image"><img src="' + escapeHtml(resolveApiUrl(imagenMostrada)) + '" alt="' + escapeHtml(item.titulo) + '"></div>'
+            + '<div class="svc-intro__image"><img src="' + escapeHtml(getImageUrl(imagenMostrada)) + '" alt="' + escapeHtml(item.titulo) + '"></div>'
             + '</div></div></section>'
 
             + (tipo === 'servicios' && item.contenido ? '<section class="svc-section"><div class="container"><div class="svc-section__head"><h2 class="svc-section__title">Informacion completa del servicio</h2></div><div class="svc-body-content">' + item.contenido + '</div></div></section>' : '')

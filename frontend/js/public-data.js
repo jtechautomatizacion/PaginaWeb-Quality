@@ -10,7 +10,12 @@
 
     function imagenServicio(i) { return IMAGENES_SERVICIOS[i % IMAGENES_SERVICIOS.length]; }
     function imagenProyecto(i) { return IMAGENES_PROYECTOS[i % IMAGENES_PROYECTOS.length]; }
-    function imagenDe(item, fallback) { return item && item.imagen ? resolveApiUrl(item.imagen) : fallback; }
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+    }
+    function imagenDe(item, fallback) { return item && item.imagen ? getImageUrl(item.imagen) : fallback; }
 
     if (serviciosMosaico) {
         ApiClient.fetch(window.API_BASE + '/api/servicios')

@@ -83,6 +83,12 @@
         });
     }
 
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/200x150/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+    }
+
     function renderAdminRow(item, viewBase) {
         var estado = item.estado === 'draft' ? 'draft' : 'published';
         var badgeClass = estado === 'published' ? 'badge-success' : 'badge-secondary';
@@ -97,7 +103,7 @@
         tr.setAttribute('data-date', item.fecha || '');
         tr.setAttribute('data-timestamp', String(item.timestamp || 0));
         tr.setAttribute('data-title', item.titulo.toLowerCase());
-        tr.innerHTML = '<td><img class="thumb-admin" src="' + escapeHtml(resolveApiUrl(item.imagen)) + '" alt="' + escapeHtml(item.titulo) + '"></td>'
+        tr.innerHTML = '<td><img class="thumb-admin" src="' + escapeHtml(getImageUrl(item.imagen)) + '" alt="' + escapeHtml(item.titulo) + '"></td>'
             + '<td><strong>' + escapeHtml(item.titulo) + '</strong><div class="text-muted" style="font-size:12px;">' + escapeHtml(item.resumen) + '</div></td>'
             + '<td><span class="badge ' + badgeClass + '">' + estado + '</span></td>'
             + '<td style="white-space:nowrap;">' + escapeHtml(displayDate) + '</td>'
