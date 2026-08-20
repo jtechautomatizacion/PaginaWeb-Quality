@@ -163,7 +163,7 @@
             if (!destacados.length) return;
 
             heroSlides.innerHTML = destacados.map(function (s, i) {
-                return '<div class="hm-hero__slide' + (i === 0 ? ' is-active' : '') + '" data-index="' + i + '" style="background-image: url(\'' + (s.imagen || '') + '\');">'
+                return '<div class="hm-hero__slide' + (i === 0 ? ' is-active' : '') + '" data-index="' + i + '" style="background-image: url(\'' + getImageUrl(s.imagen) + '\');">'
                     + '<div class="container hm-hero__inner">'
                     + '<div class="hm-hero__content">'
                     + '<span class="hm-hero__eyebrow"><i class="fas fa-certificate"></i> INACAL LE-234 &middot; ISO 17025:2017</span>'
@@ -260,7 +260,7 @@
         .then(function (clientes) {
             if (!clientes.length) return;
             var itemsHtml = clientes.map(function (c) {
-                return '<div class="hm-clients-marquee__item"><img src="' + c.logo_url + '" alt="' + c.nombre + '" loading="lazy"></div>';
+                return '<div class="hm-clients-marquee__item"><img src="' + getImageUrl(c.logo_url) + '" alt="' + c.nombre + '" loading="lazy"></div>';
             }).join('');
             track.innerHTML = itemsHtml + itemsHtml;
         })

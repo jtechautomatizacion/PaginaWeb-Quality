@@ -52,7 +52,7 @@ router.post('/', upload.single('file'), (req, res) => {
     const nombreArchivo = `${tabla}_${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
     fs.writeFileSync(path.join(uploadsDir, nombreArchivo), req.file.buffer);
 
-    const urlPublica = `assets/uploads/${tabla}/${nombreArchivo}`;
+    const urlPublica = `/uploads/${tabla}/${nombreArchivo}`;
     deleteIfUploaded(req.body.anterior || '');
 
     res.status(200).json({ ok: true, url: urlPublica, tipo: archivoTipo });

@@ -1,0 +1,47 @@
+=== INSTRUCCIONES PARA REINICIAR BACKEND EN VPS ===
+
+1. SSH a VPS (82.39.109.180):
+   ssh usuario@82.39.109.180
+   (usa tu contraseña)
+
+2. Ve al directorio backend:
+   cd /ruta/a/backend
+   
+3. Detén el servidor (usando NSSM en Windows, o PM2/systemctl en Linux):
+   
+   SI ESTÁS EN WINDOWS CON NSSM:
+   nssm stop groupTQC-api
+   
+   SI ESTÁS EN LINUX CON PM2:
+   pm2 stop server.js
+   
+   SI USAS SYSTEMCTL:
+   systemctl stop grouptqc-backend
+
+4. Sube los archivos corregidos:
+   - backend/routes/upload.routes.js
+   - backend/utils/uploadedFile.js
+
+5. Reinicia el servidor:
+   
+   SI USAS NSSM:
+   nssm start groupTQC-api
+   nssm status groupTQC-api
+   
+   SI USAS PM2:
+   pm2 start server.js
+   pm2 status
+   
+   SI USAS SYSTEMCTL:
+   systemctl start grouptqc-backend
+   systemctl status grouptqc-backend
+
+6. Verifica que esté corriendo:
+   curl http://localhost:4000/api/servicios
+   (debe retornar JSON, no error)
+
+=== QUÉ SE ARREGLÓ ===
+✓ Las imágenes ahora se guardan en: backend/uploads/
+✓ Las imágenes se sirven en: https://api.grouptqualityc.com.pe/uploads/
+✓ Las rutas retornadas por /api/upload son correctas: /uploads/servicios/...
+✓ getImageUrl() en frontend puede construir URLs válidas

@@ -5,6 +5,12 @@
         });
     }
 
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+    }
+
     var slidesContainer = document.getElementById('contenedor-nosotros-slides');
     var visionContainer = document.getElementById('contenedor-vision');
     var misionContainer = document.getElementById('contenedor-mision');
@@ -28,7 +34,7 @@
                             + '<p>' + (s.contenido || '') + '</p>'
                             + '</div></div>'
                             + '<div class="col-md-6 col-sm-12 col-12">'
-                            + '<img src="' + escapeHtml(s.imagen) + '" class="d-block w-100" style="border-radius: 10px;" alt="' + escapeHtml(s.titulo) + '">'
+                            + '<img src="' + escapeHtml(getImageUrl(s.imagen)) + '" class="d-block w-100" style="border-radius: 10px;" alt="' + escapeHtml(s.titulo) + '">'
                             + '</div></div></div>';
                     }).join('');
                 }
@@ -36,7 +42,7 @@
                 function pintarVisMis(container, bloque, imgWidth) {
                     if (!container || !bloque) return;
                     container.innerHTML = '<div class="vis-mis-alig">'
-                        + '<img src="' + escapeHtml(bloque.imagen) + '" width="' + imgWidth + '" alt="' + escapeHtml(bloque.titulo) + '">'
+                        + '<img src="' + escapeHtml(getImageUrl(bloque.imagen)) + '" width="' + imgWidth + '" alt="' + escapeHtml(bloque.titulo) + '">'
                         + '<div>'
                         + '<h2 class="h2_title">' + escapeHtml(bloque.titulo) + '</h2>'
                         + '<span>' + (bloque.contenido || '') + '</span>'
@@ -48,7 +54,7 @@
                 if (certsContainer && byClave.certificaciones) {
                     var c = byClave.certificaciones;
                     certsContainer.innerHTML = '<div class="iso-alig">'
-                        + '<img src="' + escapeHtml(c.imagen) + '" width="80" alt="' + escapeHtml(c.titulo) + '">'
+                        + '<img src="' + escapeHtml(getImageUrl(c.imagen)) + '" width="80" alt="' + escapeHtml(c.titulo) + '">'
                         + '<div>'
                         + '<h2 class="h2_title">' + escapeHtml(c.titulo) + '</h2>'
                         + '<span>' + (c.contenido || '') + '</span>'
@@ -100,7 +106,7 @@
                 staffContainer.innerHTML = staff.map(function (p) {
                     return '<div class="col-md-4 col-sm-6 col-12 mt-3">'
                         + '<div class="old-highlight-box text-center">'
-                        + '<img src="' + escapeHtml(p.imagen) + '" alt="' + escapeHtml(p.nombre) + '" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 14px; border: 3px solid var(--gtqc-blue-deep); display: block;">'
+                        + '<img src="' + escapeHtml(getImageUrl(p.imagen)) + '" alt="' + escapeHtml(p.nombre) + '" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 14px; border: 3px solid var(--gtqc-blue-deep); display: block;">'
                         + '<h3>' + escapeHtml(p.nombre) + '</h3>'
                         + '<p style="color: var(--gtqc-blue-deep);"><strong>' + escapeHtml(p.cargo) + '</strong></p>'
                         + '<p style="text-align: left;">' + escapeHtml(p.descripcion) + '</p>'

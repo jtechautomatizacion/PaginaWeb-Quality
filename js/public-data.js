@@ -10,10 +10,15 @@
 
     function imagenServicio(i) { return IMAGENES_SERVICIOS[i % IMAGENES_SERVICIOS.length]; }
     function imagenProyecto(i) { return IMAGENES_PROYECTOS[i % IMAGENES_PROYECTOS.length]; }
-    function imagenDe(item, fallback) { return item && item.imagen ? item.imagen : fallback; }
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+    }
+    function imagenDe(item, fallback) { return item && item.imagen ? getImageUrl(item.imagen) : fallback; }
 
     if (serviciosMosaico) {
-        ApiClient.fetch('api/servicios')
+        ApiClient.fetch(window.API_BASE + '/api/servicios')
             .then(function (servicios) {
                 serviciosMosaico.innerHTML = servicios.map(function (s, i) {
                     return '<a href="servicios/' + s.slug + '" class="hm-service-card">'
@@ -29,7 +34,7 @@
     }
 
     if (serviciosGrid) {
-        ApiClient.fetch('api/servicios')
+        ApiClient.fetch(window.API_BASE + '/api/servicios')
             .then(function (servicios) {
                 serviciosGrid.innerHTML = servicios.map(function (s, i) {
                     return '<div class="col-md-4 col-sm-6 col-12 mt-2">'
@@ -49,7 +54,7 @@
     }
 
     if (proyectosTrack) {
-        ApiClient.fetch('api/proyectos')
+        ApiClient.fetch(window.API_BASE + '/api/proyectos')
             .then(function (proyectos) {
                 proyectosTrack.innerHTML = proyectos.map(function (p, i) {
                     return '<div class="hm-carousel__card">'
@@ -70,7 +75,7 @@
 
     if (proyectosGrid) {
         var categoriasList = document.getElementById('proyectos-categorias');
-        ApiClient.fetch('api/proyectos')
+        ApiClient.fetch(window.API_BASE + '/api/proyectos')
             .then(function (proyectos) {
                 proyectosGrid.innerHTML = proyectos.map(function (p, i) {
                     var wa = 'https://api.whatsapp.com/send?phone=' + window.APP_CONFIG.whatsappNumber + '&text=' + encodeURIComponent('Hola, quisiera informacion sobre: ' + p.titulo);
@@ -122,14 +127,14 @@
 
     if (investigacionGrid) {
         var investigacionCategoriasList = document.getElementById('investigacion-categorias');
-        ApiClient.fetch('api/investigacion')
+        ApiClient.fetch(window.API_BASE + '/api/investigacion')
             .then(function (items) {
                 var publicados = items.filter(function (i) { return i.estado !== 'draft'; });
                 investigacionGrid.innerHTML = publicados.map(function (i) {
                     var wa = 'https://api.whatsapp.com/send?phone=' + window.APP_CONFIG.whatsappNumber + '&text=' + encodeURIComponent('Hola, quisiera informacion sobre: ' + i.titulo);
                     return '<div class="mosaic-tile" data-category="">'
                         + '<a class="mosaic-tile__imglink" href="investigacion/' + i.slug + '" aria-label="' + i.titulo + '">'
-                        + '<img src="' + i.imagen + '" alt="' + i.titulo + '" loading="lazy">'
+                        + '<img src="' + imagenDe(i, 'assets/company/hero-campo.jpeg') + '" alt="' + i.titulo + '" loading="lazy">'
                         + '</a>'
                         + '<div class="mosaic-tile__overlay">'
                         + '<span class="mosaic-tile__title">' + i.titulo + '</span>'
@@ -152,13 +157,19 @@
     var heroSlides = document.querySelector('.hm-hero__slides');
     if (!heroSlides) return;
 
-    ApiClient.fetch('api/servicios')
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+    }
+
+    ApiClient.fetch(window.API_BASE + '/api/servicios')
         .then(function (servicios) {
             var destacados = servicios.filter(function (s) { return s.estado !== 'draft' && Number(s.destacado) === 1; }).slice(0, 4);
             if (!destacados.length) return;
 
             heroSlides.innerHTML = destacados.map(function (s, i) {
-                return '<div class="hm-hero__slide' + (i === 0 ? ' is-active' : '') + '" data-index="' + i + '" style="background-image: url(\'' + (s.imagen || '') + '\');">'
+                return '<div class="hm-hero__slide' + (i === 0 ? ' is-active' : '') + '" data-index="' + i + '" style="background-image: url(\'' + getImageUrl(s.imagen) + '\');">'
                     + '<div class="container hm-hero__inner">'
                     + '<div class="hm-hero__content">'
                     + '<span class="hm-hero__eyebrow"><i class="fas fa-certificate"></i> INACAL LE-234 &middot; ISO 17025:2017</span>'
@@ -179,7 +190,7 @@
     var statsContainer = document.getElementById('contenedor-estadisticas');
     if (!statsContainer) return;
 
-    ApiClient.fetch('api/estadisticas')
+    ApiClient.fetch(window.API_BASE + '/api/estadisticas')
         .then(function (items) {
             statsContainer.innerHTML = items.map(function (e) {
                 return '<div class="hm-stat">'
@@ -195,13 +206,19 @@
     var certsContainer = document.getElementById('contenedor-acreditaciones');
     if (!certsContainer) return;
 
-    ApiClient.fetch('api/acreditaciones')
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+    }
+
+    ApiClient.fetch(window.API_BASE + '/api/acreditaciones')
         .then(function (items) {
             certsContainer.innerHTML = items.map(function (a) {
                 var icon = a.archivo_tipo === 'pdf' ? 'fa-file-pdf' : 'fa-image';
                 var label = a.archivo_tipo === 'pdf' ? 'Descargar PDF' : 'Ver certificado';
                 var link = a.archivo_url
-                    ? '<a href="' + a.archivo_url + '" target="_blank" rel="noopener" class="hm-cert__link"><i class="fas ' + icon + '"></i> ' + label + '</a>'
+                    ? '<a href="' + getImageUrl(a.archivo_url) + '" target="_blank" rel="noopener" class="hm-cert__link"><i class="fas ' + icon + '"></i> ' + label + '</a>'
                     : '';
                 return '<div class="hm-cert">'
                     + '<h3>' + a.titulo + '</h3>'
@@ -217,7 +234,7 @@
     var textos = document.querySelectorAll('[data-content]');
     if (!textos.length) return;
 
-    ApiClient.fetch('api/contenido')
+    ApiClient.fetch(window.API_BASE + '/api/contenido')
         .then(function (data) {
             textos.forEach(function (el) {
                 var clave = el.getAttribute('data-content');
@@ -251,11 +268,17 @@
     var track = document.getElementById('contenedor-clientes-marquee');
     if (!track) return;
 
-    ApiClient.fetch('api/clientes')
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+    }
+
+    ApiClient.fetch(window.API_BASE + '/api/clientes')
         .then(function (clientes) {
             if (!clientes.length) return;
             var itemsHtml = clientes.map(function (c) {
-                return '<div class="hm-clients-marquee__item"><img src="' + c.logo_url + '" alt="' + c.nombre + '" loading="lazy"></div>';
+                return '<div class="hm-clients-marquee__item"><img src="' + getImageUrl(c.logo_url) + '" alt="' + c.nombre + '" loading="lazy"></div>';
             }).join('');
             track.innerHTML = itemsHtml + itemsHtml;
         })

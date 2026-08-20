@@ -17,6 +17,12 @@
         return 'https://api.whatsapp.com/send?phone=' + window.APP_CONFIG.whatsappNumber + '&text=' + encodeURIComponent(mensaje);
     }
 
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+    }
+
     function buildFilterList(container, group, counts, total) {
         if (!container) return;
         var values = Object.keys(counts).sort();
@@ -52,7 +58,7 @@
                 + ' data-docente-name="' + escapeHtml(docente.titulo) + '"'
                 + ' data-docente-role="' + escapeHtml(docente.role || '') + '"'
                 + ' data-docente-bio="' + escapeHtml(docente.bio || '') + '"'
-                + ' data-docente-photo="' + escapeHtml(docente.imagen || '') + '"'
+                + ' data-docente-photo="' + escapeHtml(getImageUrl(docente.imagen)) + '"'
                 + ' data-docente-linkedin="' + escapeHtml(docente.linkedin || '') + '">'
                 + '<i class="fas fa-user-tie"></i> Ver docente</button>'
             : '';
@@ -60,7 +66,7 @@
         return '<article class="course-card" data-modality="' + escapeHtml(modalidad) + '" data-level="' + escapeHtml(nivel) + '" data-title="' + escapeHtml(titleAttr) + '" data-index="' + index + '">'
             + docenteBlock
             + '<a class="course-card__imglink" href="cursos/' + curso.slug + '" aria-label="' + escapeHtml(curso.titulo) + '">'
-            + '<img class="course-card__image" src="' + escapeHtml(curso.imagen) + '" alt="' + escapeHtml(curso.titulo) + '" loading="lazy">'
+            + '<img class="course-card__image" src="' + escapeHtml(getImageUrl(curso.imagen)) + '" alt="' + escapeHtml(curso.titulo) + '" loading="lazy">'
             + (modalidad ? '<div class="course-card__badge">' + escapeHtml(modalidad.toUpperCase()) + '</div>' : '')
             + '</a>'
             + '<div class="course-card__body">'
@@ -86,7 +92,7 @@
 
         return '<article class="docente-card">'
             + '<a href="docentes/' + docente.slug + '#cursos" class="docente-card__link-wrap" aria-label="Ver perfil de ' + escapeHtml(docente.titulo) + '">'
-            + '<div class="docente-card__photo"><img src="' + escapeHtml(docente.imagen || '') + '" alt="' + escapeHtml(docente.titulo) + '" loading="lazy"></div>'
+            + '<div class="docente-card__photo"><img src="' + escapeHtml(getImageUrl(docente.imagen)) + '" alt="' + escapeHtml(docente.titulo) + '" loading="lazy"></div>'
             + '<div class="docente-card__body">'
             + '<h3 class="docente-card__name">' + escapeHtml(docente.titulo) + '</h3>'
             + '<p class="docente-card__role">' + escapeHtml(docente.role || '') + '</p>'
