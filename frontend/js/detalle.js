@@ -16,7 +16,11 @@
     function getImageUrl(imagenPath) {
         if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
         if (/^https?:\/\//.test(imagenPath)) return imagenPath;
-        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+        // Solo lo subido desde el panel lo sirve el backend (VPS). El resto
+        // (assets/...) son estaticos del propio frontend y quedan relativos.
+        var rel = imagenPath.replace(/^\//, '').replace(/^assets\/(?=uploads\/)/, '');
+        if (rel.indexOf('uploads/') === 0) return window.API_BASE + '/' + rel;
+        return imagenPath;
     }
 
     function leerTipoYSlugDesdeRuta() {

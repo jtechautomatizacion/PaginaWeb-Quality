@@ -24,7 +24,7 @@
             imagen: servicio.imagen || '',
             destacado: checked
         };
-        fetch('api/servicios?id=' + encodeURIComponent(servicio.id), {
+        authFetch(window.API_BASE + '/api/servicios?id=' + encodeURIComponent(servicio.id), {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -40,7 +40,7 @@
             .catch(function () {});
     }
 
-    fetch('api/servicios')
+    fetch(window.API_BASE + '/api/servicios')
         .then(function (res) { return res.json(); })
         .then(function (servicios) {
             if (!servicios.length) {
@@ -143,7 +143,7 @@
         };
         if (!payload.valor || !payload.etiqueta) return;
 
-        fetch('api/estadisticas?id=' + encodeURIComponent(editingId), {
+        authFetch(window.API_BASE + '/api/estadisticas?id=' + encodeURIComponent(editingId), {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -159,7 +159,7 @@
             .catch(function () {});
     });
 
-    fetch('api/estadisticas')
+    fetch(window.API_BASE + '/api/estadisticas')
         .then(function (res) { return res.json(); })
         .then(function (data) {
             items = data;
@@ -255,7 +255,7 @@
             fd.append('file', file);
             fd.append('tabla', 'acreditaciones');
             fd.append('anterior', urlInput.value || '');
-            uploadPromise = fetch('api/upload.php', { method: 'POST', body: fd })
+            uploadPromise = authFetch(window.API_BASE + '/api/upload', { method: 'POST', body: fd })
                 .then(function (res) { return res.json(); })
                 .then(function (result) {
                     if (!result.ok) {
@@ -279,7 +279,7 @@
                 archivo_url: urlInput.value,
                 archivo_tipo: tipoInput.value
             };
-            return fetch('api/acreditaciones?id=' + encodeURIComponent(editingId), {
+            return authFetch(window.API_BASE + '/api/acreditaciones?id=' + encodeURIComponent(editingId), {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -295,7 +295,7 @@
         }).catch(function () {});
     });
 
-    fetch('api/acreditaciones')
+    fetch(window.API_BASE + '/api/acreditaciones')
         .then(function (res) { return res.json(); })
         .then(function (data) {
             items = data;
@@ -375,7 +375,7 @@
         var id = btn.getAttribute('data-cli-delete');
         if (!window.confirm('¿Eliminar este cliente? Esta accion no se puede deshacer.')) return;
 
-        fetch('api/clientes?id=' + encodeURIComponent(id), { method: 'DELETE' })
+        authFetch(window.API_BASE + '/api/clientes?id=' + encodeURIComponent(id), { method: 'DELETE' })
             .then(function (res) { return res.json(); })
             .then(function (result) {
                 if (!result.ok) return;
@@ -416,7 +416,7 @@
             var fd = new FormData();
             fd.append('file', file);
             fd.append('tabla', 'clientes');
-            uploadPromise = fetch('api/upload.php', { method: 'POST', body: fd })
+            uploadPromise = authFetch(window.API_BASE + '/api/upload', { method: 'POST', body: fd })
                 .then(function (res) { return res.json(); })
                 .then(function (result) {
                     if (!result.ok) {
@@ -429,7 +429,7 @@
         }
 
         uploadPromise.then(function () {
-            return fetch('api/clientes', {
+            return authFetch(window.API_BASE + '/api/clientes', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nombre: nombre, logo_url: urlInput.value })
@@ -448,7 +448,7 @@
         }).catch(function () {});
     });
 
-    fetch('api/clientes')
+    fetch(window.API_BASE + '/api/clientes')
         .then(function (res) { return res.json(); })
         .then(function (data) {
             items = data;

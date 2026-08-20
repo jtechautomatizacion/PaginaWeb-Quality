@@ -8,7 +8,11 @@
     function getImageUrl(imagenPath) {
         if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
         if (/^https?:\/\//.test(imagenPath)) return imagenPath;
-        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+        // Solo lo subido desde el panel lo sirve el backend (VPS). El resto
+        // (assets/...) son estaticos del propio frontend y quedan relativos.
+        var rel = imagenPath.replace(/^\//, '').replace(/^assets\/(?=uploads\/)/, '');
+        if (rel.indexOf('uploads/') === 0) return window.API_BASE + '/' + rel;
+        return imagenPath;
     }
 
     var slidesContainer = document.getElementById('contenedor-nosotros-slides');
@@ -37,6 +41,9 @@
                             + '<img src="' + escapeHtml(getImageUrl(s.imagen)) + '" class="d-block w-100" style="border-radius: 10px;" alt="' + escapeHtml(s.titulo) + '">'
                             + '</div></div></div>';
                     }).join('');
+                    // carousel.js cablea el carousel al cargar, cuando este contenedor
+                    // aun estaba vacio. Hay que re-inicializarlo tras pintar los slides.
+                    if (window.initBsCarousels) window.initBsCarousels();
                 }
 
                 function pintarVisMis(container, bloque, imgWidth) {

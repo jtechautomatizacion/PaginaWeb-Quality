@@ -1,4 +1,29 @@
 (function () {
+    function resolveApiUrl(url) {
+        if (!url || /^https?:\/\//i.test(url)) return url;
+        return window.API_BASE + '/' + url.replace(/^\/+/, '');
+    }
+    window.resolveApiUrl = resolveApiUrl;
+
+    if (document.body.classList.contains('admin-theme') && !localStorage.getItem('gtqc_token')) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    function authFetch(url, options) {
+        options = options || {};
+        var token = localStorage.getItem('gtqc_token');
+        options.headers = Object.assign({}, options.headers, token ? { Authorization: 'Bearer ' + token } : {});
+        return fetch(url, options).then(function (res) {
+            if (res.status === 401) {
+                localStorage.removeItem('gtqc_token');
+                window.location.href = 'index.html';
+            }
+            return res;
+        });
+    }
+    window.authFetch = authFetch;
+
     var toggle = document.querySelector('[data-sidebar-toggle]');
     var shell = document.querySelector('.admin-shell');
     if (toggle && shell) {
@@ -58,6 +83,16 @@
         });
     }
 
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/200x150/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        // Solo lo subido desde el panel lo sirve el backend (VPS). El resto
+        // (assets/...) son estaticos del propio frontend y quedan relativos.
+        var rel = imagenPath.replace(/^\//, '').replace(/^assets\/(?=uploads\/)/, '');
+        if (rel.indexOf('uploads/') === 0) return window.API_BASE + '/' + rel;
+        return imagenPath;
+    }
+
     function renderAdminRow(item, viewBase) {
         var estado = item.estado === 'draft' ? 'draft' : 'published';
         var badgeClass = estado === 'published' ? 'badge-success' : 'badge-secondary';
@@ -72,7 +107,7 @@
         tr.setAttribute('data-date', item.fecha || '');
         tr.setAttribute('data-timestamp', String(item.timestamp || 0));
         tr.setAttribute('data-title', item.titulo.toLowerCase());
-        tr.innerHTML = '<td><img class="thumb-admin" src="' + escapeHtml(item.imagen) + '" alt="' + escapeHtml(item.titulo) + '"></td>'
+        tr.innerHTML = '<td><img class="thumb-admin" src="' + escapeHtml(getImageUrl(item.imagen)) + '" alt="' + escapeHtml(item.titulo) + '"></td>'
             + '<td><strong>' + escapeHtml(item.titulo) + '</strong><div class="text-muted" style="font-size:12px;">' + escapeHtml(item.resumen) + '</div></td>'
             + '<td><span class="badge ' + badgeClass + '">' + estado + '</span></td>'
             + '<td style="white-space:nowrap;">' + escapeHtml(displayDate) + '</td>'
@@ -217,7 +252,7 @@
 
     var listBody = document.querySelector('[data-list-body]');
     if (listBody && listBody.hasAttribute('data-api')) {
-        var apiUrl = listBody.getAttribute('data-api');
+        var apiUrl = resolveApiUrl(listBody.getAttribute('data-api'));
         var viewBase = listBody.getAttribute('data-view-base') || '';
 
         fetch(apiUrl)
@@ -367,7 +402,7 @@
                     fd.append('file', selectedFile);
                     fd.append('tabla', config.imageUpload.tabla);
                     fd.append('anterior', urlInputEl ? urlInputEl.value : '');
-                    uploadPromise = fetch('api/upload.php', { method: 'POST', body: fd })
+                    uploadPromise = authFetch(window.API_BASE + '/api/upload', { method: 'POST', body: fd })
                         .then(function (res) { return res.json(); })
                         .then(function (result) {
                             if (result.ok && urlInputEl) {
@@ -402,7 +437,7 @@
                 var url = editingId ? config.apiUrl + '?id=' + encodeURIComponent(editingId) : config.apiUrl;
                 var method = editingId ? 'PUT' : 'POST';
 
-                return fetch(url, {
+                return authFetch(url, {
                     method: method,
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -448,7 +483,7 @@
                     if (!id) return;
                     if (!window.confirm('¿Eliminar este registro? Esta accion no se puede deshacer.')) return;
 
-                    fetch(config.apiUrl + '?id=' + encodeURIComponent(id), { method: 'DELETE' })
+                    authFetch(config.apiUrl + '?id=' + encodeURIComponent(id), { method: 'DELETE' })
                         .then(function (res) { return res.json(); })
                         .then(function (result) {
                             if (!result.ok) return;
@@ -486,7 +521,7 @@
             fd.append('file', file);
             fd.append('tabla', tabla);
             fd.append('anterior', hiddenInput.value || '');
-            fetch('api/upload.php', { method: 'POST', body: fd })
+            authFetch(window.API_BASE + '/api/upload', { method: 'POST', body: fd })
                 .then(function (res) { return res.json(); })
                 .then(function (result) {
                     if (result.ok) {
@@ -530,7 +565,7 @@
             fd.append('file', file);
             fd.append('tabla', 'servicios');
             fd.append('anterior', hiddenUrl.value || '');
-            fetch('api/upload.php', { method: 'POST', body: fd })
+            authFetch(window.API_BASE + '/api/upload', { method: 'POST', body: fd })
                 .then(function (res) { return res.json(); })
                 .then(function (result) {
                     if (result.ok) {
@@ -574,7 +609,7 @@
 
     wireCreateModal({
         modalId: 'svcModal', formId: 'svcModalForm', openFn: 'svcOpenCreate', closeFn: 'svcCloseModal',
-        apiUrl: 'api/servicios', responseKey: 'servicio', viewBase: '/servicios',
+        apiUrl: resolveApiUrl('api/servicios'), responseKey: 'servicio', viewBase: '/servicios',
         fields: [
             { id: 'svcField_titulo', key: 'titulo' },
             { id: 'svcField_resumen', key: 'resumen' },
@@ -627,7 +662,7 @@
 
     wireCreateModal({
         modalId: 'prjModal', formId: 'prjModalForm', openFn: 'prjOpenCreate', closeFn: 'prjCloseModal',
-        apiUrl: 'api/proyectos', responseKey: 'proyecto', viewBase: '/proyectos',
+        apiUrl: resolveApiUrl('api/proyectos'), responseKey: 'proyecto', viewBase: '/proyectos',
         fields: [
             { id: 'prjField_titulo', key: 'titulo' },
             { id: 'prjField_ubicacion', key: 'ubicacion' },
@@ -646,7 +681,7 @@
 
     wireCreateModal({
         modalId: 'artModal', formId: 'artModalForm', openFn: 'artOpenCreate', closeFn: 'artCloseModal',
-        apiUrl: 'api/investigacion', responseKey: 'articulo', viewBase: '/investigacion',
+        apiUrl: resolveApiUrl('api/investigacion'), responseKey: 'articulo', viewBase: '/investigacion',
         fields: [
             { id: 'artField_titulo', key: 'titulo' },
             { id: 'artField_resumen', key: 'resumen' },
@@ -680,7 +715,7 @@
         function wireCrsModal() {
             wireCreateModal({
                 modalId: 'crsModal', formId: 'crsModalForm', openFn: 'crsOpenCreate', closeFn: 'crsCloseModal',
-                apiUrl: 'api/cursos', responseKey: 'curso', viewBase: '/cursos',
+                apiUrl: resolveApiUrl('api/cursos'), responseKey: 'curso', viewBase: '/cursos',
                 fields: [
                     { id: 'crsField_titulo', key: 'titulo' },
                     { id: 'crsField_modalidad', key: 'modalidad' },
@@ -701,7 +736,7 @@
 
         if (!crsDocenteSelect) { wireCrsModal(); return; }
 
-        fetch('api/docentes')
+        fetch(window.API_BASE + '/api/docentes')
             .then(function (res) { return res.json(); })
             .then(function (docentes) {
                 crsDocenteSelect.innerHTML = '<option value="">Selecciona un docente...</option>'
@@ -713,7 +748,7 @@
 
     wireCreateModal({
         modalId: 'docModal', formId: 'docModalForm', openFn: 'docOpenCreate', closeFn: 'docCloseModal',
-        apiUrl: 'api/docentes', responseKey: 'docente', viewBase: '/docentes',
+        apiUrl: resolveApiUrl('api/docentes'), responseKey: 'docente', viewBase: '/docentes',
         fields: [
             { id: 'docField_titulo', key: 'titulo' },
             { id: 'docField_role', key: 'role' },
@@ -738,7 +773,7 @@
         var contentStatus = document.getElementById('contentFormStatus');
         var contentFieldEls = Array.prototype.slice.call(contentForm.querySelectorAll('[id^="contentField_"]'));
 
-        fetch('api/contenido')
+        fetch(window.API_BASE + '/api/contenido')
             .then(function (res) { return res.json(); })
             .then(function (data) {
                 contentFieldEls.forEach(function (el) {
@@ -757,7 +792,7 @@
                 payload[el.id.replace('contentField_', '')] = el.value;
             });
             if (contentStatus) contentStatus.textContent = 'Guardando...';
-            fetch('api/contenido', {
+            authFetch(window.API_BASE + '/api/contenido', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)

@@ -16,7 +16,11 @@
     function getImageUrl(imagenPath) {
         if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
         if (/^https?:\/\//.test(imagenPath)) return imagenPath;
-        return 'https://api.grouptqualityc.com.pe' + (imagenPath.startsWith('/') ? imagenPath : '/' + imagenPath);
+        // Solo lo subido desde el panel lo sirve el backend (VPS). El resto
+        // (assets/...) son estaticos del propio frontend y quedan relativos.
+        var rel = imagenPath.replace(/^\//, '').replace(/^assets\/(?=uploads\/)/, '');
+        if (rel.indexOf('uploads/') === 0) return window.API_BASE + '/' + rel;
+        return imagenPath;
     }
 
     function leerTipoYSlugDesdeRuta() {
@@ -88,7 +92,7 @@
         if (!galeria.length) return '';
         var figuras = galeria.map(function (g) {
             return '<figure class="svc-gallery__item">'
-                + '<img src="' + escapeHtml(g.imagen) + '" alt="' + escapeHtml(g.titulo) + '" loading="lazy">'
+                + '<img src="' + escapeHtml(getImageUrl(g.imagen)) + '" alt="' + escapeHtml(g.titulo) + '" loading="lazy">'
                 + '<figcaption>'
                 + '<strong>' + escapeHtml(g.titulo) + '</strong>'
                 + '<span>' + escapeHtml(g.norma) + '</span>'
@@ -217,7 +221,7 @@
 
         var relacionadosHtml = otros.map(function (o) {
             return '<a class="mosaic-tile" href="' + tipo + '/' + escapeHtml(o.slug) + '">'
-                + '<img src="' + escapeHtml(resolveApiUrl(o.imagen)) + '" alt="' + escapeHtml(o.titulo) + '" loading="lazy">'
+                + '<img src="' + escapeHtml(getImageUrl(o.imagen)) + '" alt="' + escapeHtml(o.titulo) + '" loading="lazy">'
                 + '<div class="mosaic-tile__overlay"><span class="mosaic-tile__title">' + escapeHtml(o.titulo) + '</span></div>'
                 + '</a>';
         }).join('');

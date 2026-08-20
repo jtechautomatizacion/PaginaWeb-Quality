@@ -8,10 +8,10 @@ const collectionNames = {
 async function loadReports() {
     try {
         const [overview, drafts, cursosSinDocente, docentesSinCursos] = await Promise.all([
-            fetch('api/reportes.php?tipo=overview').then(r => r.json()),
-            fetch('api/reportes.php?tipo=drafts').then(r => r.json()),
-            fetch('api/reportes.php?tipo=cursos-sin-docente').then(r => r.json()),
-            fetch('api/reportes.php?tipo=docentes-sin-cursos').then(r => r.json())
+            fetch(window.API_BASE + '/api/reportes?tipo=overview').then(r => r.json()),
+            fetch(window.API_BASE + '/api/reportes?tipo=drafts').then(r => r.json()),
+            fetch(window.API_BASE + '/api/reportes?tipo=cursos-sin-docente').then(r => r.json()),
+            fetch(window.API_BASE + '/api/reportes?tipo=docentes-sin-cursos').then(r => r.json())
         ]);
 
         if (overview.ok) renderKpis(overview.data);

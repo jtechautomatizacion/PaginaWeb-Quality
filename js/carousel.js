@@ -117,7 +117,7 @@
     });
 })();
 
-(function () {
+window.initBsCarousels = function () {
     document.querySelectorAll('.carousel[data-ride="carousel"]').forEach(function (carousel) {
         var items = Array.prototype.slice.call(carousel.querySelectorAll('.carousel-item'));
         var dots = Array.prototype.slice.call(carousel.querySelectorAll('.li-slide-btn'));
@@ -126,6 +126,11 @@
         if (!items.length) return;
         var index = items.findIndex(function (it) { return it.classList.contains('active'); });
         if (index < 0) index = 0;
+        var timer = null;
+
+        // Los slides llegan por fetch, asi que esta funcion se vuelve a llamar
+        // despues del primer render: hay que matar el autoplay anterior.
+        if (carousel._bsTimer) clearInterval(carousel._bsTimer);
 
         function render() {
             items.forEach(function (it, i) { it.classList.toggle('active', i === index); });
@@ -136,13 +141,29 @@
             index = (i + items.length) % items.length;
             render();
         }
+        function restartAutoplay() {
+            if (timer) clearInterval(timer);
+            if (items.length > 1) {
+                timer = setInterval(function () { goTo(index + 1); }, 6000);
+                carousel._bsTimer = timer;
+            }
+        }
 
-        if (prevBtn) prevBtn.addEventListener('click', function (ev) { goTo(index - 1, ev); });
-        if (nextBtn) nextBtn.addEventListener('click', function (ev) { goTo(index + 1, ev); });
-        dots.forEach(function (d, i) { d.addEventListener('click', function () { goTo(i); }); });
+        // onclick (no addEventListener) para no acumular handlers al re-inicializar.
+        if (prevBtn) prevBtn.onclick = function (ev) { goTo(index - 1, ev); restartAutoplay(); };
+        if (nextBtn) nextBtn.onclick = function (ev) { goTo(index + 1, ev); restartAutoplay(); };
+        dots.forEach(function (d, i) {
+            d.onclick = function () { goTo(i); restartAutoplay(); };
+            // El HTML trae 2 <li> fijos; el numero real de slides lo decide la API.
+            d.style.display = i < items.length ? '' : 'none';
+        });
+
         render();
+        restartAutoplay();
     });
-})();
+};
+
+window.initBsCarousels();
 
 (function () {
     var btns = document.querySelectorAll('.cat-filter-btn');

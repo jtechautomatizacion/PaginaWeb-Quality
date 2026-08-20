@@ -16,7 +16,7 @@
                 errorBox.classList.add('d-none');
             }
 
-            fetch('login', {
+            fetch(window.API_BASE + '/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -31,6 +31,9 @@
                 })
                 .then(function (result) {
                     if (result.data && result.data.ok) {
+                        if (result.data.token) {
+                            localStorage.setItem('gtqc_token', result.data.token);
+                        }
                         window.location.href = result.data.redirect || 'admin.html';
                         return;
                     }
@@ -57,6 +60,7 @@
     document.querySelectorAll('form[action="/admin/logout"]').forEach(function (form) {
         form.addEventListener('submit', function (ev) {
             ev.preventDefault();
+            localStorage.removeItem('gtqc_token');
             window.location.href = 'index.html';
         });
     });

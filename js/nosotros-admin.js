@@ -81,7 +81,7 @@
                 fd.append('file', file);
                 fd.append('tabla', 'nosotros_bloques');
                 fd.append('anterior', urlInput.value || '');
-                uploadPromise = fetch('api/upload.php', { method: 'POST', body: fd })
+                uploadPromise = authFetch(window.API_BASE + '/api/upload', { method: 'POST', body: fd })
                     .then(function (res) { return res.json(); })
                     .then(function (result) {
                         if (!result.ok) {
@@ -103,7 +103,7 @@
                     contenido: contenidoField.value,
                     imagen: urlInput.value
                 };
-                return fetch('api/nosotros_bloques?clave=' + encodeURIComponent(clave), {
+                return authFetch(window.API_BASE + '/api/nosotros_bloques?clave=' + encodeURIComponent(clave), {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -119,7 +119,7 @@
             }).catch(function () {});
         });
 
-        fetch('api/nosotros_bloques')
+        fetch(window.API_BASE + '/api/nosotros_bloques')
             .then(function (res) { return res.json(); })
             .then(function (data) {
                 items = data;
@@ -183,7 +183,7 @@
             };
             if (!payload.numero || !payload.etiqueta) return;
 
-            fetch('api/nosotros_trayectoria?id=' + encodeURIComponent(editingId), {
+            authFetch(window.API_BASE + '/api/nosotros_trayectoria?id=' + encodeURIComponent(editingId), {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -199,7 +199,7 @@
                 .catch(function () {});
         });
 
-        fetch('api/nosotros_trayectoria')
+        fetch(window.API_BASE + '/api/nosotros_trayectoria')
             .then(function (res) { return res.json(); })
             .then(function (data) {
                 items = data;
@@ -277,7 +277,7 @@
             if (delBtn) {
                 var delId = delBtn.getAttribute('data-nosval-delete');
                 if (!window.confirm('¿Eliminar este valor? Esta accion no se puede deshacer.')) return;
-                fetch('api/nosotros_valores?id=' + encodeURIComponent(delId), { method: 'DELETE' })
+                authFetch(window.API_BASE + '/api/nosotros_valores?id=' + encodeURIComponent(delId), { method: 'DELETE' })
                     .then(function (res) { return res.json(); })
                     .then(function (result) {
                         if (!result.ok) return;
@@ -298,12 +298,12 @@
             if (!payload.nombre) return;
 
             var request = editingId
-                ? fetch('api/nosotros_valores?id=' + encodeURIComponent(editingId), {
+                ? authFetch(window.API_BASE + '/api/nosotros_valores?id=' + encodeURIComponent(editingId), {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 })
-                : fetch('api/nosotros_valores', {
+                : authFetch(window.API_BASE + '/api/nosotros_valores', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
@@ -327,7 +327,7 @@
                 .catch(function () {});
         });
 
-        fetch('api/nosotros_valores')
+        fetch(window.API_BASE + '/api/nosotros_valores')
             .then(function (res) { return res.json(); })
             .then(function (data) {
                 items = data;
@@ -403,7 +403,7 @@
             if (delBtn) {
                 var delId = delBtn.getAttribute('data-nosstaff-delete');
                 if (!window.confirm('¿Eliminar este integrante? Esta accion no se puede deshacer.')) return;
-                fetch('api/nosotros_staff?id=' + encodeURIComponent(delId), { method: 'DELETE' })
+                authFetch(window.API_BASE + '/api/nosotros_staff?id=' + encodeURIComponent(delId), { method: 'DELETE' })
                     .then(function (res) { return res.json(); })
                     .then(function (result) {
                         if (!result.ok) return;
@@ -440,7 +440,7 @@
                 fd.append('file', file);
                 fd.append('tabla', 'nosotros_staff');
                 fd.append('anterior', urlInput.value || '');
-                uploadPromise = fetch('api/upload.php', { method: 'POST', body: fd })
+                uploadPromise = authFetch(window.API_BASE + '/api/upload', { method: 'POST', body: fd })
                     .then(function (res) { return res.json(); })
                     .then(function (result) {
                         if (!result.ok) {
@@ -462,12 +462,12 @@
                 if (!payload.nombre || !payload.cargo) return;
 
                 var request = editingId
-                    ? fetch('api/nosotros_staff?id=' + encodeURIComponent(editingId), {
+                    ? authFetch(window.API_BASE + '/api/nosotros_staff?id=' + encodeURIComponent(editingId), {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
                     })
-                    : fetch('api/nosotros_staff', {
+                    : authFetch(window.API_BASE + '/api/nosotros_staff', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(payload)
@@ -492,7 +492,7 @@
             }).catch(function () {});
         });
 
-        fetch('api/nosotros_staff')
+        fetch(window.API_BASE + '/api/nosotros_staff')
             .then(function (res) { return res.json(); })
             .then(function (data) {
                 items = data;

@@ -5,7 +5,7 @@ function parseDocenteSlug() {
 
 async function renderDocente(slug) {
     try {
-        const res = await fetch(`api/docentes?slug=${encodeURIComponent(slug)}`);
+        const res = await fetch(`${window.API_BASE}/api/docentes?slug=${encodeURIComponent(slug)}`);
         if (!res.ok) throw new Error('Docente no encontrado');
         const docente = await res.json();
 

@@ -5,13 +5,23 @@
         });
     }
 
+    function getImageUrl(imagenPath) {
+        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+        // Solo lo subido desde el panel lo sirve el backend (VPS). El resto
+        // (assets/...) son estaticos del propio frontend y quedan relativos.
+        var rel = imagenPath.replace(/^\//, '').replace(/^assets\/(?=uploads\/)/, '');
+        if (rel.indexOf('uploads/') === 0) return window.API_BASE + '/' + rel;
+        return imagenPath;
+    }
+
     var slidesContainer = document.getElementById('contenedor-nosotros-slides');
     var visionContainer = document.getElementById('contenedor-vision');
     var misionContainer = document.getElementById('contenedor-mision');
     var certsContainer = document.getElementById('contenedor-certificaciones-nosotros');
 
     if (slidesContainer || visionContainer || misionContainer || certsContainer) {
-        fetch('api/nosotros_bloques')
+        fetch(window.API_BASE + '/api/nosotros_bloques')
             .then(function (res) { return res.json(); })
             .then(function (bloques) {
                 var byClave = {};
@@ -28,15 +38,18 @@
                             + '<p>' + (s.contenido || '') + '</p>'
                             + '</div></div>'
                             + '<div class="col-md-6 col-sm-12 col-12">'
-                            + '<img src="' + escapeHtml(s.imagen) + '" class="d-block w-100" style="border-radius: 10px;" alt="' + escapeHtml(s.titulo) + '">'
+                            + '<img src="' + escapeHtml(getImageUrl(s.imagen)) + '" class="d-block w-100" style="border-radius: 10px;" alt="' + escapeHtml(s.titulo) + '">'
                             + '</div></div></div>';
                     }).join('');
+                    // carousel.js cablea el carousel al cargar, cuando este contenedor
+                    // aun estaba vacio. Hay que re-inicializarlo tras pintar los slides.
+                    if (window.initBsCarousels) window.initBsCarousels();
                 }
 
                 function pintarVisMis(container, bloque, imgWidth) {
                     if (!container || !bloque) return;
                     container.innerHTML = '<div class="vis-mis-alig">'
-                        + '<img src="' + escapeHtml(bloque.imagen) + '" width="' + imgWidth + '" alt="' + escapeHtml(bloque.titulo) + '">'
+                        + '<img src="' + escapeHtml(getImageUrl(bloque.imagen)) + '" width="' + imgWidth + '" alt="' + escapeHtml(bloque.titulo) + '">'
                         + '<div>'
                         + '<h2 class="h2_title">' + escapeHtml(bloque.titulo) + '</h2>'
                         + '<span>' + (bloque.contenido || '') + '</span>'
@@ -48,7 +61,7 @@
                 if (certsContainer && byClave.certificaciones) {
                     var c = byClave.certificaciones;
                     certsContainer.innerHTML = '<div class="iso-alig">'
-                        + '<img src="' + escapeHtml(c.imagen) + '" width="80" alt="' + escapeHtml(c.titulo) + '">'
+                        + '<img src="' + escapeHtml(getImageUrl(c.imagen)) + '" width="80" alt="' + escapeHtml(c.titulo) + '">'
                         + '<div>'
                         + '<h2 class="h2_title">' + escapeHtml(c.titulo) + '</h2>'
                         + '<span>' + (c.contenido || '') + '</span>'
@@ -60,7 +73,7 @@
 
     var valoresContainer = document.getElementById('contenedor-valores');
     if (valoresContainer) {
-        fetch('api/nosotros_valores')
+        fetch(window.API_BASE + '/api/nosotros_valores')
             .then(function (res) { return res.json(); })
             .then(function (valores) {
                 valoresContainer.innerHTML = valores.map(function (v) {
@@ -75,7 +88,7 @@
 
     var trayectoriaContainer = document.getElementById('contenedor-trayectoria');
     if (trayectoriaContainer) {
-        fetch('api/nosotros_trayectoria')
+        fetch(window.API_BASE + '/api/nosotros_trayectoria')
             .then(function (res) { return res.json(); })
             .then(function (items) {
                 trayectoriaContainer.innerHTML = items.map(function (t) {
@@ -94,13 +107,13 @@
 
     var staffContainer = document.getElementById('contenedor-staff-nosotros');
     if (staffContainer) {
-        fetch('api/nosotros_staff')
+        fetch(window.API_BASE + '/api/nosotros_staff')
             .then(function (res) { return res.json(); })
             .then(function (staff) {
                 staffContainer.innerHTML = staff.map(function (p) {
                     return '<div class="col-md-4 col-sm-6 col-12 mt-3">'
                         + '<div class="old-highlight-box text-center">'
-                        + '<img src="' + escapeHtml(p.imagen) + '" alt="' + escapeHtml(p.nombre) + '" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 14px; border: 3px solid var(--gtqc-blue-deep); display: block;">'
+                        + '<img src="' + escapeHtml(getImageUrl(p.imagen)) + '" alt="' + escapeHtml(p.nombre) + '" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 14px; border: 3px solid var(--gtqc-blue-deep); display: block;">'
                         + '<h3>' + escapeHtml(p.nombre) + '</h3>'
                         + '<p style="color: var(--gtqc-blue-deep);"><strong>' + escapeHtml(p.cargo) + '</strong></p>'
                         + '<p style="text-align: left;">' + escapeHtml(p.descripcion) + '</p>'
