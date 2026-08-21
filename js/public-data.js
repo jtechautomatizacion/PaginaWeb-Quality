@@ -1,3 +1,16 @@
+// A nivel de <script>, no dentro de ninguna IIFE: varias secciones de este
+// archivo son IIFEs independientes (hero, clientes, etc.) y todas necesitan
+// resolver imagenes, asi que la funcion debe vivir en el scope compartido.
+function getImageUrl(imagenPath) {
+    if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
+    if (/^https?:\/\//.test(imagenPath)) return imagenPath;
+    // Solo lo subido desde el panel lo sirve el backend (VPS). El resto
+    // (assets/...) son estaticos del propio frontend y quedan relativos.
+    var rel = imagenPath.replace(/^\//, '').replace(/^assets\/(?=uploads\/)/, '');
+    if (rel.indexOf('uploads/') === 0) return window.API_BASE + '/' + rel;
+    return imagenPath;
+}
+
 (function () {
     var serviciosMosaico = document.getElementById('contenedor-servicios-mosaico');
     var serviciosGrid = document.getElementById('contenedor-servicios');
@@ -10,15 +23,6 @@
 
     function imagenServicio(i) { return IMAGENES_SERVICIOS[i % IMAGENES_SERVICIOS.length]; }
     function imagenProyecto(i) { return IMAGENES_PROYECTOS[i % IMAGENES_PROYECTOS.length]; }
-    function getImageUrl(imagenPath) {
-        if (!imagenPath) return 'https://placehold.co/640x480/e9edf5/e9edf5';
-        if (/^https?:\/\//.test(imagenPath)) return imagenPath;
-        // Solo lo subido desde el panel lo sirve el backend (VPS). El resto
-        // (assets/...) son estaticos del propio frontend y quedan relativos.
-        var rel = imagenPath.replace(/^\//, '').replace(/^assets\/(?=uploads\/)/, '');
-        if (rel.indexOf('uploads/') === 0) return window.API_BASE + '/' + rel;
-        return imagenPath;
-    }
     function imagenDe(item, fallback) { return item && item.imagen ? getImageUrl(item.imagen) : fallback; }
 
     if (serviciosMosaico) {
